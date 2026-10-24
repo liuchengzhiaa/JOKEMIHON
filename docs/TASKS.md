@@ -12,6 +12,15 @@
       Receipt: main 1999e94e9b263a7ac256f2fb9b48946ab86fb082; PRIVATE, Actions off,
       0 runs and 0 Releases. Subsequent receipt-only docs commit needs no APK.
 
+## Public access and performance research (2026-10-25)
+
+- [x] Make JOKEMIHON PUBLIC with explicit owner approval; anonymous API reports
+      private=false, visibility=public and the repository page returns HTTP 200.
+- [x] Update current delivery instructions: future public APK downloads need no login.
+- [x] Compare v0.19.0 / e4de208 with v0.21.2 / 9612d95 using release notes and
+      actual Git diffs; preserve findings in MIHON_019_TO_0212_PERFORMANCE.md.
+- [ ] Push this documentation-only slice and verify remote commit/settings.
+
 ## Before first custom APK
 
 - [ ] Confirm first customization scope with the owner.

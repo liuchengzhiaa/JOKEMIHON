@@ -25,8 +25,9 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
 - origin: https://github.com/liuchengzhiaa/JOKEMIHON.git (owner repository).
 - upstream: https://github.com/mihonapp/mihon.git (reference only; never push).
 - Work on main or focused local branches; never force-push or rewrite shared history.
-- Current repository visibility is PRIVATE. Do not change visibility without the
-  owner's explicit approval. Private downloads require authorized GitHub sign-in.
+- Current repository visibility is PUBLIC, explicitly requested by the owner on
+  2026-10-25 for sign-in-free APK downloads. Source, history and Release assets are
+  public. Do not change visibility again without explicit owner approval.
 - Never commit/upload credentials, tokens, signing private keys, local.properties,
   .env, machine-local settings, tool/auth caches, user media or backups.
 - APK/AAB files belong in Release assets, not Git history.

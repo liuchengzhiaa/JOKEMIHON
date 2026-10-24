@@ -2,6 +2,11 @@
 
 ## Unreleased - 2026-10-25
 
+- Make JOKEMIHON PUBLIC by explicit owner request for sign-in-free future APK downloads;
+  verified with an unauthenticated repository API request and HTTP 200 page access.
+- Document the v0.19.0 to v0.21.2 library performance/stability source comparison.
+  No Android code changes or new APK in this documentation/configuration update.
+
 - Initialize independent owner repository from Mihon v0.21.2, preserving history.
 - Add persistent source synchronization, verified APK release and handoff rules.
 - Protect local signing/auth/config files and keep APK/AAB binaries out of Git.

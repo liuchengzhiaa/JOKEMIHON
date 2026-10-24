@@ -4,8 +4,9 @@
 
 - Repository: https://github.com/liuchengzhiaa/JOKEMIHON
 - Source branch: main. Base: Mihon v0.21.2 / 9612d955db3165e1578fdf9ff19ca9b7762c4a46.
-- Visibility: PRIVATE; changing this requires explicit owner approval. GitHub Release
-  pages and APK downloads require signing in as an authorized user.
+- Visibility: PUBLIC, explicitly requested by the owner on 2026-10-25 for downloads
+  without GitHub sign-in. Source, history and Release assets are public. Changing
+  visibility again requires explicit owner approval; review uploads accordingly.
 - Every completed material code slice must sync reviewed source/documentation and
   deliver a verified APK via a versioned GitHub Release. Docs-only work needs no APK.
 - Keep APK/AAB binaries outside Git history. The constant future asset name is
@@ -69,7 +70,7 @@ without assessing compatibility with this multi-module project.
    an existing asset or tag. Inspect partial publication before resuming it.
 5. Read back release target, assets, sizes and available digests (or download and
    hash the remote APK) before reporting success. Give the owner the exact release
-   and APK URLs and state that private downloads require GitHub authorization.
+   and APK URLs. Published public Release assets do not require GitHub sign-in.
 6. Record the verified publication receipt in HANDOFF. A receipt-only documentation
    commit does not require rebuilding/releasing an identical APK.
 

@@ -1,5 +1,46 @@
 # JOKEMIHON handoff
 
+## Latest continuation: public access and library research (2026-10-25)
+
+This section supersedes the PRIVATE visibility statements in the historical
+initialization entry below. The owner explicitly requested PUBLIC visibility so
+future APK downloads do not need GitHub sign-in.
+
+### Completed
+
+- Changed only liuchengzhiaa/JOKEMIHON to PUBLIC through the authenticated CLI.
+- Verified API visibility=PUBLIC, Actions still disabled and no Releases present.
+- Independently verified without authentication: repository API private=false,
+  visibility=public, default_branch=main and repository page HTTP 200.
+- Updated AGENTS, README, release policy, TASKS and CHANGELOG for public delivery.
+- Added docs/MIHON_019_TO_0212_PERFORMANCE.md: source/release-note comparison with
+  exact baseline e4de208cf75e273b425bf4b1fe4bd7bc3d9cc459 (v0.19.0) and target
+  9612d955db3165e1578fdf9ff19ca9b7762c4a46 (v0.21.2), real data-flow trace,
+  relevant commits and explicit limits. Most core changes land in v0.21.0; later
+  patches address crashes/migration/Cloudflare resource storms.
+- No app/Gradle/signing changes, Android tests/builds, user media reads or device
+  installation. No custom APK exists. This is a docs/configuration slice, not an
+  APK release. Android build commands remain in docs/RELEASING.md.
+
+### Verification and delivery
+
+- Source baseline/target commits confirmed locally; selected diffs read directly.
+- LazyLibraryGrid.kt and LibraryPager.kt are identical between the two tags
+  (git diff --quiet exit 0); these are not new lazy-loading changes.
+- git diff --check passed; reviewed upload set contains only seven Markdown files.
+  No app/Gradle/signing/workflow source modifications. Remote sync pending.
+- No device traces or controlled performance/crash-rate benchmark: conclusions
+  describe observed source mechanisms, not measured speedups or proof of zero bugs.
+
+### Safest next action
+
+Finish documentation commit/push and verify remote SHA/settings. Then confirm the
+first customization scope, establish independent app identity and dedicated stable
+signer, run verification and publish the first tested APK. Keep public uploads free
+of secrets and retain archived upstream workflows until a reviewed pipeline exists.
+
+---
+
 ## 2026-10-25: repository initialization
 
 Owner requests an independent JOKEMIHON GitHub repository. Future completed code
