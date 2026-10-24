@@ -6,6 +6,8 @@
 - Add persistent source synchronization, verified APK release and handoff rules.
 - Protect local signing/auth/config files and keep APK/AAB binaries out of Git.
 - Disable inherited upstream Actions at repository level pending workflow review.
+- Archive original workflows outside .github/workflows without changing their content;
+  avoids workflow-scope authorization and accidental upstream publishing.
 - Documentation/repository setup only; no custom application changes, Android tests,
   build or APK publication in this slice.
 

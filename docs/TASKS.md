@@ -5,6 +5,8 @@
 - [x] Download and verify upstream v0.21.2 source in an independent local checkout.
 - [x] Expand shallow checkout to retain upstream commit history.
 - [x] Create the owner's PRIVATE JOKEMIHON repository and disable inherited Actions.
+- [x] Archive original upstream workflows under docs/upstream-workflows, avoiding
+      executable workflow uploads and any need to expand OAuth permissions.
 - [x] Document standing source/APK delivery and continuity requirements.
 - [ ] Commit/push reviewed initialization and verify remote SHA and settings.
 

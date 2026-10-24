@@ -21,10 +21,12 @@ The initial shallow checkout was expanded to preserve original commit history.
 origin is the owner's repository; upstream is for reference only, with local push
 URL disabled. Do not push upstream tags/releases wholesale.
 
-Repository Actions are disabled before the initial source push. The inherited
-.github/workflows files still target upstream behavior and are not a configured
-JOKEMIHON publishing pipeline. Publication is manual until reviewed automation is
-implemented. Never enable inherited workflows blindly.
+Repository Actions are disabled before the initial source push. The inherited workflows are preserved unchanged under docs/upstream-workflows,
+outside the executable .github/workflows directory. They target upstream behavior
+and are not a configured JOKEMIHON publishing pipeline. Publication is manual until reviewed automation is
+implemented. Never restore/enable inherited workflows blindly. The current official CLI token
+has repo but not workflow scope; the first push with executable upstream workflows
+was rejected. Archiving them avoids extra authorization and accidental execution.
 
 ## Before the first APK
 

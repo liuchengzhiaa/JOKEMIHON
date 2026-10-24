@@ -14,9 +14,10 @@ This requirement is persistent in AGENTS.md and docs/RELEASING.md.
 - Owner repository: https://github.com/liuchengzhiaa/JOKEMIHON (PRIVATE).
 - Source branch main; original local custom/v0.21.2 branch remains at upstream base.
 - origin targets the owner; upstream remains reference-only with its push disabled.
-- Inherited Actions disabled at repository level before any source push.
+- Inherited Actions disabled at repository level before any source push; original
+  workflow files archived unchanged under docs/upstream-workflows (not executable).
 - Added delivery/continuity documentation, README notice and local-secret/binary
-  ignore rules. No application/Gradle/workflow source changes in this slice.
+  ignore rules. No application/Gradle source changes in this slice.
 - No JOKESONG files modified; no Claude invocation and no device install.
 
 ### Verification and delivery status
@@ -26,9 +27,13 @@ This requirement is persistent in AGENTS.md and docs/RELEASING.md.
 - Upstream Git integrity check passed before initialization; exact v0.21.2 base
   verified. Full-history git fsck --no-reflogs and git diff --check passed.
 - Reviewed upload set: AGENTS.md, three docs, README.md, CHANGELOG.md and .gitignore;
-  no app/Gradle/workflow modifications. Ignore probes cover APK/AAB, signing key,
+  plus three unchanged upstream workflows moved to docs/upstream-workflows;
+  no app/Gradle modifications. Ignore probes cover APK/AAB, signing key,
   local.properties, keystore.properties, .env and local tool/auth cache paths.
-- Remote settings rechecked: PRIVATE and actions.enabled=false. Source push pending.
+- Remote settings rechecked: PRIVATE and actions.enabled=false. First source push
+  was rejected because OAuth scope lacks workflow permission. Archived inherited
+  workflows outside .github/workflows rather than expanding account permissions.
+  Source push retry and verification pending.
 - Android unit tests/lint/build/device checks NOT RUN: documentation/repository setup
   only, not a material application code update. No custom APK exists or is published.
 - See docs/RELEASING.md for exact candidate verification/build commands.

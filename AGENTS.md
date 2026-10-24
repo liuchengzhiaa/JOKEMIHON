@@ -37,7 +37,8 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   replaced. Avoid sending custom usage/crash data to upstream services.
 - Increase versionCode for each newly published APK. Never overwrite existing
   release assets, reuse release tags or silently rotate the signing key.
-- Inherited upstream Actions are disabled at repository level. Review/replace their
+- Inherited upstream Actions are disabled at repository level and archived under
+  docs/upstream-workflows (not executable). Review/replace their
   triggers, destinations, permissions and signing before enabling any workflows.
 - Keep originals and user reading data safe; migrations need tests and backups.
 - Add/update tests for non-trivial state, data and migration behavior.
