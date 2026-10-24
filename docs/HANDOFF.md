@@ -28,13 +28,15 @@ future APK downloads do not need GitHub sign-in.
 - LazyLibraryGrid.kt and LibraryPager.kt are identical between the two tags
   (git diff --quiet exit 0); these are not new lazy-loading changes.
 - git diff --check passed; reviewed upload set contains only seven Markdown files.
-  No app/Gradle/signing/workflow source modifications. Remote sync pending.
+  No app/Gradle/signing/workflow source modifications. Commit/push succeeded;
+  GitHub API verified remote main=4147715d30595861627d492951f3d17330522814.
+  This receipt is a documentation-only follow-up; no APK rebuild/release is needed.
 - No device traces or controlled performance/crash-rate benchmark: conclusions
   describe observed source mechanisms, not measured speedups or proof of zero bugs.
 
 ### Safest next action
 
-Finish documentation commit/push and verify remote SHA/settings. Then confirm the
+Public visibility and research documentation are delivered. Next confirm the
 first customization scope, establish independent app identity and dedicated stable
 signer, run verification and publish the first tested APK. Keep public uploads free
 of secrets and retain archived upstream workflows until a reviewed pipeline exists.

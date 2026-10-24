@@ -19,7 +19,8 @@
 - [x] Update current delivery instructions: future public APK downloads need no login.
 - [x] Compare v0.19.0 / e4de208 with v0.21.2 / 9612d95 using release notes and
       actual Git diffs; preserve findings in MIHON_019_TO_0212_PERFORMANCE.md.
-- [ ] Push this documentation-only slice and verify remote commit/settings.
+- [x] Push this documentation-only slice and verify remote commit/settings.
+      Verified main=4147715d30595861627d492951f3d17330522814 (before receipt-only docs).
 
 ## Before first custom APK
 
