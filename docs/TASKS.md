@@ -8,7 +8,9 @@
 - [x] Archive original upstream workflows under docs/upstream-workflows, avoiding
       executable workflow uploads and any need to expand OAuth permissions.
 - [x] Document standing source/APK delivery and continuity requirements.
-- [ ] Commit/push reviewed initialization and verify remote SHA and settings.
+- [x] Commit/push reviewed initialization and verify remote SHA and settings.
+      Receipt: main 1999e94e9b263a7ac256f2fb9b48946ab86fb082; PRIVATE, Actions off,
+      0 runs and 0 Releases. Subsequent receipt-only docs commit needs no APK.
 
 ## Before first custom APK
 

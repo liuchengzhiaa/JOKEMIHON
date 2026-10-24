@@ -33,17 +33,20 @@ This requirement is persistent in AGENTS.md and docs/RELEASING.md.
 - Remote settings rechecked: PRIVATE and actions.enabled=false. First source push
   was rejected because OAuth scope lacks workflow permission. Archived inherited
   workflows outside .github/workflows rather than expanding account permissions.
-  Source push retry and verification pending.
+  Retry succeeded without adding OAuth scopes. GitHub API read-back confirmed
+  remote main equals local 1999e94e9b263a7ac256f2fb9b48946ab86fb082.
+- Delivery receipt: repository PRIVATE, default branch main, Actions disabled,
+  0 workflow runs and 0 Releases verified remotely. This receipt is a docs-only
+  follow-up commit; no identical APK rebuild/release is required.
 - Android unit tests/lint/build/device checks NOT RUN: documentation/repository setup
   only, not a material application code update. No custom APK exists or is published.
 - See docs/RELEASING.md for exact candidate verification/build commands.
 
 ### Safest next action
 
-1. Finish initialization commit/push and verify remote main SHA, visibility and
-   disabled Actions. Record actual receipt here.
-2. Confirm requested product customization; establish independent name/icon/package,
-   disabled or replaced updater/telemetry and a persistent dedicated signing key.
+1. Repository initialization is delivered; confirm requested product customization.
+2. Establish independent name/icon/package, disabled or replaced updater/telemetry
+   and a persistent dedicated signing key.
 3. Build/verify the first custom APK, then publish to a new versioned Release.
 
 ### Constraints and pending setup
