@@ -1,3 +1,22 @@
+# JOKEMIHON
+
+Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
+**v0.21.2**. Independent project; not an official Mihon release.
+
+- [Project status and handoff](docs/HANDOFF.md)
+- [Tasks](docs/TASKS.md) | [Source and APK delivery](docs/RELEASING.md)
+- [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
+
+**Initialization only: no custom APK has been built or published yet.** This
+repository is private; its source and future APK downloads require authorized
+GitHub sign-in. The original upstream introduction and links below are preserved
+for attribution, not as download links for JOKEMIHON.
+
+Modified for JOKEMIHON on 2026-10-25: added this project notice. Original licensing
+and credits are retained below.
+
+---
+
 <div align="center">
 
 <a href="https://mihon.app">

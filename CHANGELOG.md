@@ -1,3 +1,18 @@
+# JOKEMIHON changelog
+
+## Unreleased - 2026-10-25
+
+- Initialize independent owner repository from Mihon v0.21.2, preserving history.
+- Add persistent source synchronization, verified APK release and handoff rules.
+- Protect local signing/auth/config files and keep APK/AAB binaries out of Git.
+- Disable inherited upstream Actions at repository level pending workflow review.
+- Documentation/repository setup only; no custom application changes, Android tests,
+  build or APK publication in this slice.
+
+Original upstream changelog follows unchanged.
+
+---
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
