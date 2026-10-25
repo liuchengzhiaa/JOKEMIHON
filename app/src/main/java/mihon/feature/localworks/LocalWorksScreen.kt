@@ -687,8 +687,8 @@ private fun WorkCard(
             }
             if (tagged || relatedTagged) {
                 Surface(
-                    Modifier.align(Alignment.BottomEnd).padding(6.dp),
-                    shape = RoundedCornerShape(10.dp),
+                    Modifier.align(Alignment.BottomEnd).padding(4.dp),
+                    shape = RoundedCornerShape(5.dp),
                     color = if (tagged) {
                         MaterialTheme.colorScheme.primaryContainer
                     } else {
@@ -698,7 +698,7 @@ private fun WorkCard(
                     Icon(
                         MaterialSymbols.AutoMirroredRounded.Label,
                         stringResource(if (tagged) R.string.local_works_has_tags else R.string.local_works_contains_tags),
-                        Modifier.padding(5.dp).size(18.dp),
+                        Modifier.padding(2.dp).size(12.dp),
                     )
                 }
             }

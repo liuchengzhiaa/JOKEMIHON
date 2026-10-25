@@ -1,5 +1,13 @@
 # JOKEMIHON tasks
 
+## Compact tag marker (2026-10-25)
+
+- [x] Explain top-left Check=in library, not selection; leave its behavior unchanged.
+- [x] Shrink bottom-right tag badge28dp->16dp without new assets or logic changes.
+- [x] Continue no-test workflow; compile/package only.
+- [ ] code45 Release compile, source/docs push and public preview APK delivery.
+- [ ] Owner phone visual acceptance.
+
 ## Existing legacy library tags (2026-10-25)
 
 - [x] Source-confirm legacy raw-parent URL vs virtual hash mismatch and wrong picker lookup.

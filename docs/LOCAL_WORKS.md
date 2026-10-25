@@ -178,3 +178,12 @@ explicitly opening a reused legacy book. No new automatic media writes are added
 Backup fields107/108 unchanged. Original DB IDs/categories use standard backup fields;
 aliases are rebuilt from restored library and unchanged relative local paths. No tests
 run for code44; owner phone acceptance pending, including legacy and mixed batch cases.
+
+## joke.7: smaller category status badge
+
+Top-left Check means this resolved entry is in the library, not selected. Selection
+checkboxes only appear after long-press. Bottom-right Label means own or related named
+categories as above, not an action button. Its overall badge is now16dp instead of28dp
+(12dp vector +2dp padding each side),5dp rounded corners and4dp cover-edge inset.
+Status colors/descriptions and all identity/category/backup behavior are unchanged.
+No tests performed for this visual-only slice; owner phone sizing acceptance pending.

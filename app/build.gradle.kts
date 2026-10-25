@@ -38,8 +38,8 @@ android {
         // JOKEMIHON: independent install identity; preserve this ID for future updates.
         applicationId = "app.jokemihon"
 
-        versionCode = 44
-        versionName = "0.21.2-joke.6"
+        versionCode = 45
+        versionName = "0.21.2-joke.7"
 
         buildConfigField("boolean", "TELEMETRY_INCLUDED", "${Config.includeTelemetry}")
         buildConfigField("boolean", "UPDATER_ENABLED", "${Config.enableUpdater}")

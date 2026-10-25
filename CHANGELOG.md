@@ -1,5 +1,14 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.7 (45) - 2026-10-25
+
+- Reduce cover bottom-right category status badge from28dp to16dp overall:12dp
+  vector,2dp padding,5dp corners,4dp edge inset. Same own/related category colors
+  and accessibility descriptions; no new images, animations or hit targets.
+- Top-left Check still means in library, not multi-selection. Check size, long-press
+  checkboxes, category lookup/editing, backups and media behavior unchanged.
+- Continue owner no-test workflow: compile/package only; publication/phone acceptance pending.
+
 ## 0.21.2-joke.6 (44) - 2026-10-25
 
 - Fix legacy local books being invisible to manager tag lookup: their URL is an
