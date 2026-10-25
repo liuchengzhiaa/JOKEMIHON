@@ -22,6 +22,7 @@ import eu.kanade.tachiyomi.data.backup.models.BackupSource
 import eu.kanade.tachiyomi.data.backup.models.BackupSourcePreferences
 import kotlinx.serialization.protobuf.ProtoBuf
 import logcat.LogPriority
+import mihon.feature.localworks.LocalAuthorRulesStore
 import okio.buffer
 import okio.gzip
 import okio.sink
@@ -52,6 +53,7 @@ class BackupCreator(
     private val extensionStoresBackupCreator: ExtensionStoresBackupCreator,
     private val sourcesBackupCreator: SourcesBackupCreator,
     private val backupFileValidator: BackupFileValidator,
+    private val localAuthorRules: LocalAuthorRulesStore,
 ) {
     @AssistedFactory
     fun interface Factory {
@@ -92,6 +94,7 @@ class BackupCreator(
                 backupPreferences = backupAppPreferences(options),
                 backupExtensionStores = backupExtensionStores(options),
                 backupSourcePreferences = backupSourcePreferences(options),
+                localAuthorRules = if (options.libraryEntries) localAuthorRules.backup() else null,
             )
 
             val byteArray = parser.encodeToByteArray(Backup.serializer(), backup)

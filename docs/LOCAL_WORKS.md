@@ -17,8 +17,8 @@
   selected item's name (archive extension removed) plus part count, e.g.
   作品D 上（六部曲）. Name editable before saving; default cover is the first item.
 - Select existing library categories during add. Existing manga/categories/progress
-  stay intact; re-add same ordered selection is idempotent and adds categories rather
-  than silently removing prior ones. Max 1000 selections per operation; use batches.
+  stay intact; re-add same ordered selection is idempotent. Untouched tags stay;
+  joke.3 additionally supports explicit category removal (see below). Max 1000 selections per operation; use batches.
 - Open/preview work, enter reader, long-press an image > Set as cover. Selected page
   reference is private app metadata, not author cover.jpg. Existing bundled work opens
   when a selected child is already in a saved bundle (single entry preferred).
@@ -60,3 +60,29 @@ adds, ZIP and JPEG-directory reading, page covers/cold restart, actual normal ba
 restore after removing synthetic virtual entries, and source refresh. All34 media file
 names/hashes unchanged. See HANDOFF/build manifest for exact evidence and untested areas.
 Normal backups preserve virtual references but not media; do not move original files.
+
+## joke.3 follow-up (candidate, 2026-10-25)
+
+- Directory cards/search/grid polished. Long-press a logical directory to select in
+  click order. Merge2+ with first selected name by default, or rename a single one.
+  Manual groups can be merged again; dissolve restores automatic grouping, NOT a
+  nested undo history. Only presentation membership/name changes, not comic paths,
+  existing library titles/progress or work identity. New unrecorded folders keep auto grouping.
+- Explicit flat mapping records retain original directory names, stable UUID/display
+  name; no cascading guessed if/else rules. Temporarily unavailable recorded folders
+  remain remembered. Validate uniqueness/path safety/version/10k directories/4MiB JSON
+  before persisting. Rules live in app-state preferences, never user media folders.
+- Work checkboxes/select-all are hidden until long-press enters selection mode; tap
+  then selects additional works. Clear/back/last deselection exits selection mode.
+- Import categories prefill all/some/none (tri-state for mixed batches). Explicit
+  uncheck removes; untouched mixed tags remain. Removing every named tag leaves the
+  default category, not a removed library item. Existing work preview > Edit categories
+  edits its actual saved single/collection and works even when media is unavailable.
+- Normal Library backup includes manual rule JSON in optional protobuf field107,
+  regardless of App settings selection; general app-state backup excludes duplicate
+  copies. Restore with Library validates complete record before replacing current
+  rules; absent field in older backups leaves current rules alone. Work membership,
+  page-cover references and progress use existing manga/chapter fields; include
+  Chapters and Categories when creating backups. Media and gallery caches are not included.
+- Owner requested simple validation: unit/Lint/format and signed APK static checks,
+  no new extended AVD/device test. Previous joke.2 device receipt remains historical.

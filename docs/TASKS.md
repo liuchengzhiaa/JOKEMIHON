@@ -1,5 +1,17 @@
 # JOKEMIHON tasks
 
+## Local manager polish (2026-10-25, in progress)
+
+- [x] Compact card/grid UI and long-press-only multi-selection.
+- [x] Persist logical directory merge/rename/dissolve, original paths unchanged.
+- [x] Current-category prefill, explicit removal, mixed batch preservation and direct saved-work category editing.
+- [x] Manual rules included with Library backups independently of App settings; backup help added.
+- [x] 11 new tests; focused37 pass.
+- [x] Full162 tests/12 suites pass;15 Lint reports0 errors/152 warnings; format/resource49-key parity pass.
+- [ ] Same-signer code41 Release build and static APK check.
+- [ ] Source/docs push, unique Release, remote digests/anonymous download receipt.
+- [ ] Owner phone acceptance; no extended emulator regression this slice by explicit request.
+
 ## Local works manager (2026-10-25, delivered)
 
 - [x] Record approved author grouping, flattened works, ordered bundles/category/cover design.

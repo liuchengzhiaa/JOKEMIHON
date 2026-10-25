@@ -40,6 +40,7 @@ class LocalWorkLibrary(
         title: String,
         author: String,
         categoryIds: List<Long>,
+        removeCategoryIds: List<Long> = emptyList(),
     ): List<Manga> = withContext(Dispatchers.IO) {
         mutation.withLock {
             LocalWorkDefinition(works) // Validate count, uniqueness and paths before any mutation.
@@ -57,9 +58,12 @@ class LocalWorkLibrary(
             definitions.map { definition ->
                 val name = if (combined) title else definition.members.first().displayName
                 val manga = prepare(definition, name, author, progress)
-                // Add tags, never silently remove existing tags when an existing work is added again.
+                // Only explicitly toggled tags are changed; mixed/untouched batch tags remain intact.
                 val previous = getCategories.await(manga.id).map { it.id }.filter { it > 0 }
-                mangaRepository.setMangaCategories(manga.id, (previous + categoryIds.filter { it > 0 }).distinct())
+                mangaRepository.setMangaCategories(
+                    manga.id,
+                    (previous + categoryIds.filter { it > 0 }).distinct().filterNot { it in removeCategoryIds },
+                )
                 check(
                     mangaRepository.update(
                         MangaUpdate(manga.id) {
@@ -69,6 +73,33 @@ class LocalWorkLibrary(
                 ) { "Could not add local work to library" }
                 mangaRepository.getMangaById(manga.id)
             }
+        }
+    }
+
+    suspend fun categoryMembership(works: List<LocalWorkPath>, combined: Boolean): List<Set<Long>> =
+        withContext(Dispatchers.IO) {
+            val definitions = if (combined) {
+                listOf(LocalWorkDefinition(works))
+            } else {
+                works.map {
+                    LocalWorkDefinition(listOf(it))
+                }
+            }
+            definitions.map { definition ->
+                val manga = mangaRepository.getMangaByUrlAndSourceId(definition.url, LocalSource.ID)
+                if (manga == null) emptySet() else getCategories.await(manga.id).map { it.id }.filter { it > 0 }.toSet()
+            }
+        }
+
+    suspend fun editCategories(mangaId: Long, add: List<Long>, remove: List<Long>) = withContext(Dispatchers.IO) {
+        mutation.withLock {
+            val manga = mangaRepository.getMangaById(mangaId)
+            require(manga.source == LocalSource.ID && LocalWorkDefinition.isWorkUrl(manga.url))
+            LocalWorkDefinition.fromMemo(manga.url, manga.memo)
+            val valid = getCategories.await().map { it.id }.toSet()
+            require(add.all { it > 0 && it in valid })
+            val previous = getCategories.await(manga.id).map { it.id }.filter { it > 0 }
+            mangaRepository.setMangaCategories(manga.id, (previous + add).distinct().filterNot { it in remove })
         }
     }
 

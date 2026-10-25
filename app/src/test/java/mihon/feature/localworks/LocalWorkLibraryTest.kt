@@ -179,4 +179,33 @@ class LocalWorkLibraryTest {
         mangas.size shouldBe 1
         chapters.getValue(preview.id).size shouldBe 1
     }
+
+    @Test
+    fun `readd can explicitly remove a category without clearing other tags or progress`() = runBlocking<Unit> {
+        val added = library.add(listOf(first), false, "title", "author", listOf(1, 2)).single()
+        val original = chapters.getValue(added.id).single().copy(read = true, lastPageRead = 4)
+        chapters[added.id] = listOf(original)
+        val again = library.add(listOf(first), false, "title", "author", emptyList(), listOf(1)).single()
+        again.id shouldBe added.id
+        tags[added.id] shouldBe listOf(2L)
+        chapters[added.id] shouldBe listOf(original)
+    }
+
+    @Test
+    fun `edit categories can remove the last tag without requiring media or changing favorites`() = runBlocking<Unit> {
+        val added = library.add(listOf(first), false, "title", "author", listOf(1)).single()
+        every { catalog.requireAvailableWorks(any()) } throws IllegalStateException("Media offline")
+        library.editCategories(added.id, emptyList(), listOf(1))
+        tags[added.id] shouldBe emptyList()
+        mangas[added.id] shouldBe added
+        coVerify(exactly = 0) { mangaRepo.updateRemote(any()) }
+    }
+
+    @Test
+    fun `category dialog reads existing tags and represents a missing work as empty`() = runBlocking<Unit> {
+        library.add(listOf(first), false, "title", "author", listOf(1))
+        library.categoryMembership(listOf(first, second), false) shouldBe listOf(setOf(1L), emptySet())
+        library.categoryMembership(listOf(first, second), true) shouldBe listOf(emptySet())
+        mangas.size shouldBe 1
+    }
 }

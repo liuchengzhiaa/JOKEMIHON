@@ -38,6 +38,7 @@ import tachiyomi.source.local.work.LocalWorkPath
 class LocalWorksViewModel(
     private val catalog: LocalWorkCatalog,
     private val library: LocalWorkLibrary,
+    private val authorRules: LocalAuthorRulesStore,
     mangaRepository: MangaRepository,
     getCategories: GetCategories,
 ) : ViewModel() {
@@ -47,8 +48,23 @@ class LocalWorksViewModel(
     val events = eventChannel.receiveAsFlow()
     private var loadingJob: Job? = null
     private var loadVersion = 0
+    private var automaticAuthors: List<LocalAuthorGroup> = emptyList()
 
     init {
+        viewModelScope.launch {
+            authorRules.changes.collect {
+                try {
+                    val automatic = automaticAuthors
+                    val groups = withContext(Dispatchers.Default) { authorRules.get().applyTo(automatic) }
+                    // Do not let an older initial preference emission overwrite a completed root scan.
+                    if (automatic === automaticAuthors) mutableState.update { it.copy(authors = groups) }
+                } catch (e: Exception) {
+                    if (e is CancellationException) throw e
+                    logcat(LogPriority.ERROR, e)
+                    mutableState.update { it.copy(error = true) }
+                }
+            }
+        }
         viewModelScope.launch {
             getCategories.subscribe().collect { categories ->
                 mutableState.update { it.copy(categories = categories.filterNot(Category::isSystemCategory)) }
@@ -81,12 +97,24 @@ class LocalWorksViewModel(
         val version = loadVersion
         loadingJob?.cancel()
         val author = state.value.author
-        mutableState.update { it.copy(loading = true, error = false, selected = emptyList(), preview = null) }
+        mutableState.update {
+            it.copy(
+                loading = true,
+                error = false,
+                selected = emptyList(),
+                selectedAuthors = emptyList(),
+                preview = null,
+            )
+        }
         loadingJob = viewModelScope.launch {
             try {
                 if (author == null) {
-                    val authors = catalog.authors()
-                    if (version == loadVersion) mutableState.update { it.copy(authors = authors) }
+                    val automatic = catalog.authors()
+                    val authors = withContext(Dispatchers.Default) { authorRules.get().applyTo(automatic) }
+                    if (version == loadVersion) {
+                        automaticAuthors = automatic
+                        mutableState.update { it.copy(authors = authors) }
+                    }
                 } else {
                     val works = withContext(Dispatchers.Default) {
                         catalog.works(author).map { path ->
@@ -123,7 +151,7 @@ class LocalWorksViewModel(
 
     fun back(): Boolean {
         if (state.value.saving) return true
-        if (state.value.selected.isNotEmpty()) {
+        if (state.value.selected.isNotEmpty() || state.value.selectedAuthors.isNotEmpty()) {
             clearSelection()
             return true
         }
@@ -145,6 +173,62 @@ class LocalWorksViewModel(
         return false
     }
 
+    fun toggleAuthor(author: LocalAuthorGroup) {
+        if (state.value.saving || state.value.loading) return
+        mutableState.update { current ->
+            val selected = current.selectedAuthors
+            current.copy(selectedAuthors = if (author in selected) selected - author else selected + author)
+        }
+    }
+
+    fun saveAuthorGroup(name: String) {
+        val selected = state.value.selectedAuthors
+        if (selected.isEmpty() || state.value.saving) return
+        updateRules { authorRules.save(selected, name) }
+    }
+
+    fun dissolveAuthorGroups() {
+        val keys = state.value.selectedAuthors.map { it.key }.toSet()
+        if (keys.isEmpty() || state.value.saving) return
+        updateRules { authorRules.dissolve(keys) }
+    }
+
+    private fun updateRules(action: () -> Unit) {
+        mutableState.update { it.copy(saving = true) }
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) { action() }
+                clearSelection()
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                logcat(LogPriority.ERROR, e)
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_operation_failed))
+            } finally {
+                mutableState.update { it.copy(saving = false) }
+            }
+        }
+    }
+
+    suspend fun categoryMembership(works: List<LocalWorkPath>, combined: Boolean): List<Set<Long>> =
+        library.categoryMembership(works, combined)
+
+    fun editCategories(mangaId: Long, add: List<Long>, remove: List<Long>) {
+        if (state.value.saving) return
+        mutableState.update { it.copy(saving = true, preview = null) }
+        viewModelScope.launch {
+            try {
+                library.editCategories(mangaId, add, remove)
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_categories_saved))
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                logcat(LogPriority.ERROR, e)
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_operation_failed))
+            } finally {
+                mutableState.update { it.copy(saving = false) }
+            }
+        }
+    }
+
     fun toggle(path: LocalWorkPath) {
         if (state.value.saving) return
         if (path !in state.value.selected && state.value.selected.size >= LocalWorkDefinition.MAX_MEMBERS) {
@@ -163,7 +247,7 @@ class LocalWorksViewModel(
     }
 
     fun clearSelection() {
-        mutableState.update { it.copy(selected = emptyList()) }
+        mutableState.update { it.copy(selected = emptyList(), selectedAuthors = emptyList()) }
     }
     fun preview(item: LocalWorkItem?) {
         mutableState.update { it.copy(preview = item) }
@@ -188,13 +272,19 @@ class LocalWorksViewModel(
         }
     }
 
-    fun add(ordered: List<LocalWorkPath>, combined: Boolean, title: String, categories: List<Long>) {
+    fun add(
+        ordered: List<LocalWorkPath>,
+        combined: Boolean,
+        title: String,
+        categories: List<Long>,
+        removeCategories: List<Long>,
+    ) {
         if (state.value.saving) return
         val author = state.value.author?.name.orEmpty()
         mutableState.update { it.copy(saving = true, preview = null) }
         viewModelScope.launch {
             try {
-                library.add(ordered, combined, title, author, categories)
+                library.add(ordered, combined, title, author, categories, removeCategories)
                 mutableState.update { it.copy(selected = emptyList()) }
                 eventChannel.send(LocalWorksEvent.Message(R.string.local_works_added))
             } catch (e: Exception) {
@@ -211,6 +301,7 @@ class LocalWorksViewModel(
 data class LocalWorkItem(val path: LocalWorkPath, val preview: Manga)
 data class LocalWorksState(
     val authors: List<LocalAuthorGroup> = emptyList(),
+    val selectedAuthors: List<LocalAuthorGroup> = emptyList(),
     val author: LocalAuthorGroup? = null,
     val works: List<LocalWorkItem> = emptyList(),
     val selected: List<LocalWorkPath> = emptyList(),

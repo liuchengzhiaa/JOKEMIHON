@@ -39,3 +39,14 @@ fun localCollectionNumeral(count: Int): String {
         }
     }
 }
+
+/** Null means a mixed batch: untouched tags must not be removed from any existing work. */
+fun localCategoryChecked(memberships: List<Set<Long>>, edits: Map<Long, Boolean>, category: Long): Boolean? {
+    edits[category]?.let { return it }
+    val count = memberships.count { category in it }
+    return when {
+        count == 0 -> false
+        count == memberships.size -> true
+        else -> null
+    }
+}

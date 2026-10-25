@@ -12,4 +12,6 @@ data class Backup(
     @ProtoNumber(104) var backupPreferences: List<BackupPreference> = emptyList(),
     @ProtoNumber(105) var backupSourcePreferences: List<BackupSourcePreferences> = emptyList(),
     @ProtoNumber(106) var backupExtensionStores: List<BackupExtensionStore> = emptyList(),
+    // JOKEMIHON library metadata; old backups omit it and retain current manual grouping.
+    @ProtoNumber(107) var localAuthorRules: String? = null,
 )

@@ -1,5 +1,22 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.3 (41) - 2026-10-25
+
+### Local directory polish and manual grouping - candidate
+- Compact rounded author cards and search, clearer cover grid and selection state.
+- Long-press logical directories to merge in selection order, rename or dissolve
+  manual groups; persist explicit physical-directory membership without moving files.
+- Hide cover checkboxes until long-press enters ordered multi-selection.
+- Prefill current categories; explicitly uncheck to remove tags, including the last
+  one. Mixed batch tags remain unchanged unless toggled. Existing collection members
+  can edit their actual saved collection categories instead of creating a new single.
+- Include manual groups/names in library backups via optional custom field107,
+  independent of App settings; old backups preserve existing manual-group records.
+- Add11 focused grouping/category/backup tests. Per owner request, no long emulator
+  regression this slice: compile/unit/Lint/signature checks only; phone acceptance pending.
+- Full162 tests pass; Lint0 errors/152 warnings, format and49-resource parity pass.
+- Build, publication and public download verification pending; see HANDOFF.
+
 ## 0.21.2-joke.2 (40) - 2026-10-25
 
 ### Local works manager - published and verified

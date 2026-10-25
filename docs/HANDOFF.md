@@ -1,6 +1,41 @@
 # JOKEMIHON handoff
 
-## Latest delivery: local works manager (2026-10-25, PUBLISHED AND VERIFIED)
+## Current work: local manager polish (2026-10-25, IN PROGRESS)
+
+Owner requested nicer pages, manual logical-directory merge/rename persistence,
+long-press-only cover selection controls, removable tags and backup clarity. Also
+explicitly requested simple validation and APK handoff for owner testing, not another
+long emulator run. Candidate joke.3/code41, same package and dedicated signer.
+
+Implemented: rounded compact directory cards/search and132dp-min cover grid; root
+long-press ordered selection, merge/rename/default first name/dissolve; pure validated
+physical-name mapping records in app-state preferences. No files or existing work IDs
+changed. Existing rules remember temporarily missing folders and repeated merges flatten.
+Cover checkboxes and select-all appear only while in long-press multi-selection mode.
+Category checkboxes load current memberships; explicit toggles add/remove, mixed untouched
+tags stay. Existing collection member previews edit the saved collection's categories.
+Direct category editing needs no online media access and never changes favorite/read state.
+
+New library-backup field107 carries manual-group JSON, even if App settings is off;
+restoring Library validates then replaces this record atomically. Old backups without
+field107 retain current groups. Existing manga memo/page-cover backups stay unchanged.
+Backup help is in the manager info button. No real media/phone or JOKESONG touched.
+
+Focused37 tests passed (17 models+12 service+8 manual/backup); initial combined task
+failed only format max-line-length. Those expressions were reflowed without suppression.
+Full testDebugUnitTest/lintDebug and app/source-local format checks passed in8m18s.
+All12 JUnit XML suites:162 tests, zero failures/errors/skips. All15 Lint XMLs inspected:
+zero Error/Fatal,152 warnings. Resource parity49 keys. git diff --check passes.
+Logs in ignored .tools/verification/local-polish-gates.log/.json; isolated JDK21/cache,
+serial3GB flags. Release not yet built/published. Do NOT reuse joke.2 device evidence as joke.3 validation.
+Next: inspect final gates/XMLs, commit reviewed source/docs, signed/minified universal
+APK build and package/code41/signer/embedded-commit check; no AVD regression. Push/tag
+unique v0.21.2-joke.3 and verify public assets + anonymous whole APK hash. Then receipt.
+Owner offline signer backup remains pending. Keep keys/config/cache/APKs out of Git.
+
+---
+
+## Previous delivery: local works manager (2026-10-25, PUBLISHED AND VERIFIED)
 
 Completed the owner-approved non-destructive local works manager. More > 本地作品管理
 uses original SAF storage and keeps old folders/library intact. Source and tested APK
