@@ -30,6 +30,7 @@ import tachiyomi.source.local.work.LocalAuthorGroup
 import tachiyomi.source.local.work.LocalWorkCatalog
 import tachiyomi.source.local.work.LocalWorkCover
 import tachiyomi.source.local.work.LocalWorkDefinition
+import tachiyomi.source.local.work.LocalWorkFolder
 import tachiyomi.source.local.work.LocalWorkPath
 
 @Inject
@@ -39,6 +40,7 @@ class LocalWorksViewModel(
     private val catalog: LocalWorkCatalog,
     private val library: LocalWorkLibrary,
     private val authorRules: LocalAuthorRulesStore,
+    private val workFolders: LocalWorkFoldersStore,
     mangaRepository: MangaRepository,
     getCategories: GetCategories,
 ) : ViewModel() {
@@ -71,21 +73,40 @@ class LocalWorksViewModel(
             }
         }
         viewModelScope.launch {
-            mangaRepository.getFavoritesBySourceId(LocalSource.ID).conflate().collect { mangas ->
-                val byMember = withContext(Dispatchers.Default) {
-                    val index = mutableMapOf<LocalWorkPath, Manga>()
-                    for (manga in mangas) {
-                        if (!LocalWorkDefinition.isWorkUrl(manga.url)) continue
-                        val definition = runCatching {
-                            LocalWorkDefinition.fromMemo(manga.url, manga.memo)
-                        }.getOrNull() ?: continue
-                        for (member in definition.members) {
-                            if (member !in index || definition.members.size == 1) index[member] = manga
-                        }
+            workFolders.changes.collect {
+                try {
+                    val folders = withContext(Dispatchers.IO) { workFolders.get().folders }
+                    mutableState.update { current ->
+                        current.copy(
+                            folders = folders,
+                            folderId = current.folderId?.takeIf { id -> folders.any { it.id == id } },
+                        )
                     }
-                    index
+                } catch (e: Exception) {
+                    if (e is CancellationException) throw e
+                    logcat(LogPriority.ERROR, e)
+                    mutableState.update { it.copy(error = true) }
                 }
-                mutableState.update { it.copy(favorites = mangas.associateBy(Manga::url), favoriteMembers = byMember) }
+            }
+        }
+        viewModelScope.launch {
+            mangaRepository.getLibraryMangaAsFlow().conflate().collect { entries ->
+                val local = entries.filter { it.manga.source == LocalSource.ID }
+                try {
+                    withContext(Dispatchers.IO) { workFolders.adoptExisting(local.map { it.manga }) }
+                } catch (e: Exception) {
+                    if (e is CancellationException) throw e
+                    logcat(LogPriority.ERROR, e)
+                    eventChannel.send(LocalWorksEvent.Message(R.string.local_works_operation_failed))
+                }
+                mutableState.update {
+                    it.copy(
+                        favorites = local.associate { entry -> entry.manga.url to entry.manga },
+                        taggedUrls = local.filter { entry -> entry.categories.any { id -> id > 0 } }
+                            .mapTo(HashSet()) { entry -> entry.manga.url },
+                        tagsByUrl = local.associate { entry -> entry.manga.url to entry.categories.filter { id -> id > 0 } },
+                    )
+                }
             }
         }
         refresh()
@@ -145,7 +166,7 @@ class LocalWorksViewModel(
 
     fun enter(author: LocalAuthorGroup) {
         if (state.value.loading || state.value.saving) return
-        mutableState.update { it.copy(author = author, works = emptyList(), selected = emptyList()) }
+        mutableState.update { it.copy(author = author, folderId = null, works = emptyList(), selected = emptyList()) }
         refresh()
     }
 
@@ -155,12 +176,17 @@ class LocalWorksViewModel(
             clearSelection()
             return true
         }
+        if (state.value.folderId != null) {
+            mutableState.update { it.copy(folderId = null, preview = null) }
+            return true
+        }
         if (state.value.author != null) {
             loadVersion++
             loadingJob?.cancel()
             mutableState.update {
                 it.copy(
                     author = null,
+                    folderId = null,
                     works = emptyList(),
                     selected = emptyList(),
                     preview = null,
@@ -171,6 +197,47 @@ class LocalWorksViewModel(
             return true
         }
         return false
+    }
+
+    fun enterFolder(folder: LocalWorkFolder) {
+        if (state.value.saving || state.value.selected.isNotEmpty()) return
+        mutableState.update { it.copy(folderId = folder.id, preview = null, selected = emptyList()) }
+    }
+
+    fun createFolder(ordered: List<LocalWorkPath>, title: String) {
+        if (state.value.saving || state.value.folderId != null) return
+        mutableState.update { it.copy(saving = true, preview = null) }
+        viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) { workFolders.create(ordered, title) }
+                clearSelection()
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_folder_created))
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                logcat(LogPriority.ERROR, e)
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_operation_failed))
+            } finally {
+                mutableState.update { it.copy(saving = false) }
+            }
+        }
+    }
+
+    fun setFolderCover(path: LocalWorkPath) {
+        val folder = state.value.folder ?: return
+        if (state.value.saving) return
+        mutableState.update { it.copy(saving = true, preview = null) }
+        viewModelScope.launch {
+            try {
+                library.setFolderCover(folder, LocalWorkCover(path))
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_folder_cover_saved))
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                logcat(LogPriority.ERROR, e)
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_operation_failed))
+            } finally {
+                mutableState.update { it.copy(saving = false) }
+            }
+        }
     }
 
     fun toggleAuthor(author: LocalAuthorGroup) {
@@ -239,10 +306,11 @@ class LocalWorksViewModel(
     }
 
     fun selectAll(visible: List<LocalWorkItem>) {
-        if (visible.size > LocalWorkDefinition.MAX_MEMBERS) {
+        val works = visible.filter { it.folder == null }
+        if (works.size > LocalWorkDefinition.MAX_MEMBERS) {
             viewModelScope.launch { eventChannel.send(LocalWorksEvent.Message(R.string.local_works_selection_limit)) }
         } else {
-            mutableState.update { it.copy(selected = visible.map(LocalWorkItem::path)) }
+            mutableState.update { it.copy(selected = works.map(LocalWorkItem::path)) }
         }
     }
 
@@ -259,8 +327,10 @@ class LocalWorksViewModel(
         mutableState.update { it.copy(saving = true, preview = null) }
         viewModelScope.launch {
             try {
-                val existing = snapshot.favorites[item.preview.url] ?: snapshot.favoriteMembers[item.path]
-                val manga = existing ?: library.open(item.path, snapshot.author?.name.orEmpty())
+                val existing = snapshot.favorites[item.preview.url]
+                val author = snapshot.author?.name.orEmpty()
+                val manga = existing ?: item.folder?.let { library.openFolder(it, author) }
+                    ?: library.open(item.path, author)
                 eventChannel.send(LocalWorksEvent.Open(manga.id))
             } catch (e: Exception) {
                 if (e is CancellationException) throw e
@@ -279,13 +349,16 @@ class LocalWorksViewModel(
         categories: List<Long>,
         removeCategories: List<Long>,
         removeOriginals: Boolean,
+        folder: LocalWorkFolder? = null,
     ) {
         if (state.value.saving) return
         val author = state.value.author?.name.orEmpty()
         mutableState.update { it.copy(saving = true, preview = null) }
         viewModelScope.launch {
             try {
-                library.add(ordered, combined, title, author, categories, removeCategories, removeOriginals)
+                library.add(
+                    ordered, combined, title, author, categories, removeCategories, removeOriginals, folder?.cover,
+                )
                 mutableState.update { it.copy(selected = emptyList()) }
                 eventChannel.send(LocalWorksEvent.Message(R.string.local_works_added))
             } catch (e: Exception) {
@@ -299,21 +372,66 @@ class LocalWorksViewModel(
     }
 }
 
-data class LocalWorkItem(val path: LocalWorkPath, val preview: Manga)
+data class LocalWorkItem(val path: LocalWorkPath, val preview: Manga, val folder: LocalWorkFolder? = null) {
+    val title get() = folder?.name ?: path.displayName
+    val key get() = folder?.let { "folder:${it.id}" } ?: path.relativeUrl
+}
+
+fun LocalWorkFolder.toItem(author: String): LocalWorkItem = LocalWorkItem(
+    members.first(),
+    Manga.create().copy(
+        url = url,
+        source = LocalSource.ID,
+        title = name,
+        thumbnailUrl = coverUrl,
+        author = author,
+    ),
+    this,
+)
+
+fun LocalWorksState.managerItems(): List<LocalWorkItem> {
+    val author = author ?: return emptyList()
+    val folder = folder
+    if (folder != null) {
+        val byPath = works.associateBy { it.path }
+        return folder.members.map { path ->
+            byPath[path] ?: LocalWorkItem(
+                path,
+                Manga.create().copy(
+                    url = LocalWorkDefinition(listOf(path)).url,
+                    source = LocalSource.ID,
+                    title = path.displayName,
+                    thumbnailUrl = LocalWorkCover(path).toUrl(),
+                    author = author.name,
+                ),
+            )
+        }
+    }
+    // Anchor by original physical directory, not mutable logical author name/key.
+    val directories = author.directories.toHashSet()
+    val visibleFolders = folders.filter { it.members.first().directory in directories }
+    val assigned = visibleFolders.flatMapTo(HashSet()) { it.members }
+    return visibleFolders.map { it.toItem(author.name) } + works.filterNot { it.path in assigned }
+}
 data class LocalWorksState(
     val authors: List<LocalAuthorGroup> = emptyList(),
     val selectedAuthors: List<LocalAuthorGroup> = emptyList(),
     val author: LocalAuthorGroup? = null,
     val works: List<LocalWorkItem> = emptyList(),
+    val folders: List<LocalWorkFolder> = emptyList(),
+    val folderId: String? = null,
     val selected: List<LocalWorkPath> = emptyList(),
     val preview: LocalWorkItem? = null,
     val categories: List<Category> = emptyList(),
     val favorites: Map<String, Manga> = emptyMap(),
-    val favoriteMembers: Map<LocalWorkPath, Manga> = emptyMap(),
+    val taggedUrls: Set<String> = emptySet(),
+    val tagsByUrl: Map<String, List<Long>> = emptyMap(),
     val loading: Boolean = true,
     val saving: Boolean = false,
     val error: Boolean = false,
-)
+) {
+    val folder get() = folders.firstOrNull { it.id == folderId }
+}
 sealed interface LocalWorksEvent {
     data class Open(val mangaId: Long) : LocalWorksEvent
     data class Message(val resource: Int) : LocalWorksEvent

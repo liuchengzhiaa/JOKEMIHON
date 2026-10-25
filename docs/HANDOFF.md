@@ -1,5 +1,42 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.5 logical work directories/tags (2026-10-25, BUILD/PUBLICATION PENDING)
+
+Owner asked to implement the agreed separation plus lightweight tag badges and a
+searchable tag-grid picker. Continued the requested NO-test workflow: no unit/Lint/
+format/static-signature/emulator/device tests; only compile/package and delivery.
+
+- Work selection now creates a persistent logical directory WITHOUT favoriting or
+  changing tags. Click its card for children, long-press or Directory options for
+  directory import/categories/reader. Children always open/import their exact single
+  identity; removed previous member-to-parent fallback. Nested work dirs not offered.
+- Existing ordered LocalWorkDefinition URL identities unchanged; old favorited
+  combinations are adopted as directory metadata, not duplicated/remapped. Folder
+  contents are immutable after creation; name entered at creation, chosen order kept.
+- Directory metadata app-state preference + bounded validated LocalWorkFolders model
+  (10k dirs,100k total member references,8MiB encoded; max1000 per dir). Anchored by
+  first physical parent name, not mutable author alias. Unrecorded physical files stay.
+  Author manual groups still field107. New optional field108 travels with Library,
+  independent of App settings and whether directories are favorited. Restore validates
+  complete record before replacement; absent108 preserves current directories.
+- Folder page cover stored independently; child-preview first-page choice needs no
+  manga creation. Directory-reader long-press stores portable page ref into both
+  manga and metadata, including unadded dirs. Media files never changed. Child covers,
+  exact tags and progress remain independent; legacy-only progress inheritance unchanged.
+- Card label vector badge reads exact favorite named-tag membership, no extra media
+  decoding/per-card scans. Standard library flow supplies live category IDs. Default-
+  only favorites have Check badge, no named-tag Label. Folder has Folder badge.
+- Choose tags button opens searchable lazy grid; filled means selected, partial state
+  explicit. Cancel discards nested draft. Done choosing returns to import dialog;
+  outer Save/Confirm applies explicit deltas, preserving untouched mixed tags.
+- Existing default-off removal option kept ONLY on directory import; creation never
+  removes original favorites, and children/dirs otherwise remain independent.
+- Candidate 0.21.2-joke.5 / code43, existing package/private signer configuration.
+  Pending: source/docs review+commit; Release compile, push/tag/public APK publication.
+  Owner should back up Library+Chapters+Categories before installing and test on phone.
+
+---
+
 ## Current slice: joke.4 optional removal of originals (2026-10-25, PUBLISHED; NOT TESTED)
 
 Owner explicitly requested this option and NO tests; do not run unit tests, Lint,

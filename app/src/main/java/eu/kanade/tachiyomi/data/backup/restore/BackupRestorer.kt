@@ -26,6 +26,7 @@ import kotlinx.coroutines.ensureActive
 import kotlinx.coroutines.launch
 import logcat.LogPriority
 import mihon.feature.localworks.LocalAuthorRulesStore
+import mihon.feature.localworks.LocalWorkFoldersStore
 import tachiyomi.core.common.i18n.stringResource
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.source.repository.StubSourceRepository
@@ -55,6 +56,7 @@ class BackupRestorer(
     private val sourceManager: SourceManager,
     private val stubSourceRepository: StubSourceRepository,
     private val localAuthorRules: LocalAuthorRulesStore,
+    private val localWorkFolders: LocalWorkFoldersStore,
 ) {
 
     @AssistedFactory
@@ -111,6 +113,13 @@ class BackupRestorer(
                     localAuthorRules.restore(value)
                 } catch (e: Exception) {
                     errors.add(Date() to "Local directory groups: ${e.message}")
+                }
+            }
+            backup.localWorkFolders?.let { value ->
+                try {
+                    localWorkFolders.restore(value)
+                } catch (e: Exception) {
+                    errors.add(Date() to "Local work directories: ${e.message}")
                 }
             }
             restoreSourceNames(backupMaps)

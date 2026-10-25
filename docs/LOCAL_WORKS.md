@@ -108,3 +108,44 @@ them to the library; current ordinary library backups omit unfavorited entries, 
 make a backup BEFORE replacement to preserve the prior library membership snapshot.
 
 Owner requested no tests for joke.4; compile/package only, phone acceptance pending.
+
+## joke.5: local work directories are separate from the library
+
+At the author level, long-press ungrouped works in order, then Combine into work
+directory. Name defaults to first work plus part count; arrows adjust order before
+creation. Creation stores metadata only, never favorites, tags or files. Click the
+Folder card to see its children; long-press the card or use Directory options inside
+for directory import/category edit/reader. No nested work directories or post-creation
+member editing offered in this slice. Directories are shown in the author group that
+contains their first original physical parent; changing author grouping does not
+change directory identity or stored members. Missing files remain referenced.
+
+A directory uses the existing ordered multi-member LocalWorkDefinition identity;
+children use their own single-member identities. Removed all child-to-combination
+fallbacks. Both can be in different library categories and have different page covers.
+Earlier favorited combinations automatically become manager directories using the
+same manga IDs/ordered URLs, so their existing tags/progress are not remapped. The
+old optional fully-covered-original removal is now on directory import only, default
+OFF. It is an explicit opt-out from otherwise independent original favorite status.
+
+Inside a directory, preview a child and choose its first page as directory cover;
+this does not create a favorite or change that child cover. For another image, use
+Directory options > Open / Choose cover, choose a chapter in the directory manga,
+then long-press a reader page > Set as cover. Portable path/page is stored in both
+manga metadata and directory records; even an unadded directory keeps its cover in
+normal Library backup. Gallery cover overrides remain private cache, not portable.
+
+Optional backup field108 contains all directory names, ordered members and portable
+covers, including unfavorited directories. Library must be selected; App settings
+is not needed. Use Chapters/Categories too for favorite progress and categories.
+Restore with108 validates then replaces current directory records; older backups
+without108 retain existing records. Field107 author groups continue independently.
+Files are not copied: retain relative local paths and regrant storage on a new phone.
+Directory record bounds:10k records,100k total members,8MiB encoded,max1000 per dir.
+
+Label badge means this exact favorite has at least one named category; Check means
+in library, Folder means logical work directory. Parent tags never mark a child.
+Choose tags opens a searchable lazy grid; filled/partial states show current all/
+some membership. Cancel discards picker changes; Done choosing returns the draft
+and the outer Confirm/Save persists explicit additions/removals. Untouched mixed
+batch tags remain unchanged. No tests run for this slice; owner acceptance pending.

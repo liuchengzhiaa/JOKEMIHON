@@ -1,5 +1,15 @@
 # JOKEMIHON tasks
 
+## Independent work directories and tags (2026-10-25)
+
+- [x] Separate persistent directory creation from import; browse ordered children.
+- [x] Exact independent child/directory identities; adopt old combined favorites.
+- [x] Portable directory covers even without import; backup Library field108.
+- [x] Lightweight named-tag vector badges and searchable tri-state grid picker.
+- [x] Continue explicit no-test workflow; no unit/Lint/format/emulator/device checks.
+- [ ] Signed code43 Release compile, source/docs push and public preview APK delivery.
+- [ ] Owner phone acceptance, including new-phone ordinary backup/restore.
+
 ## Combined-import replacement option (2026-10-25)
 
 - [x] Default-off remove-originals checkbox, fully covered originals only.

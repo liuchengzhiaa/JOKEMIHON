@@ -21,6 +21,7 @@ import tachiyomi.source.local.work.LocalAuthorGroup
 import tachiyomi.source.local.work.LocalWorkCatalog
 import tachiyomi.source.local.work.LocalWorkCover
 import tachiyomi.source.local.work.LocalWorkDefinition
+import tachiyomi.source.local.work.LocalWorkFolder
 import tachiyomi.source.local.work.LocalWorkPath
 import kotlin.time.Clock
 
@@ -33,6 +34,7 @@ class LocalWorkLibrary(
     private val catalog: LocalWorkCatalog,
     private val getCategories: GetCategories,
     private val coverCache: CoverCache,
+    private val folders: LocalWorkFoldersStore,
 ) {
     private val mutation = Mutex()
 
@@ -44,6 +46,7 @@ class LocalWorkLibrary(
         categoryIds: List<Long>,
         removeCategoryIds: List<Long> = emptyList(),
         removeOriginals: Boolean = false,
+        cover: LocalWorkCover? = null,
     ): List<Manga> = withContext(Dispatchers.IO) {
         mutation.withLock {
             LocalWorkDefinition(works) // Validate count, uniqueness and paths before any mutation.
@@ -51,6 +54,7 @@ class LocalWorkLibrary(
             val validIds = getCategories.await().map { it.id }.toSet()
             require(categoryIds.all { it == 0L || it in validIds }) { "Category no longer exists" }
             require(!removeOriginals || (combined && works.size > 1))
+            require(cover == null || (combined && cover.path in works))
             // Resolve coverage before adding anything. Partial originals must remain visible.
             val originals = if (removeOriginals) coveredOriginals(works) else emptyList()
             val progress = inheritedProgress(works)
@@ -63,7 +67,8 @@ class LocalWorkLibrary(
             }
             val added = definitions.map { definition ->
                 val name = if (combined) title else definition.members.first().displayName
-                val manga = prepare(definition, name, author, progress)
+                val manga = prepare(definition, name, author, progress, cover)
+                if (combined && cover != null && manga.thumbnailUrl != cover.toUrl()) updateCover(manga, cover)
                 // Only explicitly toggled tags are changed; mixed/untouched batch tags remain intact.
                 val previous = getCategories.await(manga.id).map { it.id }.filter { it > 0 }
                 mangaRepository.setMangaCategories(
@@ -152,6 +157,27 @@ class LocalWorkLibrary(
         }
     }
 
+    suspend fun openFolder(folder: LocalWorkFolder, author: String): Manga = withContext(Dispatchers.IO) {
+        mutation.withLock {
+            catalog.requireAvailableWorks(folder.members)
+            val manga = prepare(
+                LocalWorkDefinition(folder.members), folder.name, author, inheritedProgress(folder.members), folder.cover,
+            )
+            val cover = folder.cover
+            if (cover != null && manga.thumbnailUrl != folder.coverUrl) updateCover(manga, cover)
+            mangaRepository.getMangaById(manga.id)
+        }
+    }
+
+    suspend fun setFolderCover(folder: LocalWorkFolder, cover: LocalWorkCover) = withContext(Dispatchers.IO) {
+        mutation.withLock {
+            require(cover.path in folder.members)
+            catalog.requireAvailable(cover.path)
+            mangaRepository.getMangaByUrlAndSourceId(folder.url, LocalSource.ID)?.let { updateCover(it, cover) }
+            folders.setCover(folder.url, cover)
+        }
+    }
+
     // Import legacy progress once for newly created chapters. Old manga/chapter/history rows are never rewritten.
     private suspend fun inheritedProgress(works: List<LocalWorkPath>): Map<String, Chapter> {
         val wanted = works.mapTo(HashSet()) { it.relativeUrl }
@@ -168,6 +194,7 @@ class LocalWorkLibrary(
         title: String,
         author: String,
         inherited: Map<String, Chapter>,
+        cover: LocalWorkCover? = null,
     ): Manga {
         require(title.isNotBlank() && title.length <= 1024)
         val existing = mangaRepository.getMangaByUrlAndSourceId(definition.url, LocalSource.ID)
@@ -179,7 +206,7 @@ class LocalWorkLibrary(
                     title = title,
                     author = author,
                     memo = definition.toMemo(),
-                    thumbnailUrl = LocalWorkCover(definition.members.first()).toUrl(),
+                    thumbnailUrl = (cover ?: LocalWorkCover(definition.members.first())).toUrl(),
                     initialized = true,
                     chapterFlags = Manga.CHAPTER_SORT_ASC or Manga.CHAPTER_SORTING_SOURCE,
                 ),
@@ -214,25 +241,30 @@ class LocalWorkLibrary(
             val path = LocalWorkPath.fromRelativeUrl(chapterUrl)
             require(path in definition.members)
             val cover = LocalWorkCover(path, page)
-            check(
-                mangaRepository.updateRemote(
-                    MangaRemoteUpdate(
-                        id = manga.id,
-                        title = null,
-                        author = manga.author,
-                        artist = manga.artist,
-                        description = manga.description,
-                        genre = manga.genre,
-                        status = manga.status,
-                        thumbnailUrl = cover.toUrl(),
-                        updateStrategy = manga.updateStrategy,
-                        memo = manga.memo,
-                        initialized = manga.initialized,
-                        coverLastModified = Clock.System.now(),
-                    ),
-                ),
-            ) { "Could not save local work cover" }
-            coverCache.deleteFromCache(manga, true)
+            updateCover(manga, cover)
+            folders.setCover(definition.url, cover)
         }
+    }
+
+    private suspend fun updateCover(manga: Manga, cover: LocalWorkCover) {
+        check(
+            mangaRepository.updateRemote(
+                MangaRemoteUpdate(
+                    id = manga.id,
+                    title = null,
+                    author = manga.author,
+                    artist = manga.artist,
+                    description = manga.description,
+                    genre = manga.genre,
+                    status = manga.status,
+                    thumbnailUrl = cover.toUrl(),
+                    updateStrategy = manga.updateStrategy,
+                    memo = manga.memo,
+                    initialized = manga.initialized,
+                    coverLastModified = Clock.System.now(),
+                ),
+            ),
+        ) { "Could not save local work cover" }
+        coverCache.deleteFromCache(manga, true)
     }
 }

@@ -37,7 +37,9 @@ class LocalWorkLibraryTest {
     private val covers = mockk<CoverCache>()
     private val first = LocalWorkPath("423黄金01", "作品D 上.zip")
     private val second = LocalWorkPath("423黄金05", "作品B.zip")
-    private val library = LocalWorkLibrary(mangaRepo, chapterRepo, catalog, categories, covers)
+    private val library = LocalWorkLibrary(
+        mangaRepo, chapterRepo, catalog, categories, covers, mockk<LocalWorkFoldersStore>(relaxed = true),
+    )
     private var nextManga = 100L
     private var nextChapter = 1000L
 

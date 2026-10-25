@@ -1,5 +1,21 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.5 (43) - 2026-10-25
+
+- Separate logical work-directory creation from library import. Click directory to
+  browse selected members in saved order; directory and children have independent
+  exact library identities/categories/covers. Never route a child to its parent.
+- Keep previous combined favorites as compatible logical directories without new
+  manga identities. Existing original files, library items and progress stay intact.
+- Persist even unfavorited directory names/members/order/page covers with Library
+  via optional field108, independent of App settings; absent old fields keep records.
+- Lightweight vector label badge for named categories; Choose tags opens searchable
+  lazy grid with filled/partial states, explicit removal and cancellable draft edits.
+- Choose child first page as directory cover, or open directory reader and long-press
+  any page. Neither needs library import or changes the child cover.
+- Owner no-test workflow continued: NO unit/Lint/format/emulator/device tests; compile
+  and package only. Release/publication pending, owner acceptance required.
+
 ## 0.21.2-joke.4 (42) - 2026-10-25
 
 - Optional, default-off removal of fully covered original library entries after combined import.
