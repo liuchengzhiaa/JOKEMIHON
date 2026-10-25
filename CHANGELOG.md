@@ -8,7 +8,7 @@
 - Remove redundant top-left in-library Check overlay per owner follow-up. Keep
   in-library text under cover, including Default-only favorites. Long-press selection
   checkboxes, category lookup/editing, backups and media behavior unchanged.
-- Continue owner no-test workflow: compile/package only; publication/phone acceptance pending.
+- Continue owner no-test workflow: compile/package only. Final build6m47s; source59d6626aa and v0.21.2-joke.7 public preview delivered, remote asset digests/sizes and public API URL read back. Phone acceptance pending; earlier shrink-only APK was not published.
 
 ## 0.21.2-joke.6 (44) - 2026-10-25
 

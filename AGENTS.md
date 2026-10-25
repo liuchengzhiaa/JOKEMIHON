@@ -63,7 +63,19 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview: joke.6 (2026-10-25)
+## Latest preview: joke.7 (2026-10-25)
+
+- PUBLIC prerelease0.21.2-joke.7/code45; next APK code>45, same package/signer config.
+- Source/tag59d6626aad9b5cd55520394a7baf3de23e1299ae / v0.21.2-joke.7 immutable.
+- UI-only: remove redundant in-library Check overlay per owner follow-up; keep footer
+  status and long-press selection checkboxes. Label badge28->16dp, existing colors/
+  meanings/descriptions. No category/data/backup/media changes or new assets.
+- Superseded shrink-only build was NEVER published. Final combined build6m47s only;
+  no unit/Lint/format/static-signature/device/visual tests. Remote asset sizes/digests
+  and anonymous API delivery readback confirmed. Owner phone acceptance pending.
+  Resume standing verification for future work unless owner requests otherwise.
+
+## Previous preview: joke.6 (2026-10-25)
 
 - PUBLIC prerelease0.21.2-joke.6/code44; next APK code>44, same package/signer config.
 - Source/tag7842e5f03797a1b5a5afae3681a74d8c38241b21 / v0.21.2-joke.6 immutable.

@@ -1,22 +1,38 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.7 smaller tag badge (2026-10-25, BUILD/PUBLICATION PENDING)
+## Current slice: joke.7 compact status badges (2026-10-25, PUBLISHED; NOT TESTED)
 
 Owner asks what the upper-left Check means and says the lower-right category badge
 is too large. Explained Check = already in library, not selection. Owner then said
 it is redundant with tags; remove the Check overlay in the SAME unpublished code45
 slice. Do not publish the earlier shrink-only build or create another version for it.
 
-- ONLY bottom-right Label badge sizing changed: outer28dp ->16dp (glyph18->12dp,
+- Bottom-right Label badge sizing changed: outer28dp ->16dp (glyph18->12dp,
   padding5->2dp), rounded corners10->5dp, edge inset6->4dp. Existing status colors,
   own/related meaning and content descriptions unchanged. No clickable target added.
 - Remove ONLY top-left in-library Check overlay/import. Keep under-cover in-library
   status text and long-press multi-selection checkboxes. No category/data/legacy-match/
   selection/backup/media logic changed. No new assets.
-- Candidate0.21.2-joke.7/code45; existing app.jokemihon/signing configuration.
-- Continue owner no-test workflow: no unit/Lint/format/static-signature/emulator/device
-  tests. Pending Release compile, source/docs push, unique public preview APK delivery.
-  Safest next action is owner phone visual acceptance after a backup.
+- Published0.21.2-joke.7/code45; existing app.jokemihon/signing configuration.
+- First shrink-only compile9m39s was superseded by owner follow-up while building;
+  its APK was NEVER copied to Release assets or published. Final rebuild including
+  Check removal passed app:assembleRelease in6m47s. Same unpublished candidate code45.
+- NO unit/Lint/format/static-signature/emulator/device/visual tests performed. Owner
+  phone visual acceptance pending; no previous-version test receipt applies here.
+- Reviewed6 unique source/version/docs files across commits0a5b9b365 and final source
+  59d6626aad9b5cd55520394a7baf3de23e1299ae; source pushed/read back, immutable annotated
+  v0.21.2-joke.7 targets59d6626aa. Subsequent receipt-only docs do not rebuild/move tag.
+- PUBLIC prerelease ID423317706, published2026-10-25T10:21:30Z; draft=false,
+  prerelease=true, not promoted to stable/latest. Actions/signing config unchanged.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.7
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.7/JOKEMIHON.apk
+- APK67903639 bytes; SHA25684b796b731a31c5f26af47b4399180ff037210dbe87b63156de519b4ee464443.
+  All3 remote asset sizes/digests match local APK/checksum/manifest (67903639/80/1167
+  bytes). Anonymous public API confirms published URL; no whole-download test repeated.
+  Receipt ignored .tools/releases/v0.21.2-joke.7/publication-receipt.json.
+- No keys/config/auth caches/media/backups uploaded. Signer offline backup still pending.
+  Safest next action: owner backs up, installs and checks smaller badge/no redundant
+  Check; in-library footer and long-press selection stay. No data/backup logic changes.
 
 ---
 

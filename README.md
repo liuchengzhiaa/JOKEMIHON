@@ -10,7 +10,15 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**New preview: [0.21.2-joke.6 · existing legacy library tags](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.6).**
+**New preview: [0.21.2-joke.7 · compact status badges](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.7).**
+[Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.7/JOKEMIHON.apk)
+without sign-in. Code45, existing package/signing config. Remove redundant upper-left
+in-library Check; keep footer status text and long-press selection checkboxes. Shrink
+lower-right Label badge28dp->16dp. Own/related tag meaning and all category/backup/
+reader/media logic unchanged. **Release build only, no tests or device visual checks;
+owner phone acceptance pending. Back up before installing.**
+
+**Previous preview: [0.21.2-joke.6 · existing legacy library tags](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.6).**
 [Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.6/JOKEMIHON.apk)
 without sign-in. Code44, unchanged package/signing config. Fix raw-directory legacy
 book vs virtual hash mismatch: complete single-work originals reuse existing IDs,

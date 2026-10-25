@@ -5,7 +5,7 @@
 - [x] Explain Check=in library; remove redundant top-left Check per owner follow-up. Keep status text and multi-selection checkboxes.
 - [x] Shrink bottom-right tag badge28dp->16dp without new assets or logic changes.
 - [x] Continue no-test workflow; compile/package only.
-- [ ] code45 Release compile, source/docs push and public preview APK delivery.
+- [x] Final code45 Release compile6m47s; source59d6626aa and immutable v0.21.2-joke.7 PUBLIC preview,3 asset sizes/digests and public API URL readback confirmed. Earlier shrink-only build not published.
 - [ ] Owner phone visual acceptance.
 
 ## Existing legacy library tags (2026-10-25)
