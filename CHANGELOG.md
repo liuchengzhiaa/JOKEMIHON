@@ -14,6 +14,8 @@
   do not assign all parent/collection categories to every independent child.
 - No schema/memo/backup-field migration, no automatic tag/media mutations. Continue
   no-test workflow: compile/package only, owner acceptance pending.
+- Release build9m53s; source7842e5f03 and v0.21.2-joke.6 public preview delivered,
+  remote asset sizes/digests and public API URL read back. No phone DB/device test.
 
 ## 0.21.2-joke.5 (43) - 2026-10-25
 

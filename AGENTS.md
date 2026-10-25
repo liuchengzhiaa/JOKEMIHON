@@ -63,7 +63,22 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview: joke.5 (2026-10-25)
+## Latest preview: joke.6 (2026-10-25)
+
+- PUBLIC prerelease0.21.2-joke.6/code44; next APK code>44, same package/signer config.
+- Source/tag7842e5f03797a1b5a5afae3681a74d8c38241b21 / v0.21.2-joke.6 immutable.
+- Legacy original-directory URL compatibility: only complete one-work originals can
+  alias a single; exact virtual favorites win. Tags load/save actual explicit manga
+  ID. Multi-work original/collection tags shown as separate context, not propagated
+  as child ownership; explicit original-entry editor and author aggregate markers.
+- No schema/memo/backup107/108 migration or automatic file/tag mutation. Preserve
+  actual original IDs/progress. Same resolver for batch prefill/add (live coverage).
+- Continued no-test slice: Release compile9m53s only; no unit/Lint/format/static-signer/
+  device checks and no owner DB inspected.3 remote asset digests/sizes/public API
+  delivery readback confirmed. Owner phone acceptance pending; no old tests as proof.
+  Resume standing verification for future work unless owner requests otherwise.
+
+## Previous preview: joke.5 (2026-10-25)
 
 - PUBLIC prerelease0.21.2-joke.5 / code43; next APK code>43, same package/signer config.
 - Source/tag438de729ced6e71ac5048230cfc1d489050d423a / v0.21.2-joke.5 immutable.

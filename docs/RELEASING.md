@@ -14,7 +14,14 @@
 
 ## Current releases
 
-Latest preview: 0.21.2-joke.5 (43), existing app.jokemihon/signing configuration.
+Latest preview: 0.21.2-joke.6 (44), unchanged app.jokemihon/signing configuration.
+Source/APK7842e5f03797a1b5a5afae3681a74d8c38241b21 / v0.21.2-joke.6.
+PUBLIC prerelease; build only9m53s, no tests/Lint/format/static-signer/device checks.
+Three remote asset sizes/digests and anonymous public API delivery readback confirmed.
+Owner phone/DB acceptance pending. Legacy single-work ID reuse, explicit category
+ID prefill/save and related original/collection tag context; no backup schema changes.
+
+Previous preview: 0.21.2-joke.5 (43), existing app.jokemihon/signing configuration.
 Source/APK438de729ced6e71ac5048230cfc1d489050d423a / v0.21.2-joke.5.
 PUBLIC prerelease; build only9m11s, no tests/Lint/format/device checks by continued
 owner no-test request. Three remote asset sizes/digests and anonymous public API
@@ -45,7 +52,7 @@ updater/telemetry are delivered. See HANDOFF for the exact verified public downl
 tests and known limits. Do not mistake upstream badges/tags for JOKEMIHON releases.
 
 Subsequent APKs MUST retain app.jokemihon and the certificate pinned in
-tools/release-signing-certificate.sha256, with versionCode greater than 43. No signing
+tools/release-signing-certificate.sha256, with versionCode greater than 44. No signing
 rotation, tag reuse or release-asset overwrite. Documentation receipts do not need
 an identical APK rebuild and may advance main beyond the immutable APK source tag.
 

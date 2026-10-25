@@ -1,6 +1,6 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.6 legacy tag compatibility (2026-10-25, BUILD/PUBLICATION PENDING)
+## Current slice: joke.6 legacy tag compatibility (2026-10-25, PUBLISHED; NOT TESTED)
 
 Owner reports existing library tags absent in manager cards and tag picker. Source
 confirms LocalSource legacy manga.url = raw original directory name, chapter.url =
@@ -24,9 +24,25 @@ Continued owner no-test workflow: no unit/Lint/format/device checks, compile onl
   favorites, no schema/backup/memo migration. Existing backups retain IDs/categories;
   aliases rebuilt from same paths + restored library data. Legacy reader behavior
   remains upstream for the explicitly reused original book (no automatic file writes).
-- Candidate0.21.2-joke.6/code44, same package/signing config. Pending source review,
-  Release compile, push/tag/public APK delivery. Owner should back up then verify
-  single-work legacy, multi-work parent context, virtual exact tags and batch behavior.
+- Published0.21.2-joke.6/code44, unchanged package/signing configuration.
+- app:assembleRelease passed9m53s; no unit/Lint/format/static-signature/emulator/device
+  tests performed. Code compiles; owner DB/phone behavior remains unverified.
+- Reviewed10-file source/resource/docs upload, commit7842e5f03797a1b5a5afae3681a74d8c38241b21
+  pushed/read back; immutable annotated tag v0.21.2-joke.6 targets this exact source.
+- PUBLIC prerelease ID423266316, published2026-10-25T08:52:48Z, draft=false,
+  prerelease=true; not promoted to stable/latest. Actions/signing config unchanged.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.6
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.6/JOKEMIHON.apk
+- APK67903643 bytes; SHA2568aaa1980d6559aa460d9d430d834be0ee3a229a36db1aa40aae53e4b7ac54000.
+  All3 remote sizes/digests match APK/checksum/manifest (67903643/80/1772 bytes).
+  Anonymous public API readback confirms published URL; no repeated whole-download
+  test. Local ignored receipt: .tools/releases/v0.21.2-joke.6/publication-receipt.json.
+- No keys/config/auth caches/media/backups uploaded; receipt-only docs advance main
+  without rebuilding or moving the source tag. Signer offline backup still pending.
+- Safest next action: owner backs up Library+Chapters+Categories, installs and verifies
+  one-work legacy tag prefill/edit at same manga ID, multi-work related context/editor,
+  exact virtual tags and mixed batch edits. Multi-work original tags are intentionally
+  not silently preselected as individual child tags. No phone DB inspected this slice.
 
 ---
 

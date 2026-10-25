@@ -10,7 +10,17 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**New preview: [0.21.2-joke.5 · independent work directories and tag grid](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.5).**
+**New preview: [0.21.2-joke.6 · existing legacy library tags](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.6).**
+[Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.6/JOKEMIHON.apk)
+without sign-in. Code44, unchanged package/signing config. Fix raw-directory legacy
+book vs virtual hash mismatch: complete single-work originals reuse existing IDs,
+tags and progress; category picker reads/saves the actual explicit manga ID. Multiple-
+work parent/collection tags appear separately with an explicit original-entry editor,
+not automatically assigned to every child. Aggregate author markers added. No data/
+backup migration or automatic tag copying. **Build only, no tests; owner phone/DB
+acceptance pending. Back up before installing.**
+
+**Previous preview: [0.21.2-joke.5 · independent work directories and tag grid](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.5).**
 [Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.5/JOKEMIHON.apk)
 without sign-in. Code43, existing package/signing configuration. Creating a logical
 work directory no longer imports it; click to browse children, long-press or Directory

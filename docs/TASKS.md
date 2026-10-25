@@ -7,7 +7,7 @@
 - [x] Explicit existing-ID category load/save; no duplicate creation for matched originals.
 - [x] Own vs related tag markers, original-entry tag context/editor and author aggregates.
 - [x] Continue no-test workflow; compile/package only.
-- [ ] code44 Release compile and source/docs/public preview synchronization.
+- [x] Release compile9m53s; reviewed10-file source7842e5f03 pushed; v0.21.2-joke.6 PUBLIC preview,3 asset sizes/digests and anonymous API URL readback confirmed.
 - [ ] Owner phone acceptance; no owner DB or device test this slice.
 
 ## Independent work directories and tags (2026-10-25)
