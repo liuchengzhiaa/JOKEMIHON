@@ -1,5 +1,35 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.6 legacy tag compatibility (2026-10-25, BUILD/PUBLICATION PENDING)
+
+Owner reports existing library tags absent in manager cards and tag picker. Source
+confirms LocalSource legacy manga.url = raw original directory name, chapter.url =
+parent/entry; code43 looked up only virtual-work hashes and picker ignored explicit
+category target IDs. No phone DB was supplied/inspected; runtime acceptance pending.
+Continued owner no-test workflow: no unit/Lint/format/device checks, compile only.
+
+- Add read-only one-to-one aliases from completed author scan: a legacy favorite must
+  contain exactly one current work, and all stored chapter URLs must match it. Exact
+  virtual favorite wins. Alias build async/guarded against stale work/favorite snapshots.
+- Category prefill uses actual explicit manga ID when editing; legacy local identity
+  validated as one original parent segment. Save edits that same existing row, not a
+  new hashed single. Batch prefill/add resolver rechecks live full-directory coverage.
+  Open preserves original manga ID; new/unmatched singles still prepare virtual rows.
+- Multiple-work parent tags are NOT silently inherited. Show related original and
+  collection tag cards in preview/import/picker, with explicit original-entry editor
+  in preview. Own tags highlighted in normal grid; related tags secondary/read-only.
+  Author rows show aggregate label marker; child/group cards show contains-tag hint
+  when only related entries carry tags. No false favorite Check for partial children.
+- Existing exact child/group separation retained; no automatic copying of tags or
+  favorites, no schema/backup/memo migration. Existing backups retain IDs/categories;
+  aliases rebuilt from same paths + restored library data. Legacy reader behavior
+  remains upstream for the explicitly reused original book (no automatic file writes).
+- Candidate0.21.2-joke.6/code44, same package/signing config. Pending source review,
+  Release compile, push/tag/public APK delivery. Owner should back up then verify
+  single-work legacy, multi-work parent context, virtual exact tags and batch behavior.
+
+---
+
 ## Current slice: joke.5 logical work directories/tags (2026-10-25, PUBLISHED; NOT TESTED)
 
 Owner asked to implement the agreed separation plus lightweight tag badges and a

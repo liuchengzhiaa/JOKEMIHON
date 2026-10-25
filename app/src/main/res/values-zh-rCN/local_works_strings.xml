@@ -71,4 +71,9 @@
     <string name="local_works_no_tag_results">没有匹配的标签；尚无标签时请先在书架中创建分类。</string>
     <string name="local_works_partial_tag">部分作品已有</string>
     <string name="local_works_tags_done">完成选择</string>
+    <string name="local_works_contains_tags">包含已分类条目</string>
+    <string name="local_works_related_tags">原书架条目已有标签</string>
+    <string name="local_works_related_tags_help">以下标签属于列出的原目录或组合，不会自动变成当前子作品或新目录自己的标签。可在预览中点击“编辑该条目标签”修改原条目。</string>
+    <string name="local_works_edit_related_tags">编辑该条目标签</string>
+    <string name="local_works_legacy_match">对应原书架条目：%1$s。直接使用其标签和阅读记录，不另建副本。</string>
 </resources>

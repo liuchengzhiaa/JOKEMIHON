@@ -49,6 +49,7 @@ class LocalWorksViewModel(
     private val eventChannel = Channel<LocalWorksEvent>(Channel.BUFFERED)
     val events = eventChannel.receiveAsFlow()
     private var loadingJob: Job? = null
+    private var aliasJob: Job? = null
     private var loadVersion = 0
     private var automaticAuthors: List<LocalAuthorGroup> = emptyList()
 
@@ -99,14 +100,37 @@ class LocalWorksViewModel(
                     logcat(LogPriority.ERROR, e)
                     eventChannel.send(LocalWorksEvent.Message(R.string.local_works_operation_failed))
                 }
+                val indexed = withContext(Dispatchers.Default) {
+                    val members = mutableMapOf<LocalWorkPath, MutableList<Manga>>()
+                    val taggedDirectories = mutableSetOf<String>()
+                    for (entry in local) {
+                        val manga = entry.manga
+                        val named = entry.categories.any { it > 0 }
+                        if (LocalWorkDefinition.isWorkUrl(manga.url)) {
+                            val definition = runCatching {
+                                LocalWorkDefinition.fromMemo(manga.url, manga.memo)
+                            }.getOrNull() ?: continue
+                            for (path in definition.members) {
+                                members.getOrPut(path) { mutableListOf() }.add(manga)
+                                if (named) taggedDirectories.add(path.directory)
+                            }
+                        } else if (named) {
+                            taggedDirectories.add(manga.url)
+                        }
+                    }
+                    members.mapValues { it.value.toList() } to taggedDirectories.toSet()
+                }
                 mutableState.update {
                     it.copy(
+                        memberFavorites = indexed.first,
+                        taggedDirectories = indexed.second,
                         favorites = local.associate { entry -> entry.manga.url to entry.manga },
                         taggedUrls = local.filter { entry -> entry.categories.any { id -> id > 0 } }
                             .mapTo(HashSet()) { entry -> entry.manga.url },
                         tagsByUrl = local.associate { entry -> entry.manga.url to entry.categories.filter { id -> id > 0 } },
                     )
                 }
+                refreshAliases()
             }
         }
         refresh()
@@ -152,7 +176,10 @@ class LocalWorksViewModel(
                             )
                         }
                     }
-                    if (version == loadVersion) mutableState.update { it.copy(works = works) }
+                    if (version == loadVersion) {
+                        mutableState.update { it.copy(works = works) }
+                        refreshAliases()
+                    }
                 }
             } catch (e: Exception) {
                 if (e is CancellationException) throw e
@@ -160,6 +187,31 @@ class LocalWorksViewModel(
                 if (version == loadVersion) mutableState.update { it.copy(error = true) }
             } finally {
                 if (version == loadVersion) mutableState.update { it.copy(loading = false) }
+            }
+        }
+    }
+
+    private fun refreshAliases() {
+        aliasJob?.cancel()
+        val snapshot = state.value
+        if (snapshot.works.isEmpty()) {
+            mutableState.update { it.copy(legacySingleAliases = emptyMap()) }
+            return
+        }
+        aliasJob = viewModelScope.launch {
+            try {
+                val aliases = library.legacySingleAliases(snapshot.works.map { it.path }, snapshot.favorites.values)
+                mutableState.update {
+                    if (it.works === snapshot.works && it.favorites === snapshot.favorites) {
+                        it.copy(legacySingleAliases = aliases)
+                    } else {
+                        it
+                    }
+                }
+            } catch (e: Exception) {
+                if (e is CancellationException) throw e
+                logcat(LogPriority.ERROR, e)
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_operation_failed))
             }
         }
     }
@@ -276,6 +328,8 @@ class LocalWorksViewModel(
         }
     }
 
+    suspend fun categoryMembershipForId(mangaId: Long): List<Set<Long>> = library.categoryMembershipForId(mangaId)
+
     suspend fun categoryMembership(works: List<LocalWorkPath>, combined: Boolean): List<Set<Long>> =
         library.categoryMembership(works, combined)
 
@@ -327,7 +381,7 @@ class LocalWorksViewModel(
         mutableState.update { it.copy(saving = true, preview = null) }
         viewModelScope.launch {
             try {
-                val existing = snapshot.favorites[item.preview.url]
+                val existing = snapshot.favoriteFor(item)
                 val author = snapshot.author?.name.orEmpty()
                 val manga = existing ?: item.folder?.let { library.openFolder(it, author) }
                     ?: library.open(item.path, author)
@@ -389,6 +443,30 @@ fun LocalWorkFolder.toItem(author: String): LocalWorkItem = LocalWorkItem(
     this,
 )
 
+data class LocalWorkTagContext(val manga: Manga, val names: String)
+
+fun LocalWorksState.favoriteFor(item: LocalWorkItem): Manga? = favorites[item.preview.url]
+    ?: if (item.folder == null) legacySingleAliases[item.preview.url]?.let { favorites[it] } else null
+
+fun LocalWorksState.tagContexts(item: LocalWorkItem): List<LocalWorkTagContext> {
+    val own = favoriteFor(item)
+    val paths = item.folder?.members ?: listOf(item.path)
+    return tagContextsForPaths(paths, setOfNotNull(own?.id))
+}
+
+fun LocalWorksState.tagContextsForPaths(
+    paths: List<LocalWorkPath>,
+    excludedIds: Set<Long> = emptySet(),
+): List<LocalWorkTagContext> {
+    val related = paths.flatMap { path ->
+        listOfNotNull(favorites[path.directory]) + memberFavorites[path].orEmpty()
+    }.distinctBy { it.id }.filterNot { it.id in excludedIds }
+    val names = categories.associate { it.id to it.name }
+    return related.map { manga ->
+        LocalWorkTagContext(manga, tagsByUrl[manga.url].orEmpty().mapNotNull { names[it] }.joinToString("、"))
+    }
+}
+
 fun LocalWorksState.managerItems(): List<LocalWorkItem> {
     val author = author ?: return emptyList()
     val folder = folder
@@ -425,6 +503,9 @@ data class LocalWorksState(
     val categories: List<Category> = emptyList(),
     val favorites: Map<String, Manga> = emptyMap(),
     val taggedUrls: Set<String> = emptySet(),
+    val taggedDirectories: Set<String> = emptySet(),
+    val memberFavorites: Map<LocalWorkPath, List<Manga>> = emptyMap(),
+    val legacySingleAliases: Map<String, String> = emptyMap(),
     val tagsByUrl: Map<String, List<Long>> = emptyMap(),
     val loading: Boolean = true,
     val saving: Boolean = false,

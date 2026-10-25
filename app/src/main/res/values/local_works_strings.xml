@@ -71,4 +71,9 @@
     <string name="local_works_no_tag_results">No matching tags. Create categories in the library first if needed.</string>
     <string name="local_works_partial_tag">Some selected works</string>
     <string name="local_works_tags_done">Done choosing</string>
+    <string name="local_works_contains_tags">Contains previously tagged entries</string>
+    <string name="local_works_related_tags">Existing related library tags</string>
+    <string name="local_works_related_tags_help">These tags belong to the listed original directory or collection, not automatically to this child or new directory. Edit that entry explicitly from the preview if needed.</string>
+    <string name="local_works_edit_related_tags">Edit this entry’s tags</string>
+    <string name="local_works_legacy_match">Using existing library entry: %1$s. Its tags and reading records are kept; no duplicate is created.</string>
 </resources>

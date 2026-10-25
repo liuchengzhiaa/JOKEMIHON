@@ -1,5 +1,15 @@
 # JOKEMIHON tasks
 
+## Existing legacy library tags (2026-10-25)
+
+- [x] Source-confirm legacy raw-parent URL vs virtual hash mismatch and wrong picker lookup.
+- [x] Complete-coverage one-to-one legacy resolution shared by batch prefill/add.
+- [x] Explicit existing-ID category load/save; no duplicate creation for matched originals.
+- [x] Own vs related tag markers, original-entry tag context/editor and author aggregates.
+- [x] Continue no-test workflow; compile/package only.
+- [ ] code44 Release compile and source/docs/public preview synchronization.
+- [ ] Owner phone acceptance; no owner DB or device test this slice.
+
 ## Independent work directories and tags (2026-10-25)
 
 - [x] Separate persistent directory creation from import; browse ordered children.

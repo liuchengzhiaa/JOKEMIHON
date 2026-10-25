@@ -1,5 +1,20 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.6 (44) - 2026-10-25
+
+- Fix legacy local books being invisible to manager tag lookup: their URL is an
+  original directory name, not the newer virtual-work hash.
+- Reuse an existing legacy favorite for a single-work directory only after complete
+  scan and stored-chapter coverage checks; preserve original manga ID/tags/progress.
+  Exact virtual favorites take precedence. Batch add/prefill use the same resolver.
+- Category editing now loads and saves the actual explicit manga ID, including local
+  legacy rows; no-media category edits do not create duplicate virtual books.
+- Show author-directory aggregate tag markers and related original/collection tags
+  separately in cards/previews/tag picker. Explicit related-entry editor available;
+  do not assign all parent/collection categories to every independent child.
+- No schema/memo/backup-field migration, no automatic tag/media mutations. Continue
+  no-test workflow: compile/package only, owner acceptance pending.
+
 ## 0.21.2-joke.5 (43) - 2026-10-25
 
 - Separate logical work-directory creation from library import. Click directory to

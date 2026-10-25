@@ -202,7 +202,11 @@ class LocalWorksScreen : Screen() {
                 } else if (state.selected.isNotEmpty()) {
                     SelectionBar(
                         state.selected.size,
-                        { importRequest = LocalWorkImport(state.selected, false) },
+                        {
+                            importRequest = LocalWorkImport(
+                                state.selected, false, contexts = state.tagContextsForPaths(state.selected),
+                            )
+                        },
                         { importRequest = LocalWorkImport(state.selected, true, createFolder = true) },
                         viewModel::clearSelection,
                         state.saving,
@@ -252,6 +256,7 @@ class LocalWorksScreen : Screen() {
                                     state.selectedAuthors.indexOf(author) + 1,
                                     state.selectedAuthors.isNotEmpty(),
                                     !state.saving,
+                                    tagged = author.directories.any { it in state.taggedDirectories },
                                     onClick = {
                                         if (state.selectedAuthors.isEmpty()) {
                                             viewModel.enter(author)
@@ -280,13 +285,20 @@ class LocalWorksScreen : Screen() {
                         ) {
                             items(visibleWorks, key = { it.key }) { item ->
                                 val ordinal = state.selected.indexOf(item.path) + 1
+                                val existing = state.favoriteFor(item)
+                                val contexts = remember(
+                                    item, state.favorites, state.tagsByUrl, state.categories, state.legacySingleAliases,
+                                ) {
+                                    state.tagContexts(item)
+                                }
                                 WorkCard(
                                     item = item,
-                                    manga = state.favorites[item.preview.url] ?: item.preview,
+                                    manga = existing ?: item.preview,
                                     ordinal = ordinal,
                                     selectionMode = state.selected.isNotEmpty() && item.folder == null,
-                                    added = item.preview.url in state.favorites,
-                                    tagged = item.preview.url in state.taggedUrls,
+                                    added = existing != null,
+                                    tagged = existing?.url in state.taggedUrls,
+                                    relatedTagged = contexts.any { it.names.isNotBlank() },
                                     enabled = !state.saving && (item.folder == null || state.selected.isEmpty()),
                                     onSelect = {
                                         if (item.folder != null) viewModel.preview(item) else viewModel.toggle(item.path)
@@ -310,8 +322,10 @@ class LocalWorksScreen : Screen() {
             }
         }
         state.preview?.let { item ->
-            val existing = state.favorites[item.preview.url]
-            val tagIds = state.tagsByUrl[item.preview.url].orEmpty()
+            val existing = state.favoriteFor(item)
+            val contexts = state.tagContexts(item)
+            val boundTitle = existing?.takeIf { it.url != item.preview.url }?.title
+            val tagIds = state.tagsByUrl[existing?.url ?: item.preview.url].orEmpty()
             val tagNames = state.categories.filter { it.id in tagIds }.joinToString("、") { it.name }
             PreviewDialog(
                 item,
@@ -324,9 +338,19 @@ class LocalWorksScreen : Screen() {
                     val paths = item.folder?.members ?: listOf(item.path)
                     importRequest = LocalWorkImport(
                         paths, item.folder != null, item.title, existing?.id, folder = item.folder,
+                        contexts = contexts, boundTitle = boundTitle,
                     )
                 },
                 tagNames = tagNames,
+                contexts = contexts,
+                boundTitle = boundTitle,
+                onEditRelated = { related ->
+                    viewModel.preview(null)
+                    importRequest = LocalWorkImport(
+                        item.folder?.members ?: listOf(item.path), false, related.title, related.id,
+                        boundTitle = related.title,
+                    )
+                },
                 onFolderCover = if (state.folder != null && item.folder == null) {
                     { viewModel.setFolderCover(item.path) }
                 } else {
@@ -342,7 +366,12 @@ class LocalWorksScreen : Screen() {
                 categoriesOnly = request.categoriesOnlyId != null,
                 createFolder = request.createFolder,
                 fixedOrder = request.folder != null,
-                loadCategories = viewModel::categoryMembership,
+                loadCategories = { works, combined ->
+                    val id = request.categoriesOnlyId
+                    if (id != null) viewModel.categoryMembershipForId(id) else viewModel.categoryMembership(works, combined)
+                },
+                contexts = request.contexts,
+                boundTitle = request.boundTitle,
                 categories = state.categories,
                 saving = state.saving,
                 onDismiss = { if (!state.saving) importRequest = null },
@@ -414,6 +443,8 @@ private data class LocalWorkImport(
     val categoriesOnlyId: Long? = null,
     val createFolder: Boolean = false,
     val folder: LocalWorkFolder? = null,
+    val contexts: List<LocalWorkTagContext> = emptyList(),
+    val boundTitle: String? = null,
 )
 
 @Composable
@@ -422,6 +453,7 @@ private fun AuthorCard(
     ordinal: Int,
     selectionMode: Boolean,
     enabled: Boolean,
+    tagged: Boolean,
     onClick: () -> Unit,
     onSelect: () -> Unit,
 ) {
@@ -471,6 +503,14 @@ private fun AuthorCard(
                     ),
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     style = MaterialTheme.typography.bodySmall,
+                )
+            }
+            if (tagged) {
+                Icon(
+                    MaterialSymbols.AutoMirroredRounded.Label,
+                    stringResource(R.string.local_works_contains_tags),
+                    Modifier.size(18.dp),
+                    tint = MaterialTheme.colorScheme.secondary,
                 )
             }
             if (selectionMode) {
@@ -605,6 +645,7 @@ private fun WorkCard(
     selectionMode: Boolean,
     added: Boolean,
     tagged: Boolean,
+    relatedTagged: Boolean,
     enabled: Boolean,
     onSelect: () -> Unit,
     onClick: () -> Unit,
@@ -644,15 +685,19 @@ private fun WorkCard(
                     )
                 }
             }
-            if (tagged) {
+            if (tagged || relatedTagged) {
                 Surface(
                     Modifier.align(Alignment.BottomEnd).padding(6.dp),
                     shape = RoundedCornerShape(10.dp),
-                    color = MaterialTheme.colorScheme.primaryContainer,
+                    color = if (tagged) {
+                        MaterialTheme.colorScheme.primaryContainer
+                    } else {
+                        MaterialTheme.colorScheme.secondaryContainer
+                    },
                 ) {
                     Icon(
                         MaterialSymbols.AutoMirroredRounded.Label,
-                        stringResource(R.string.local_works_has_tags),
+                        stringResource(if (tagged) R.string.local_works_has_tags else R.string.local_works_contains_tags),
                         Modifier.padding(5.dp).size(18.dp),
                     )
                 }
@@ -690,6 +735,13 @@ private fun WorkCard(
                 overflow = TextOverflow.Ellipsis,
                 style = MaterialTheme.typography.labelSmall,
             )
+            if (!tagged && relatedTagged) {
+                Text(
+                    stringResource(R.string.local_works_contains_tags),
+                    color = MaterialTheme.colorScheme.secondary,
+                    style = MaterialTheme.typography.labelSmall,
+                )
+            }
             if (added) {
                 Text(
                     stringResource(R.string.local_works_in_library),
@@ -710,6 +762,9 @@ private fun PreviewDialog(
     onOpen: () -> Unit,
     onAdd: () -> Unit,
     tagNames: String,
+    contexts: List<LocalWorkTagContext>,
+    boundTitle: String?,
+    onEditRelated: (Manga) -> Unit,
     onFolderCover: (() -> Unit)?,
 ) {
     AlertDialog(
@@ -727,6 +782,8 @@ private fun PreviewDialog(
                     color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.labelMedium,
                 )
+                if (boundTitle != null) Text(stringResource(R.string.local_works_legacy_match, boundTitle))
+                RelatedTagInfo(contexts, onEditRelated)
                 if (item.folder != null) Text(stringResource(R.string.local_works_folder_cover_help))
                 onFolderCover?.let { action ->
                     OutlinedButton(onClick = action) {
@@ -761,6 +818,8 @@ private fun ImportDialog(
     categoriesOnly: Boolean,
     createFolder: Boolean,
     fixedOrder: Boolean,
+    contexts: List<LocalWorkTagContext>,
+    boundTitle: String?,
     loadCategories: suspend (List<LocalWorkPath>, Boolean) -> List<Set<Long>>,
     categories: List<Category>,
     saving: Boolean,
@@ -829,6 +888,7 @@ private fun ImportDialog(
                     }
                 }
                 if (categoriesOnly || fixedOrder) Text(title, style = MaterialTheme.typography.titleSmall)
+                if (boundTitle != null) Text(stringResource(R.string.local_works_legacy_match, boundTitle))
                 if (createFolder) {
                     Text(stringResource(R.string.local_works_create_folder_help), style = MaterialTheme.typography.bodySmall)
                 }
@@ -906,6 +966,7 @@ private fun ImportDialog(
                     )
                 }
                 if (!createFolder) {
+                    RelatedTagInfo(contexts)
                     OutlinedButton(
                         onClick = { categoryPicker = true },
                         enabled = memberships != null && !saving,
@@ -963,7 +1024,7 @@ private fun ImportDialog(
     )
     if (categoryPicker && memberships != null) {
         CategoryPickerDialog(
-            categories, memberships.orEmpty(), changes,
+            categories, memberships.orEmpty(), changes, contexts,
             { categoryPicker = false },
             { changes = it; categoryPicker = false },
         )
@@ -975,6 +1036,7 @@ private fun CategoryPickerDialog(
     categories: List<Category>,
     memberships: List<Set<Long>>,
     changes: Map<Long, Boolean>,
+    contexts: List<LocalWorkTagContext>,
     onDismiss: () -> Unit,
     onConfirm: (Map<Long, Boolean>) -> Unit,
 ) {
@@ -985,7 +1047,11 @@ private fun CategoryPickerDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.local_works_choose_tags)) },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Column(
+                Modifier.heightIn(max = 520.dp).verticalScroll(rememberScrollState()),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                RelatedTagInfo(contexts)
                 OutlinedTextField(
                     search, { search = it },
                     placeholder = { Text(stringResource(R.string.local_works_search_tags)) },
@@ -1043,4 +1109,32 @@ private fun CategoryPickerDialog(
             TextButton(onClick = onDismiss) { Text(stringResource(R.string.local_works_cancel)) }
         },
     )
+}
+
+@Composable
+private fun RelatedTagInfo(contexts: List<LocalWorkTagContext>, onEdit: ((Manga) -> Unit)? = null) {
+    if (contexts.isEmpty()) return
+    Text(stringResource(R.string.local_works_related_tags), style = MaterialTheme.typography.titleSmall)
+    Text(stringResource(R.string.local_works_related_tags_help), style = MaterialTheme.typography.bodySmall)
+    LazyColumn(
+        Modifier.fillMaxWidth().heightIn(min = 64.dp, max = 152.dp),
+        verticalArrangement = Arrangement.spacedBy(6.dp),
+    ) {
+        items(contexts, key = { it.manga.id }) { context ->
+            Surface(shape = RoundedCornerShape(10.dp), color = MaterialTheme.colorScheme.secondaryContainer) {
+                Column(Modifier.fillMaxWidth().padding(8.dp)) {
+                    Text(context.manga.title, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                    Text(
+                        context.names.ifBlank { stringResource(R.string.local_works_no_named_tags) },
+                        style = MaterialTheme.typography.labelMedium,
+                    )
+                    if (onEdit != null) {
+                        TextButton(onClick = { onEdit(context.manga) }) {
+                            Text(stringResource(R.string.local_works_edit_related_tags))
+                        }
+                    }
+                }
+            }
+        }
+    }
 }

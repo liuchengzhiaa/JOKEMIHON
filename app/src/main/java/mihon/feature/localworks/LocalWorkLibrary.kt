@@ -67,7 +67,9 @@ class LocalWorkLibrary(
             }
             val added = definitions.map { definition ->
                 val name = if (combined) title else definition.members.first().displayName
-                val manga = prepare(definition, name, author, progress, cover)
+                val stored = existingTarget(definition, allowLegacySingle = !combined)
+                val manga = stored?.takeIf { !LocalWorkDefinition.isWorkUrl(it.url) }
+                    ?: prepare(definition, name, author, progress, cover)
                 if (combined && cover != null && manga.thumbnailUrl != cover.toUrl()) updateCover(manga, cover)
                 // Only explicitly toggled tags are changed; mixed/untouched batch tags remain intact.
                 val previous = getCategories.await(manga.id).map { it.id }.filter { it > 0 }
@@ -133,16 +135,59 @@ class LocalWorkLibrary(
                 }
             }
             definitions.map { definition ->
-                val manga = mangaRepository.getMangaByUrlAndSourceId(definition.url, LocalSource.ID)
+                val manga = existingTarget(definition, allowLegacySingle = !combined)
                 if (manga == null) emptySet() else getCategories.await(manga.id).map { it.id }.filter { it > 0 }.toSet()
             }
         }
 
+    suspend fun categoryMembershipForId(mangaId: Long): List<Set<Long>> = withContext(Dispatchers.IO) {
+        val manga = mangaRepository.getMangaById(mangaId)
+        requireLocalIdentity(manga)
+        listOf(getCategories.await(manga.id).map { it.id }.filter { it > 0 }.toSet())
+    }
+
+    private fun requireLocalIdentity(manga: Manga) {
+        require(manga.source == LocalSource.ID)
+        if (LocalWorkDefinition.isWorkUrl(manga.url)) {
+            LocalWorkDefinition.fromMemo(manga.url, manga.memo)
+        } else {
+            LocalWorkPath(manga.url, "validation") // A real local parent name, never an arbitrary path/URL.
+        }
+    }
+
+    // Read-only compatibility mapping from a completed author scan; never infer identity from titles.
+    suspend fun legacySingleAliases(
+        works: List<LocalWorkPath>,
+        favorites: Collection<Manga>,
+    ): Map<String, String> = withContext(Dispatchers.IO) {
+        val legacy = favorites.filterNot { LocalWorkDefinition.isWorkUrl(it.url) }.associateBy { it.url }
+        buildMap {
+            for ((directory, members) in works.groupBy { it.directory }) {
+                val path = members.singleOrNull() ?: continue
+                val manga = legacy[directory] ?: continue
+                if (chapterRepository.getChapterByMangaId(manga.id).all { it.url == path.relativeUrl }) {
+                    put(LocalWorkDefinition(listOf(path)).url, manga.url)
+                }
+            }
+        }
+    }
+
+    private suspend fun existingTarget(definition: LocalWorkDefinition, allowLegacySingle: Boolean): Manga? {
+        val exact = mangaRepository.getMangaByUrlAndSourceId(definition.url, LocalSource.ID)
+        if (exact?.favorite == true || !allowLegacySingle) return exact
+        val path = definition.members.singleOrNull() ?: return exact
+        val legacy = mangaRepository.getMangaByUrlAndSourceId(path.directory, LocalSource.ID)
+            ?.takeIf { it.favorite } ?: return exact
+        val contents = catalog.works(LocalAuthorGroup(path.directory, path.directory, listOf(path.directory)))
+        if (contents != listOf(path)) return exact
+        if (chapterRepository.getChapterByMangaId(legacy.id).any { it.url != path.relativeUrl }) return exact
+        return legacy
+    }
+
     suspend fun editCategories(mangaId: Long, add: List<Long>, remove: List<Long>) = withContext(Dispatchers.IO) {
         mutation.withLock {
             val manga = mangaRepository.getMangaById(mangaId)
-            require(manga.source == LocalSource.ID && LocalWorkDefinition.isWorkUrl(manga.url))
-            LocalWorkDefinition.fromMemo(manga.url, manga.memo)
+            requireLocalIdentity(manga)
             val valid = getCategories.await().map { it.id }.toSet()
             require(add.all { it > 0 && it in valid })
             val previous = getCategories.await(manga.id).map { it.id }.filter { it > 0 }
@@ -153,7 +198,10 @@ class LocalWorkLibrary(
     suspend fun open(work: LocalWorkPath, author: String): Manga = withContext(Dispatchers.IO) {
         mutation.withLock {
             catalog.requireAvailable(work)
-            prepare(LocalWorkDefinition(listOf(work)), work.displayName, author, inheritedProgress(listOf(work)))
+            val definition = LocalWorkDefinition(listOf(work))
+            val existing = existingTarget(definition, allowLegacySingle = true)
+            existing?.takeIf { !LocalWorkDefinition.isWorkUrl(it.url) }
+                ?: prepare(definition, work.displayName, author, inheritedProgress(listOf(work)))
         }
     }
 

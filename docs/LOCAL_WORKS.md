@@ -149,3 +149,32 @@ Choose tags opens a searchable lazy grid; filled/partial states show current all
 some membership. Cancel discards picker changes; Done choosing returns the draft
 and the outer Confirm/Save persists explicit additions/removals. Untouched mixed
 batch tags remain unchanged. No tests run for this slice; owner acceptance pending.
+
+## joke.6: compatibility with original local library books
+
+Legacy LocalSource library books identify a physical parent directory, whereas new
+virtual works use ordered-path hashes. Both are now indexed. If a completed current
+author scan has exactly one work under a favorite legacy parent AND every stored
+chapter URL matches that work, the single card can reuse the original book, categories
+and progress. An exact favorited virtual single always wins. There is no title-based
+matching, ID migration or automatic copying. Batch prefill and import recheck the same
+full-directory coverage against live storage before resolving a legacy favorite.
+
+Editing categories always reads/saves the explicit actual manga ID. Legacy category
+edits do not require media availability or create a new virtual manga. If an original
+parent has multiple works, or stale/unselected chapter references, it is not treated
+as the same individual child: its tags appear separately under Existing related
+library tags. Use Edit this entry’s tags in preview to modify that original row.
+Parent/collection tags are not automatically preselected as an independent child’s
+own tags. A new group similarly shows related tags without falsely being favorited.
+
+Primary Label means the exact resolved item owns named tags. Secondary Label plus
+Contains previously tagged entries means related original/collection books own tags.
+Author rows aggregate the presence of named tags among original/virtual library books
+under their physical directories. All contexts come from library IDs/category data,
+not file guesses. Old-directory reader cover/refresh behavior remains upstream when
+explicitly opening a reused legacy book. No new automatic media writes are added.
+
+Backup fields107/108 unchanged. Original DB IDs/categories use standard backup fields;
+aliases are rebuilt from restored library and unchanged relative local paths. No tests
+run for code44; owner phone acceptance pending, including legacy and mixed batch cases.
