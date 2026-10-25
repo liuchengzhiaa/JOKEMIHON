@@ -2,7 +2,7 @@
 
 ## 0.21.2-joke.2 (40) - 2026-10-25
 
-### Local works manager - candidate, not published yet
+### Local works manager - published and verified
 - More > Local works manager groups original local folders by exact leading digits
   and first Unicode letter, then displays their works as one flattened cover grid.
 - Select in click order, add individual works or combine them into one named library
@@ -14,7 +14,11 @@
 - Add 26 model/service tests including identity, backup round-trip, category safety,
   interrupted preparation, legacy state, concurrency and portable cover metadata.
 - Full 151 unit tests, app/source-local formatting and all 15 Lint reports pass
-  (0 errors, 149 warnings). Release/device/publication remain pending; see HANDOFF.
+  (0 errors, 149 warnings). Same-signer minified universal Release passed code39 upgrade,
+  SAF/grouping/import, ZIP/JPEG reader, portable covers, actual backup restore and refresh
+  tests; 34 synthetic media files unchanged. Public whole APK download/hash verified.
+- Source/tag: f4630606e / v0.21.2-joke.2. Physical-phone/large real-library/full extension
+  regression not performed; see Release manifest and HANDOFF for exact scope.
 
 ## 0.21.2-joke.1 (39) - 2026-10-25
 

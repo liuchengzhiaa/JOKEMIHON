@@ -1,42 +1,85 @@
 # JOKEMIHON handoff
 
-## Current work: local works manager (2026-10-25, VERIFIED GATES / RELEASE PENDING)
+## Latest delivery: local works manager (2026-10-25, PUBLISHED AND VERIFIED)
 
-Owner authorized implementation after approving exact leading digits + first letter
-folder grouping. Scope/design in docs/LOCAL_WORKS.md. Candidate joke.2/code40, same
-package/signer. The category-wall Release below remains the latest published APK.
+Completed the owner-approved non-destructive local works manager. More > 本地作品管理
+uses original SAF storage and keeps old folders/library intact. Source and tested APK
+are synchronized to the public owner's repository. No physical phone or JOKESONG edits.
 
-Implemented: read-only virtual author catalog, flattened lazy cover grid, ordered
-selection/reorder/name/category dialogs, memo-backed work identity, portable reader
-page covers and More entry. No original media move/delete/write; legacy path stays.
-New entries inherit legacy read/bookmark/page once; later old/new progress is independent.
-Re-add is idempotent for the same ordered paths, preserving cover/progress and unioning tags.
+### Delivery receipt
 
-Verified against this source before the release build:
-- Focused model/service suites: 26 tests (17 + 9); all discovered, none skipped.
-- Full testDebugUnitTest, lintDebug, app/source-local spotlessCheck: BUILD SUCCESSFUL
-  in 7m37s with isolated D: JDK21/cache, serial/in-process/3GB flags in RELEASING.
-- All 11 Debug JUnit XML suites: 151 tests, zero failures/errors/skips. All 15 module
-  Lint XMLs inspected: zero Error/Fatal, 149 warnings. Resource key parity: 33.
-- Fixed a configuration-awareness Lint error with LocalResources + rememberUpdatedState;
-  no suppression and no reliance on upstream abortOnError=false. git diff --check passes.
-- Covered grouping/Unicode/10k folders, ordered identity/selection/count naming, normal
-  protobuf manga-backup round-trip, legacy state/category/idempotence/partial failure,
-  concurrent adds, preview behavior and page-cover metadata preservation.
-- Local logs/scripts/synthetic media live in ignored .tools/verification; never upload.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.2
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.2/JOKEMIHON.apk
+- Source/APK commit f4630606ea10b0d89d1cccb5270c2ff35b573740; embedded SHA f4630606e. Immutable annotated
+  tag v0.21.2-joke.2 resolves to that commit. Normal main push and API readback verified.
+- Package app.jokemihon, 0.21.2-joke.2, versionCode40; same pinned RSA4096 signer as code39,
+  v2 signature, min26/target36, all four ABIs. Upstream updater/telemetry remain false.
+- Release ID 423178263, published 2026-10-25T06:01:53Z; draft=false,
+  prerelease=false, PUBLIC. Existing Actions remain disabled; no workflows restored.
+- All 3 remote sizes/digests matched before publication: APK 67846047 bytes,
+  checksum81 bytes, build-manifest5791 bytes. No secrets/media/keys/tools uploaded.
+- APK SHA256: 1cfb358513abe0e4677c2a697f877d54f4f8656d20b512e5f99645ca33a095f0.
+- Independent urllib opener WITHOUT login/auth headers/cookies downloaded the WHOLE
+  public APK: HTTP200, exact size/SHA256 match the installed/tested universal Release.
+  Receipt: ignored .tools/releases/v0.21.2-joke.2/public-download-check/receipt.json.
+- Source upload set: 25 reviewed source/resource/test/docs files. This subsequent
+  docs-only receipt advances main; do not rebuild the same APK, move tag or overwrite assets.
 
-Safest next action: commit reviewed source snapshot; build signed/minified Release,
-verify package/code40/signer pin/embedded commit, then test exact universal APK upgrade
-from published code39 on guarded JOKEMIHON_CategoryWall_Test (ADB5038, port5588).
-Prepared synthetic fixtures: nine local folders, five groups, thirteen works; manually
-select six in approved order, verify category/reader/page cover/backup and exact 34-file
-SHA256 preservation. No device behavior or second APK publication is claimed yet.
-Then push normally, unique v0.21.2-joke.2 Release, verify remote assets + anonymous full
-APK download and write receipt. Do not touch signer, physical phones or JOKESONG.
+### Verification
+
+- Full testDebugUnitTest, lintDebug, app/source-local spotlessCheck passed in7m37s.
+  All 11 Debug JUnit XMLs: 151 tests, zero failures/errors/skips, including 26 new
+  model/service tests (17+9). All 15 Lint XMLs: zero Error/Fatal, 149 warnings.
+  33 default/zh-CN resource keys match; git diff --check passed.
+- Signed/minified/resource-shrunk app:assembleRelease passed in9m58s. Exact universal
+  APK metadata, signature pin, four ABIs and generated BuildConfig inspected.
+- Actual Release upgraded published code39 in JOKEMIHON_CategoryWall_Test, Android16/
+  API36 Google APIs x86_64. After first add, all 31 original manga rows, original
+  chapter and all categories/legacy memberships matched pre-upgrade fixture exactly.
+- Real system SAF grant; nine physical folders -> five groups; five split folders ->
+  eight flat work cards. Real covers, manual six-click order/ordinals, arrow reorder
+  and automatic 作品D 上（六部曲） title checked. Detail lists six chapters in that order.
+- Legacy read/bookmark/page inheritance checked. Two works in one unsplit author
+  folder separately added to category03. Re-add exact same six kept manga102 and
+  page-cover/progress, unioned categories01+09 without duplicate creation.
+- ZIP natural page order read; second (blue) page selected through normal reader
+  menu. Portable page index1 saved; blue library cover survives cold restart.
+- Actual normal .tachibk created via UI and decoded:34 manga, three virtual definitions,
+  original ordered chapters and page cover. Saved coherent DB snapshot, removed ONLY
+  three synthetic virtual entries from derived test DB, then actual UI restore rebuilt
+  all three; order/categories/read state and blue cover survived. JPEG-directory last
+  chapter reads three pages afterward. Normal manga Refresh preserved six chapters,
+  metadata and selected cover.
+- All 34 synthetic files under local retained EXACT filenames/SHA256, including old
+  cover.jpg/.noxml; no new media/metadata files. Empty crash buffer, no FATAL/app ANR/
+  SQLite/OOM hits; eight app exit records were intentional test FORCE STOP only.
+- Full screenshots/XML, consistent DB snapshots, file manifest and logs remain ignored
+  in .tools/verification/local-works-ui. Dedicated AVD shut down after verification.
+
+### Limits and safest next action
+
+- See LOCAL_WORKS.md for semantics. Existing progress is copied once; old/new entries
+  then advance independently. Different orders intentionally mean different bundles.
+  Batch adds are sequential/resumable, not one transaction. Max1000 per operation.
+- Backup contains references, NOT comics; relative paths + SAF grant are required.
+  Reader-page covers are portable; gallery overrides remain upstream private cache.
+- No physical-phone/full extension/tracker/network-reader regression or large real-library
+  benchmark. RAR/7z/tar/EPUB not device-tested in this slice; ZIP/CBZ covers and ZIP/JPEG
+  reading exercised. Lint149 warnings remain. Release had an upstream Compose stack-
+  trace mapping warning in BaseUpdatesGridGlanceWidget; build and application checks pass.
+- Emulator first boot System UI ANR recovered by Wait; NOT an app ANR. Test harness
+  initially force-stopped one re-add too early; proper wait/retry verified category union.
+  A full-window swipe initially triggered system Home; corrected to content-area swipe,
+  existing activity resumed HOT. Exit parser initially matched subreason; corrected
+  word-boundary reason parsing confirms only USER REQUESTED/FORCE STOP. No code
+  changes or hidden test suppression were used to reinterpret these harness failures.
+- Owner offline backup of BOTH ignored signer and keystore.properties is still pending.
+  Do not regenerate/delete either or upload them. Safest next action: owner phone
+  acceptance using new Release after a normal backup; preserve original local layout.
 
 ---
 
-## Latest delivery: category wall (2026-10-25, PUBLISHED AND VERIFIED)
+## Previous delivery: category wall (2026-10-25, PUBLISHED AND VERIFIED)
 
 The completed slice is delivered to the public owner repository. JOKESONG source,
 physical phones and personal reading data were not touched. Notes below the first

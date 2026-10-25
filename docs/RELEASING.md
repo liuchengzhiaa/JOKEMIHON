@@ -12,16 +12,21 @@
 - Keep APK/AAB binaries outside Git history. The constant future asset name is
   JOKEMIHON.apk; use a new versioned tag for every release.
 
-## Current initialization
+## Current releases
 
-First published custom version: 0.21.2-joke.1 (39), package app.jokemihon.
+Latest published custom version: 0.21.2-joke.2 (40), package app.jokemihon.
+Source/APK commit f4630606ea10b0d89d1cccb5270c2ff35b573740, tag v0.21.2-joke.2.
+Local works manager delivered; signed universal APK and anonymous whole download verified.
+See HANDOFF for upgrade/SAF/reader/cover/actual backup-restore checks and known limits.
+
+First published custom version: 0.21.2-joke.1 (39), same package/signer.
 Source/APK commit b0a183dd8061e85c100e66415df3f9aeec07e721, tag v0.21.2-joke.1.
 Category wall, independent name/icon, fixed dedicated signer and disabled upstream
 updater/telemetry are delivered. See HANDOFF for the exact verified public download,
 tests and known limits. Do not mistake upstream badges/tags for JOKEMIHON releases.
 
 Subsequent APKs MUST retain app.jokemihon and the certificate pinned in
-tools/release-signing-certificate.sha256, with versionCode greater than 39. No signing
+tools/release-signing-certificate.sha256, with versionCode greater than 40. No signing
 rotation, tag reuse or release-asset overwrite. Documentation receipts do not need
 an identical APK rebuild and may advance main beyond the immutable APK source tag.
 

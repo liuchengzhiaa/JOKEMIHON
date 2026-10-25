@@ -5,20 +5,27 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 
 - [Project status and handoff](docs/HANDOFF.md)
 - [Expandable category wall](docs/CATEGORY_WALL.md)
-- [Non-destructive local works manager](docs/LOCAL_WORKS.md) (joke.2 candidate; not published yet)
+- [Non-destructive local works manager](docs/LOCAL_WORKS.md)
 - [Tasks](docs/TASKS.md) | [Source and APK delivery](docs/RELEASING.md)
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**First custom release: [0.21.2-joke.1 · category wall](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.1).**
-[Download JOKEMIHON.apk](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.1/JOKEMIHON.apk)
-without GitHub sign-in. Tap the arrow on the right of the library category tabs to
-expand multiple rows. Independent package app.jokemihon; it does not overwrite or
-automatically import official Mihon data. Back up the original app before migrating.
+**Latest: [0.21.2-joke.2 · local works manager](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.2).**
+[Download JOKEMIHON.apk](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.2/JOKEMIHON.apk)
+without GitHub sign-in. Same package/signer as joke.1, versionCode40; back up before upgrading.
 
-125 unit tests, zero Lint errors (146 warnings) and synthetic emulator UI checks
-passed. Physical-phone/full reader-extension regression is not implied; see Release
-notes and HANDOFF for scope and limitations. Repository is public by owner request.
+More > 本地作品管理 groups existing author folders without reorganizing files. Add works
+separately or combine them in selection order, name the bundle and choose category tags.
+Long-press a reader page to choose a per-work cover. Original directories/old library stay;
+initial progress is inherited once, then old/new progress is independent. Normal backups
+retain definitions/page-cover references, not comic files. See [design/limits](docs/LOCAL_WORKS.md).
+
+Expandable category wall remains available: tap the arrow on the right of category tabs.
+Independent package app.jokemihon does not overwrite/import official Mihon automatically.
+151 unit tests, zero Lint errors (149 warnings), signed Release upgrade/SAF/reader/cover/
+actual backup-restore synthetic emulator checks and anonymous APK hash verification pass.
+Physical-phone/full extension/large real-library tests are not implied; see HANDOFF.
+Repository is public by owner request.
 Original upstream introduction/download links below are retained for attribution,
 NOT as JOKEMIHON download links.
 

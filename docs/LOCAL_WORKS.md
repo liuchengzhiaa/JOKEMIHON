@@ -49,10 +49,14 @@
   remain, later items can be retried; favorite publication follows chapter initialization.
   The operation is not an all-or-nothing multi-manga transaction.
 
-## Candidate and verification
+## Delivered version and verification
 
-Candidate 0.21.2-joke.2 / versionCode40; preserve app.jokemihon and existing dedicated
-signer. Implementation/checks are IN PROGRESS; no second Release is published yet.
-See HANDOFF for current test/build/device/push state, not the previous category-wall
-receipt. Tests must include grouping, ordered identity/selection, count naming, source
-branches, backup round-trip, safety/idempotence and actual SAF/reader/cover UI behavior.
+Published 0.21.2-joke.2 / versionCode40 with unchanged app.jokemihon and dedicated signer.
+[Download](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.2).
+151 unit tests pass (26 new), Lint0 errors/149 warnings, both changed module format checks pass.
+Exact minified universal Release tested on isolated Android16/API36: code39 upgrade, real
+SAF grant, grouping/flattening, six-click order/title/reorder, separate/category/idempotent
+adds, ZIP and JPEG-directory reading, page covers/cold restart, actual normal backup and
+restore after removing synthetic virtual entries, and source refresh. All34 media file
+names/hashes unchanged. See HANDOFF/build manifest for exact evidence and untested areas.
+Normal backups preserve virtual references but not media; do not move original files.

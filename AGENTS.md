@@ -46,10 +46,19 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
 ## Established first release (2026-10-25)
 
 - app.jokemihon / JOKEMIHON, first published version 0.21.2-joke.1, versionCode 39.
-  Preserve package ID and dedicated signer; the next APK needs versionCode > 39.
+  Preserve package ID and dedicated signer; use the latest versionCode floor below.
 - Pin: tools/release-signing-certificate.sha256. Private signer is ignored
   .signing/jokemihon-release.p12 plus ignored keystore.properties. NEVER delete or
   regenerate either. Owner offline backup remains pending; tool-cache duplicates
   are not offline backups. Never upload signing material.
 - Release/source tag v0.21.2-joke.1 points to b0a183dd8. Receipt-only docs can
   advance main without rebuilding that exact APK or moving its tag.
+
+## Latest release (2026-10-25)
+
+- Published 0.21.2-joke.2 / code40, same app.jokemihon and pinned signer. Next APK code>40.
+- Source/tag f4630606ea10b0d89d1cccb5270c2ff35b573740 / v0.21.2-joke.2 immutable.
+- Local works are namespaced memo-backed original-path references; never migrate or
+  rewrite physical media to make virtual entries. Preserve backup compatibility and
+  independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
+- See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
