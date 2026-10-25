@@ -92,3 +92,19 @@ code41/source c2f1fd287.162 tests pass, Lint0 errors/152 warnings, formatting/re
 and same-signer universal APK static checks pass. Public whole APK hash verified.
 New screen/interaction/new backup-field device restore acceptance is owner-pending;
 no new device run was performed. See HANDOFF for exact verification boundaries.
+
+## joke.4: optional original-entry removal
+
+Combined import offers a default-off checkbox to remove fully covered originals
+from the library after saving the new collection and its selected categories.
+Virtual originals require all memo members selected. Legacy directory originals
+require all currently listed works and stored chapters selected. Partial or invalid
+originals remain. The new target is excluded. Only favorite status changes: no media,
+chapters, history or saved categories are deleted. Removed originals disappear from
+all visible library tags, not just the destination tag. The new collection does not
+automatically inherit tags or virtual-original reading progress. Root logical-directory
+merge alone still does not change any library entries. Re-add originals to restore
+them to the library; current ordinary library backups omit unfavorited entries, so
+make a backup BEFORE replacement to preserve the prior library membership snapshot.
+
+Owner requested no tests for joke.4; compile/package only, phone acceptance pending.

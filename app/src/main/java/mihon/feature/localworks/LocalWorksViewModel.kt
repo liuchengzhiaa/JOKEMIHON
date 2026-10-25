@@ -278,13 +278,14 @@ class LocalWorksViewModel(
         title: String,
         categories: List<Long>,
         removeCategories: List<Long>,
+        removeOriginals: Boolean,
     ) {
         if (state.value.saving) return
         val author = state.value.author?.name.orEmpty()
         mutableState.update { it.copy(saving = true, preview = null) }
         viewModelScope.launch {
             try {
-                library.add(ordered, combined, title, author, categories, removeCategories)
+                library.add(ordered, combined, title, author, categories, removeCategories, removeOriginals)
                 mutableState.update { it.copy(selected = emptyList()) }
                 eventChannel.send(LocalWorksEvent.Message(R.string.local_works_added))
             } catch (e: Exception) {

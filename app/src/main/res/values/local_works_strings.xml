@@ -50,4 +50,6 @@
     <string name="local_works_backup_title">Local works backup</string>
     <string name="local_works_backup_help">Create a normal backup in More → Data and storage and include Library and Categories. Manual directory groups, names, work collections, reading state, tags and reader-page cover references are preserved. Comic files and gallery cover caches are not included. Keep the original relative paths and grant storage access after restoring.</string>
     <string name="local_works_understood">Got it</string>
+    <string name="local_works_remove_originals">Remove original entries from library after combining (keep files)</string>
+    <string name="local_works_remove_originals_help">Only originals fully covered by this selection are removed from all library categories. Partially selected originals stay. Files, chapters and reading records are not deleted. The new collection uses your selected categories.</string>
 </resources>

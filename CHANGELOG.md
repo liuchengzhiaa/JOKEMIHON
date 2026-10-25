@@ -1,5 +1,12 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.4 (42) - 2026-10-25
+
+- Optional, default-off removal of fully covered original library entries after combined import.
+- Original entries disappear from all library categories; files, chapter/history rows and saved categories remain untouched. Partial originals stay visible; new collection categories are not inherited.
+- Save the new collection before unfavoriting originals; no physical media mutation.
+- Owner explicitly requested NO tests: unit/Lint/format checks and device runs are skipped; build only, owner acceptance pending.
+
 ## 0.21.2-joke.3 (41) - 2026-10-25
 
 ### Local directory polish and manual grouping - published preview

@@ -320,13 +320,13 @@ class LocalWorksScreen : Screen() {
                 categories = state.categories,
                 saving = state.saving,
                 onDismiss = { if (!state.saving) importRequest = null },
-                onSubmit = { ordered, title, add, remove ->
+                onSubmit = { ordered, title, add, remove, removeOriginals ->
                     importRequest = null
                     val id = request.categoriesOnlyId
                     if (id != null) {
                         viewModel.editCategories(id, add, remove)
                     } else {
-                        viewModel.add(ordered, request.combined, title, add, remove)
+                        viewModel.add(ordered, request.combined, title, add, remove, removeOriginals)
                     }
                 },
             )
@@ -686,10 +686,11 @@ private fun ImportDialog(
     categories: List<Category>,
     saving: Boolean,
     onDismiss: () -> Unit,
-    onSubmit: (List<LocalWorkPath>, String, List<Long>, List<Long>) -> Unit,
+    onSubmit: (List<LocalWorkPath>, String, List<Long>, List<Long>, Boolean) -> Unit,
 ) {
     var ordered by remember(works) { mutableStateOf(works) }
     var customTitle by remember { mutableStateOf(initialTitle) }
+    var removeOriginals by remember(works) { mutableStateOf(false) }
     var changes by remember(ordered) { mutableStateOf(emptyMap<Long, Boolean>()) }
     var memberships by remember(ordered) { mutableStateOf<List<Set<Long>>?>(null) }
     var categoryError by remember(ordered) { mutableStateOf(false) }
@@ -800,6 +801,26 @@ private fun ImportDialog(
                         }
                     }
                 }
+                if (combined && !categoriesOnly && ordered.size > 1) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.fillMaxWidth().combinedClickable(
+                            enabled = !saving,
+                            onClick = { removeOriginals = !removeOriginals },
+                        ),
+                    ) {
+                        Checkbox(
+                            checked = removeOriginals,
+                            onCheckedChange = { removeOriginals = it },
+                            enabled = !saving,
+                        )
+                        Text(stringResource(R.string.local_works_remove_originals))
+                    }
+                    Text(
+                        stringResource(R.string.local_works_remove_originals_help),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
+                }
                 Text(stringResource(R.string.local_works_category_help), style = MaterialTheme.typography.bodySmall)
                 if (categoryError) {
                     Text(stringResource(R.string.local_works_categories_failed))
@@ -844,6 +865,7 @@ private fun ImportDialog(
                         title.trim(),
                         changes.filterValues { it }.keys.toList(),
                         changes.filterValues { !it }.keys.toList(),
+                        removeOriginals && combined && !categoriesOnly && ordered.size > 1,
                     )
                 },
                 enabled = !saving && memberships != null && ordered.isNotEmpty() &&

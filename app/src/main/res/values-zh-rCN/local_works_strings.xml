@@ -50,4 +50,6 @@
     <string name="local_works_backup_title">本地作品备份</string>
     <string name="local_works_backup_help">在“更多 → 数据与存储”创建普通备份，勾选“书架”和“分类”。手动目录归组及名称、作品组合、阅读进度、分类与阅读页封面引用会一起保存；无需额外勾选“应用设置”。备份不包含漫画文件和相册封面缓存，恢复后需保留原相对路径并授权存储目录。</string>
     <string name="local_works_understood">知道了</string>
+    <string name="local_works_remove_originals">合并后将原条目移出书架（保留本地文件）</string>
+    <string name="local_works_remove_originals_help">仅移出内容已全部选入新组合的原条目，原条目将不再显示在任何书架标签下；只选中部分内容的原条目保留。不删除文件、章节和阅读记录。新组合使用本次选择的标签。</string>
 </resources>

@@ -5,6 +5,7 @@ import dev.zacsweers.metro.Inject
 import dev.zacsweers.metro.SingleIn
 import eu.kanade.tachiyomi.data.cache.CoverCache
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -16,6 +17,7 @@ import tachiyomi.domain.manga.model.MangaRemoteUpdate
 import tachiyomi.domain.manga.model.MangaUpdate
 import tachiyomi.domain.manga.repository.MangaRepository
 import tachiyomi.source.local.LocalSource
+import tachiyomi.source.local.work.LocalAuthorGroup
 import tachiyomi.source.local.work.LocalWorkCatalog
 import tachiyomi.source.local.work.LocalWorkCover
 import tachiyomi.source.local.work.LocalWorkDefinition
@@ -41,12 +43,16 @@ class LocalWorkLibrary(
         author: String,
         categoryIds: List<Long>,
         removeCategoryIds: List<Long> = emptyList(),
+        removeOriginals: Boolean = false,
     ): List<Manga> = withContext(Dispatchers.IO) {
         mutation.withLock {
             LocalWorkDefinition(works) // Validate count, uniqueness and paths before any mutation.
             catalog.requireAvailableWorks(works)
             val validIds = getCategories.await().map { it.id }.toSet()
             require(categoryIds.all { it == 0L || it in validIds }) { "Category no longer exists" }
+            require(!removeOriginals || (combined && works.size > 1))
+            // Resolve coverage before adding anything. Partial originals must remain visible.
+            val originals = if (removeOriginals) coveredOriginals(works) else emptyList()
             val progress = inheritedProgress(works)
             val definitions = if (combined) {
                 listOf(LocalWorkDefinition(works))
@@ -55,7 +61,7 @@ class LocalWorkLibrary(
                     LocalWorkDefinition(listOf(it))
                 }
             }
-            definitions.map { definition ->
+            val added = definitions.map { definition ->
                 val name = if (combined) title else definition.members.first().displayName
                 val manga = prepare(definition, name, author, progress)
                 // Only explicitly toggled tags are changed; mixed/untouched batch tags remain intact.
@@ -73,7 +79,43 @@ class LocalWorkLibrary(
                 ) { "Could not add local work to library" }
                 mangaRepository.getMangaById(manga.id)
             }
+            // Only unfavorite after the new entry and its categories are saved successfully.
+            // Keep original rows, chapters, history, categories and all physical files untouched.
+            val addedIds = added.mapTo(HashSet()) { it.id }
+            val removals = originals.filterNot { it in addedIds }.map { id ->
+                MangaUpdate(id) { favoriteAt = null }
+            }
+            if (removals.isNotEmpty()) {
+                check(mangaRepository.updateAll(removals)) { "Could not remove original entries from library" }
+            }
+            added
         }
+    }
+
+    private suspend fun coveredOriginals(works: List<LocalWorkPath>): List<Long> {
+        val selected = works.toHashSet()
+        val selectedUrls = works.mapTo(HashSet()) { it.relativeUrl }
+        val directories = works.mapTo(HashSet()) { it.directory }
+        val originals = mutableListOf<Long>()
+        for (manga in mangaRepository.getFavoritesBySourceId(LocalSource.ID).first()) {
+            if (LocalWorkDefinition.isWorkUrl(manga.url)) {
+                // Invalid definitions cannot establish full coverage: leave them in the library.
+                val definition = runCatching {
+                    LocalWorkDefinition.fromMemo(manga.url, manga.memo)
+                }.getOrNull() ?: continue
+                if (definition.members.all { it in selected }) originals.add(manga.id)
+            } else if (manga.url in directories) {
+                // Use live contents as well as stored chapters, never just the selected folder name.
+                val contents = catalog.works(LocalAuthorGroup(manga.url, manga.title, listOf(manga.url)))
+                val chapters = chapterRepository.getChapterByMangaId(manga.id)
+                if (contents.isNotEmpty() && contents.all { it in selected } &&
+                    chapters.all { it.url in selectedUrls }
+                ) {
+                    originals.add(manga.id)
+                }
+            }
+        }
+        return originals
     }
 
     suspend fun categoryMembership(works: List<LocalWorkPath>, combined: Boolean): List<Set<Long>> =

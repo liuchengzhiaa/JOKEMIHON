@@ -1,5 +1,13 @@
 # JOKEMIHON tasks
 
+## Combined-import replacement option (2026-10-25)
+
+- [x] Default-off remove-originals checkbox, fully covered originals only.
+- [x] Preserve media/chapters/history/category rows; never remove new target.
+- [x] Skip ALL tests/Lint/device/format checks by explicit owner request this slice.
+- [ ] Signed code42 Release build; reviewed source/doc push; public APK delivery.
+- [ ] Owner phone acceptance (no automated/device tests this slice).
+
 ## Local manager polish (2026-10-25, preview delivered)
 
 - [x] Compact card/grid UI and long-press-only multi-selection.

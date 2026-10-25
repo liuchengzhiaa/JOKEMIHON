@@ -1,5 +1,25 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.4 optional removal of originals (2026-10-25, BUILD/PUBLICATION PENDING)
+
+Owner explicitly requested this option and NO tests; do not run unit tests, Lint,
+format checks, emulator or phone tests for this slice. Compile/package only.
+
+- Added default-off checkbox to combined import only. Fully covered local virtual
+  singles/bundles and legacy physical-directory library entries can be unfavorited.
+- Full virtual memo coverage required; malformed definitions remain untouched.
+  Legacy coverage uses live folder works AND stored chapter URLs; partial originals
+  stay. New saved target is always excluded from removal. New collection/categories
+  are saved first; removal failure may leave duplicates rather than lose originals.
+- Only favoriteAt becomes null. Never delete media, chapter/history/category rows.
+  Old tags no longer display the unfavorited item; new tags are explicitly selected.
+  Progress inheritance is unchanged (legacy parents only, one-time, no later sync).
+- Same package/signer, candidate 0.21.2-joke.4 / code42. No new backup schema needed.
+- Pending: build signed Release, source/doc commit and normal push, unique public
+  prerelease and APK link. This build is NOT tested; owner phone acceptance pending.
+
+---
+
 ## Latest delivery: joke.3 local manager preview (2026-10-25, PUBLISHED)
 
 Owner requested compact UI, manual logical-directory merge/rename, long-press-only
