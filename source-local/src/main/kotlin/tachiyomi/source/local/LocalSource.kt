@@ -49,6 +49,10 @@ import tachiyomi.source.local.io.Archive
 import tachiyomi.source.local.io.Format
 import tachiyomi.source.local.io.LocalSourceFileSystem
 import tachiyomi.source.local.metadata.fillMetadata
+import tachiyomi.source.local.work.LocalWorkCatalog
+import tachiyomi.source.local.work.LocalWorkCover
+import tachiyomi.source.local.work.LocalWorkCoverReader
+import tachiyomi.source.local.work.LocalWorkDefinition
 import uy.kohesive.injekt.injectLazy
 import java.io.InputStream
 import java.nio.charset.StandardCharsets
@@ -61,6 +65,8 @@ class LocalSource(
     private val context: Context,
     private val fileSystem: LocalSourceFileSystem,
     private val coverManager: LocalCoverManager,
+    private val workCatalog: LocalWorkCatalog,
+    private val workCoverReader: LocalWorkCoverReader,
 ) : Source, UnmeteredSource {
 
     private val json: Json by injectLazy()
@@ -157,6 +163,29 @@ class LocalSource(
         fetchDetails: Boolean,
         fetchChapters: Boolean,
     ): SMangaUpdate = supervisorScope {
+        // JOKEMIHON: preserve portable virtual-work metadata and bypass all legacy metadata/cover writes.
+        if (LocalWorkDefinition.isWorkUrl(manga.url)) {
+            val definition = LocalWorkDefinition.fromMemo(manga.url, manga.memo)
+            val workChapters = if (fetchChapters) {
+                withContext(Dispatchers.IO) {
+                    workCatalog.requireAvailableWorks(definition.members)
+                    definition.members.mapIndexed { index, path ->
+                        SChapter.create().apply {
+                            url = path.relativeUrl
+                            name = path.displayName
+                            chapter_number = (index + 1).toFloat()
+                        }
+                    }.asReversed() // Source convention: latest last-selected work first.
+                }
+            } else {
+                chapters
+            }
+            val details = manga.copy().apply {
+                initialized = true
+                if (thumbnail_url.isNullOrBlank()) thumbnail_url = LocalWorkCover(definition.members.first()).toUrl()
+            }
+            return@supervisorScope SMangaUpdate(details, workChapters)
+        }
         val asyncManga = if (fetchDetails) async { getMangaDetails(manga) } else null
         val asyncChapters = if (fetchChapters) async { getChapterList(manga) } else null
         SMangaUpdate(asyncManga?.await() ?: manga, asyncChapters?.await() ?: chapters)
@@ -345,6 +374,9 @@ class LocalSource(
 
     // Unused stuff
     override suspend fun getPageList(chapter: SChapter): List<Page> = throw UnsupportedOperationException("Unused")
+
+    // Open only a visible virtual-work cover; never writes into the author directory.
+    suspend fun openWorkCover(url: String): InputStream = workCoverReader.open(url)
 
     fun getFormat(chapter: SChapter): Format {
         try {

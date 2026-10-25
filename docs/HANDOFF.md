@@ -1,5 +1,41 @@
 # JOKEMIHON handoff
 
+## Current work: local works manager (2026-10-25, VERIFIED GATES / RELEASE PENDING)
+
+Owner authorized implementation after approving exact leading digits + first letter
+folder grouping. Scope/design in docs/LOCAL_WORKS.md. Candidate joke.2/code40, same
+package/signer. The category-wall Release below remains the latest published APK.
+
+Implemented: read-only virtual author catalog, flattened lazy cover grid, ordered
+selection/reorder/name/category dialogs, memo-backed work identity, portable reader
+page covers and More entry. No original media move/delete/write; legacy path stays.
+New entries inherit legacy read/bookmark/page once; later old/new progress is independent.
+Re-add is idempotent for the same ordered paths, preserving cover/progress and unioning tags.
+
+Verified against this source before the release build:
+- Focused model/service suites: 26 tests (17 + 9); all discovered, none skipped.
+- Full testDebugUnitTest, lintDebug, app/source-local spotlessCheck: BUILD SUCCESSFUL
+  in 7m37s with isolated D: JDK21/cache, serial/in-process/3GB flags in RELEASING.
+- All 11 Debug JUnit XML suites: 151 tests, zero failures/errors/skips. All 15 module
+  Lint XMLs inspected: zero Error/Fatal, 149 warnings. Resource key parity: 33.
+- Fixed a configuration-awareness Lint error with LocalResources + rememberUpdatedState;
+  no suppression and no reliance on upstream abortOnError=false. git diff --check passes.
+- Covered grouping/Unicode/10k folders, ordered identity/selection/count naming, normal
+  protobuf manga-backup round-trip, legacy state/category/idempotence/partial failure,
+  concurrent adds, preview behavior and page-cover metadata preservation.
+- Local logs/scripts/synthetic media live in ignored .tools/verification; never upload.
+
+Safest next action: commit reviewed source snapshot; build signed/minified Release,
+verify package/code40/signer pin/embedded commit, then test exact universal APK upgrade
+from published code39 on guarded JOKEMIHON_CategoryWall_Test (ADB5038, port5588).
+Prepared synthetic fixtures: nine local folders, five groups, thirteen works; manually
+select six in approved order, verify category/reader/page cover/backup and exact 34-file
+SHA256 preservation. No device behavior or second APK publication is claimed yet.
+Then push normally, unique v0.21.2-joke.2 Release, verify remote assets + anonymous full
+APK download and write receipt. Do not touch signer, physical phones or JOKESONG.
+
+---
+
 ## Latest delivery: category wall (2026-10-25, PUBLISHED AND VERIFIED)
 
 The completed slice is delivered to the public owner repository. JOKESONG source,

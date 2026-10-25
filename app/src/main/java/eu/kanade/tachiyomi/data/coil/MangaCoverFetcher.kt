@@ -31,6 +31,8 @@ import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.domain.manga.model.MangaCover
 import tachiyomi.domain.source.service.SourceManager
+import tachiyomi.source.local.LocalSource
+import tachiyomi.source.local.work.LocalWorkCover
 import java.io.File
 import java.io.IOException
 
@@ -52,6 +54,7 @@ class MangaCoverFetcher(
     private val customCoverFileLazy: Lazy<File>,
     private val diskCacheKeyLazy: Lazy<String>,
     private val getSource: suspend () -> HttpSource?,
+    private val getLocalSource: suspend () -> LocalSource,
     private val callFactoryLazy: Lazy<Call.Factory>,
     private val imageLoader: ImageLoader,
 ) : Fetcher {
@@ -71,6 +74,17 @@ class MangaCoverFetcher(
 
         // diskCacheKey is thumbnail_url
         if (url == null) error("No cover specified")
+        // JOKEMIHON: only visible covers are streamed; the descriptor survives backup/restore.
+        if (LocalWorkCover.isCoverUrl(url)) {
+            return SourceFetchResult(
+                source = ImageSource(
+                    source = getLocalSource().openWorkCover(url).source().buffer(),
+                    fileSystem = FileSystem.SYSTEM,
+                ),
+                mimeType = "image/*",
+                dataSource = DataSource.DISK,
+            )
+        }
         return when (getResourceType(url)) {
             Type.File -> fileLoader(File(url.substringAfter("file://")))
             Type.URI -> fileUriLoader(url)
@@ -313,6 +327,7 @@ class MangaCoverFetcher(
                 customCoverFileLazy = lazy { coverCache.getCustomCoverFile(data.id) },
                 diskCacheKeyLazy = lazy { imageLoader.components.key(data, options)!! },
                 getSource = { sourceManager.get(data.source) as? HttpSource },
+                getLocalSource = { sourceManager.get(LocalSource.ID) as LocalSource },
                 callFactoryLazy = callFactoryLazy,
                 imageLoader = imageLoader,
             )
@@ -334,6 +349,7 @@ class MangaCoverFetcher(
                 customCoverFileLazy = lazy { coverCache.getCustomCoverFile(data.mangaId) },
                 diskCacheKeyLazy = lazy { imageLoader.components.key(data, options)!! },
                 getSource = { sourceManager.get(data.sourceId) as? HttpSource },
+                getLocalSource = { sourceManager.get(LocalSource.ID) as LocalSource },
                 callFactoryLazy = callFactoryLazy,
                 imageLoader = imageLoader,
             )

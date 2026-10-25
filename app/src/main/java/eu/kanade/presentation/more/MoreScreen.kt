@@ -7,6 +7,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.unit.dp
 import eu.kanade.presentation.more.settings.widget.SwitchPreferenceWidget
 import eu.kanade.presentation.more.settings.widget.TextPreferenceWidget
+import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.ui.more.DownloadQueueState
 import mihon.icons.materialsymbols.MaterialSymbols
 import mihon.icons.materialsymbols.automirroredrounded.Help
@@ -25,6 +26,7 @@ import tachiyomi.presentation.core.components.ScrollbarLazyColumn
 import tachiyomi.presentation.core.components.material.Scaffold
 import tachiyomi.presentation.core.i18n.pluralStringResource
 import tachiyomi.presentation.core.i18n.stringResource
+import androidx.compose.ui.res.stringResource as androidStringResource
 
 @Composable
 fun MoreScreen(
@@ -35,6 +37,7 @@ fun MoreScreen(
     onIncognitoModeChange: (Boolean) -> Unit,
     onClickDownloadQueue: () -> Unit,
     onClickCategories: () -> Unit,
+    onClickLocalWorks: () -> Unit,
     onClickStats: () -> Unit,
     onClickDataAndStorage: () -> Unit,
     onClickSettings: () -> Unit,
@@ -98,6 +101,13 @@ fun MoreScreen(
                     },
                     icon = MaterialSymbols.Rounded.Download,
                     onPreferenceClick = onClickDownloadQueue,
+                )
+            }
+            item {
+                TextPreferenceWidget(
+                    title = androidStringResource(R.string.local_works_title),
+                    icon = MaterialSymbols.Rounded.Storage,
+                    onPreferenceClick = onClickLocalWorks,
                 )
             }
             item {

@@ -78,6 +78,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import logcat.LogPriority
 import mihon.core.metro.AppCoroutineScope
+import mihon.feature.localworks.LocalWorkLibrary
 import tachiyomi.core.common.preference.toggle
 import tachiyomi.core.common.util.system.logcat
 import tachiyomi.domain.chapter.interactor.GetChaptersByMangaId
@@ -95,6 +96,7 @@ import tachiyomi.domain.manga.model.Manga
 import tachiyomi.domain.source.service.SourceManager
 import tachiyomi.source.local.image.LocalCoverManager
 import tachiyomi.source.local.isLocal
+import tachiyomi.source.local.work.LocalWorkDefinition
 import kotlin.time.Clock
 import kotlin.time.Duration.Companion.seconds
 import kotlin.time.Instant
@@ -129,6 +131,7 @@ class ReaderViewModel(
     private val coverCache: CoverCache,
     private val chapterCache: ChapterCache,
     private val downloadCache: DownloadCache,
+    private val localWorkLibrary: LocalWorkLibrary,
 ) : ViewModel() {
 
     @AssistedFactory
@@ -1039,7 +1042,12 @@ class ReaderViewModel(
         viewModelScope.launch {
             val result = appScope.async {
                 try {
-                    manga.editCover(coverManager, stream(), updateManga, coverCache)
+                    if (manga.isLocal() && LocalWorkDefinition.isWorkUrl(manga.url)) {
+                        // JOKEMIHON: persist a portable page reference, not a cover.jpg in an author folder.
+                        localWorkLibrary.setPageCover(manga.id, page.chapter.chapter.url, page.index)
+                    } else {
+                        manga.editCover(coverManager, stream(), updateManga, coverCache)
+                    }
                     if (manga.isLocal() || manga.favorite) {
                         SetAsCoverResult.Success
                     } else {

@@ -1,5 +1,21 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.2 (40) - 2026-10-25
+
+### Local works manager - candidate, not published yet
+- More > Local works manager groups original local folders by exact leading digits
+  and first Unicode letter, then displays their works as one flattened cover grid.
+- Select in click order, add individual works or combine them into one named library
+  entry (e.g. 作品D 上（六部曲）); reorder and choose existing category tags before add.
+- Virtual entries retain original file references in normal backup metadata; reading
+  and page-selected covers use the existing SAF grant. No media moves or writes.
+- Same ordered selection is idempotent; categories are unioned on re-add. Legacy
+  read/bookmark/page state is copied once; old/new progress is independent afterward.
+- Add 26 model/service tests including identity, backup round-trip, category safety,
+  interrupted preparation, legacy state, concurrency and portable cover metadata.
+- Full 151 unit tests, app/source-local formatting and all 15 Lint reports pass
+  (0 errors, 149 warnings). Release/device/publication remain pending; see HANDOFF.
+
 ## 0.21.2-joke.1 (39) - 2026-10-25
 
 ### First custom APK - published

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JOKEMIHON: non-destructive local works manager. -->
+    <string name="local_works_title">Local works manager</string>
+    <string name="local_works_refresh">Rescan local folders</string>
+    <string name="local_works_select_all">Select results</string>
+    <string name="local_works_search">Search authors or works</string>
+    <string name="local_works_group_help">Read-only view. Folders with the same leading digits and first letter are grouped. Existing folders and library entries stay unchanged.</string>
+    <string name="local_works_author_summary">Works from %1$d original folders. Tap to preview; use checkboxes or long-press to select in order.</string>
+    <string name="local_works_directories">%1$d original folders</string>
+    <string name="local_works_load_failed">Cannot read the local folder. Check the storage directory and permission, then retry.</string>
+    <string name="local_works_retry">Retry</string>
+    <string name="local_works_storage_settings">Data and storage settings</string>
+    <string name="local_works_empty_authors">No matching author folders in local.</string>
+    <string name="local_works_empty_works">No matching supported archives or image directories.</string>
+    <string name="local_works_selected">%1$d selected in order</string>
+    <string name="local_works_add_separately">Add separately</string>
+    <string name="local_works_add_combined">Add collection</string>
+    <string name="local_works_clear">Clear selection</string>
+    <string name="local_works_select">Select work</string>
+    <string name="local_works_in_library">In library (including collections)</string>
+    <string name="local_works_cover_help">Open the work, enter the reader and long-press an image to set it as the library cover. If already in a collection, the saved library work opens.</string>
+    <string name="local_works_open">Open / choose cover</string>
+    <string name="local_works_add">Add to library</string>
+    <string name="local_works_bundle_title">%1$s (%2$s parts)</string>
+    <string name="local_works_name">Library title</string>
+    <string name="local_works_automatic_name">Use automatic title</string>
+    <string name="local_works_order_help">Numbering follows selection order. Arrows change collection reading order; the first item supplies the automatic title and default cover.</string>
+    <string name="local_works_move_up">Move %1$s up</string>
+    <string name="local_works_move_down">Move %1$s down</string>
+    <string name="local_works_category_help">Choose categories. None means Default for a new work; existing categories are retained.</string>
+    <string name="local_works_confirm">Confirm</string>
+    <string name="local_works_cancel">Cancel</string>
+    <string name="local_works_selection_limit">Select at most 1000 works per operation. Narrow the search or add in batches.</string>
+    <string name="local_works_operation_failed">Operation failed. Check folder access and category availability, then retry. Successfully added works are kept; retrying the same selection will not duplicate them.</string>
+    <string name="local_works_added">Added to library. Existing entries and categories were preserved.</string>
+</resources>

@@ -5,6 +5,7 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 
 - [Project status and handoff](docs/HANDOFF.md)
 - [Expandable category wall](docs/CATEGORY_WALL.md)
+- [Non-destructive local works manager](docs/LOCAL_WORKS.md) (joke.2 candidate; not published yet)
 - [Tasks](docs/TASKS.md) | [Source and APK delivery](docs/RELEASING.md)
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)

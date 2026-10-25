@@ -1,5 +1,14 @@
 # JOKEMIHON tasks
 
+## Local works manager (2026-10-25, in progress)
+
+- [x] Record approved author grouping, flattened works, ordered bundles/category/cover design.
+- [x] Implement source/model/library/UI paths; candidate joke.2/code40, not published.
+- [x] Compile/narrow tests, 26 model/service tests, media safety review.
+- [x] Full tests: 151/11 suites, no failures/errors/skips; 15 Lint XMLs: 0 errors/149 warnings; app/source-local formatting and 33 resource keys pass.
+- [ ] Signed/minified Release, same signer, actual upgrade/SAF/reader/cover UI verification.
+- [ ] Review/commit/push source; new Release; anonymous download/hash verification; receipt.
+
 ## Initialization (2026-10-25)
 
 - [x] Download and verify upstream v0.21.2 source in an independent local checkout.

@@ -6,6 +6,7 @@ import eu.kanade.tachiyomi.data.cache.CoverCache
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.source.local.image.LocalCoverManager
 import tachiyomi.source.local.isLocal
+import tachiyomi.source.local.work.LocalWorkDefinition
 import java.io.InputStream
 import kotlin.time.Clock
 
@@ -24,7 +25,11 @@ suspend fun Manga.editCover(
     updateManga: UpdateManga,
     coverCache: CoverCache,
 ) {
-    if (isLocal()) {
+    if (isLocal() && LocalWorkDefinition.isWorkUrl(url)) {
+        // Gallery overrides are app-private; reader page covers use portable references instead.
+        stream.use { coverCache.setCustomCoverToCache(this, it) }
+        updateManga.awaitUpdateCoverLastModified(id)
+    } else if (isLocal()) {
         coverManager.update(toSManga(), stream)
         updateManga.awaitUpdateCoverLastModified(id)
     } else if (favorite) {
