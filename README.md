@@ -9,10 +9,17 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**Category wall implemented and source checks passed; first APK verification/publication pending.** This
-repository is public by owner request (2026-10-25); source and future published APK
-downloads do not require GitHub sign-in. The original upstream introduction and links below are preserved
-for attribution, not as download links for JOKEMIHON.
+**First custom release: [0.21.2-joke.1 · category wall](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.1).**
+[Download JOKEMIHON.apk](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.1/JOKEMIHON.apk)
+without GitHub sign-in. Tap the arrow on the right of the library category tabs to
+expand multiple rows. Independent package app.jokemihon; it does not overwrite or
+automatically import official Mihon data. Back up the original app before migrating.
+
+125 unit tests, zero Lint errors (146 warnings) and synthetic emulator UI checks
+passed. Physical-phone/full reader-extension regression is not implied; see Release
+notes and HANDOFF for scope and limitations. Repository is public by owner request.
+Original upstream introduction/download links below are retained for attribution,
+NOT as JOKEMIHON download links.
 
 Modified for JOKEMIHON on 2026-10-25: added this project notice. Original licensing
 and credits are retained below.

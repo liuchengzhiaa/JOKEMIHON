@@ -1,8 +1,8 @@
 # JOKEMIHON changelog
 
-## Unreleased - 2026-10-25
+## 0.21.2-joke.1 (39) - 2026-10-25
 
-### Candidate 0.21.2-joke.1 (39) - source checks passed; APK/publication pending
+### First custom APK - published
 - Add expandable, height-bounded, vertically scrollable multi-row category wall.
 - Preserve category order/counts, highlight selection and jump directly by stable ID.
 - Add production row-packing tests and isolated Kotlin smoke verification.
@@ -11,9 +11,13 @@
 - Establish independent JOKEMIHON identity/icon and dedicated local signing identity;
   disable upstream updater/telemetry and use owner release links.
 - Android compile, 125 unit tests and formatting passed; 15 module Lint reports
-  inspected: 0 errors, 146 warnings. Release APK/UI verification/publication pending.
+  inspected: 0 errors, 146 warnings. Signed/minified Release and 14 emulator UI
+  evidence checks passed; published APK anonymously downloaded and SHA256 verified.
+- Known limitation: expanded landscape wall crowds/clips the empty-state illustration;
+  collapse to restore book area. Physical-phone/full reader/extension tests not done.
+- Source/tag: b0a183dd8 / v0.21.2-joke.1. See Release build manifest for checksums.
 
-### Repository initialization and research
+## Repository setup and research - 2026-10-25
 
 - Make JOKEMIHON PUBLIC by explicit owner request for sign-in-free future APK downloads;
   verified with an unauthenticated repository API request and HTTP 200 page access.

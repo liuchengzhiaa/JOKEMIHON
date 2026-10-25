@@ -14,11 +14,21 @@
 
 ## Current initialization
 
-First custom candidate: 0.21.2-joke.1 (39), package app.jokemihon. Category wall,
-name/icon and disabled upstream updater/telemetry are implemented. Persistent local
-signing configured; public certificate pinned in tools/release-signing-certificate.sha256.
-No verified APK is published yet; see latest HANDOFF for exact build/test state. Do not mistake upstream README download badges
-or upstream version tags for JOKEMIHON releases.
+First published custom version: 0.21.2-joke.1 (39), package app.jokemihon.
+Source/APK commit b0a183dd8061e85c100e66415df3f9aeec07e721, tag v0.21.2-joke.1.
+Category wall, independent name/icon, fixed dedicated signer and disabled upstream
+updater/telemetry are delivered. See HANDOFF for the exact verified public download,
+tests and known limits. Do not mistake upstream badges/tags for JOKEMIHON releases.
+
+Subsequent APKs MUST retain app.jokemihon and the certificate pinned in
+tools/release-signing-certificate.sha256, with versionCode greater than 39. No signing
+rotation, tag reuse or release-asset overwrite. Documentation receipts do not need
+an identical APK rebuild and may advance main beyond the immutable APK source tag.
+
+Owner action still pending: make a protected OFFLINE backup of BOTH
+.signing/jokemihon-release.p12 and keystore.properties. Do not send either to GitHub
+or chat. Losing them can prevent compatible upgrades. Local duplicate copies are
+not an offline backup. Never silently regenerate the signer.
 
 The initial shallow checkout was expanded to preserve original commit history.
 origin is the owner's repository; upstream is for reference only, with local push

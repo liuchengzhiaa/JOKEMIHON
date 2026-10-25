@@ -22,7 +22,7 @@
 - [x] Push this documentation-only slice and verify remote commit/settings.
       Verified main=4147715d30595861627d492951f3d17330522814 (before receipt-only docs).
 
-## Category wall slice (2026-10-25, in progress)
+## Category wall slice (2026-10-25, delivered)
 
 - [x] Owner selected multi-row category wall; fixed toggle, bounded scrolling,
       original order, counts/highlight and direct category jumps implemented.
@@ -32,9 +32,10 @@
 - [x] Work around full C: and broken bundled JDK with isolated D: cache and verified JDK 21.
 - [x] Android narrow tests (7), full Debug tests (125), formatting and Lint passed;
       parsed 15 Lint reports: 0 errors, 146 warnings. Inherited errors fixed.
-- [ ] Build/inspect APK and test actual UI on available emulator/device or explicitly
-      record lack of device verification.
-- [ ] Review/commit/push completed source and publish verified first APK.
+- [x] Build and verify minified signed universal Release; 14 emulator UI evidence
+      checks passed. Physical-phone/full regression not performed; limits documented.
+- [x] Reviewed 28-file source pushed at b0a183dd8; unique v0.21.2-joke.1 published.
+      All 3 asset digests/sizes verified; anonymous full APK download/hash matched.
 - [ ] Owner offline backup of local keystore + keystore.properties (not yet done).
 
 ## Before first custom APK
@@ -42,12 +43,12 @@
 - [x] Confirm first customization scope with the owner: multi-row category wall.
 - [x] Set independent app name/icon/applicationId; disable or replace upstream
       updater and telemetry. Preserve licensing/attribution.
-- [ ] Establish dedicated persistent signing identity and offline backup; keep keys
-      and passwords out of Git. Record public certificate fingerprint only.
-- [ ] Verify JDK/SDK/NDK and Gradle/dependencies; run focused tests, full unit tests,
-      lint, build and actual APK checks. Document any device-test limitations.
-- [ ] Review/commit/push source, verify remote commit, publish a unique Release with
-      verified JOKEMIHON.apk and SHA256, then provide the owner its download link.
+- [x] Establish persistent dedicated signing identity; public certificate pin only.
+- [ ] Owner OFFLINE backup of .signing/jokemihon-release.p12 + keystore.properties.
+- [x] Toolchain/Gradle, 125 unit tests, 0-error Lint, formatting, Release and emulator
+      checks passed. Existing prebuilt native dependencies used; limits documented.
+- [x] Source/tag/Release/assets/public-download verified. See HANDOFF receipt.
+- [ ] Optional owner physical-phone acceptance and density/height feedback.
 - [ ] Optionally implement a reviewed release script/CI; do not enable inherited
       upstream Actions as-is.
 

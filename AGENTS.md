@@ -43,3 +43,13 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   triggers, destinations, permissions and signing before enabling any workflows.
 - Keep originals and user reading data safe; migrations need tests and backups.
 - Add/update tests for non-trivial state, data and migration behavior.
+## Established first release (2026-10-25)
+
+- app.jokemihon / JOKEMIHON, first published version 0.21.2-joke.1, versionCode 39.
+  Preserve package ID and dedicated signer; the next APK needs versionCode > 39.
+- Pin: tools/release-signing-certificate.sha256. Private signer is ignored
+  .signing/jokemihon-release.p12 plus ignored keystore.properties. NEVER delete or
+  regenerate either. Owner offline backup remains pending; tool-cache duplicates
+  are not offline backups. Never upload signing material.
+- Release/source tag v0.21.2-joke.1 points to b0a183dd8. Receipt-only docs can
+  advance main without rebuilding that exact APK or moving its tag.

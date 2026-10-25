@@ -34,7 +34,7 @@ Owner decision, 2026-10-25: use a multi-row tag wall, not a searchable category 
 ## Initial custom application identity
 
 - Name: JOKEMIHON. Release package: app.jokemihon (debug: app.jokemihon.dev).
-- Candidate: 0.21.2-joke.1, versionCode 39. Check HANDOFF for actual publication state.
+- Published: 0.21.2-joke.1, versionCode 39. See HANDOFF for verified delivery receipt.
 - Independent open-book/J vector launcher/splash icon. Internal upstream namespaces
   are kept for compatibility; existing official Mihon installations are not replaced.
 - Upstream updater/telemetry are disabled; release links target the owner repository.
@@ -55,3 +55,17 @@ Owner decision, 2026-10-25: use a multi-row tag wall, not a searchable category 
 See HANDOFF.md for exact completed checks, failures, limits and delivery receipt.
 Physical-phone acceptance and complete third-party extension/tracker regression are
 not implied by the synthetic layout and emulator checks.
+
+## First Release verification and known limits
+
+The exact universal minified Release APK passed 14 saved emulator XML/log checks
+with 40 synthetic categories / 30 fake books, in English and Simplified Chinese.
+Includes far empty-category jump, vertical wall versus horizontal book gestures,
+count preference, selected highlight, collapse synchronization, rotation, cold
+restart and long names at 150% font. 125 Debug unit tests and formatting passed;
+15 module Lint reports contain 0 errors and 146 warnings. This is not a physical-phone,
+full reader/extension/tracker or backup/restore regression test.
+
+In landscape the expanded wall crowds/clips the upstream empty-category illustration;
+collapse the wall for more book area. A first-boot emulator System UI timeout recovered
+with Wait; no application crash/ANR was found in the captured app exits/logs.

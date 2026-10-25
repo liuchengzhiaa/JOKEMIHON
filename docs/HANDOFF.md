@@ -1,6 +1,80 @@
 # JOKEMIHON handoff
 
-## Latest development: category wall (2026-10-25, APK verification pending)
+## Latest delivery: category wall (2026-10-25, PUBLISHED AND VERIFIED)
+
+The completed slice is delivered to the public owner repository. JOKESONG source,
+physical phones and personal reading data were not touched. Notes below the first
+separator are historical checkpoints, not current pending-publication statements.
+
+### Delivery receipt
+
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.1
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.1/JOKEMIHON.apk
+- Source/APK commit b0a183dd8061e85c100e66415df3f9aeec07e721; embedded SHA
+  b0a183dd8. Annotated tag v0.21.2-joke.1 resolves to the exact source commit.
+- Normal main push and API readback verified before publication. This subsequent
+  documentation-only receipt advances main; release tag/APK stay immutable at the
+  tested code commit. No identical APK rebuild or tag move is needed.
+- Release ID 423083096, published 2026-10-25T01:27:14Z; draft=false, prerelease=false.
+  Repository PUBLIC; inherited Actions remain disabled.
+- All 3 remote asset sizes/digests matched local files before publishing:
+  JOKEMIHON.apk: 67794839 bytes; JOKEMIHON.apk.sha256: 80 bytes; build-manifest.json: 3369 bytes.
+- APK SHA256: ececfa895e8f03999dac33c7522207498d68c41c971035d4dad5c16b388e3851.
+- Independent urllib opener WITHOUT auth/cookies/token read public API and downloaded
+  the whole APK: HTTP 200, exact size and SHA256 match the installed/tested universal
+  Release. Local receipt: ignored
+  .tools/releases/v0.21.2-joke.1/public-download-check/receipt.json.
+- Exact 28-file source upload reviewed: source/resources/tests/docs/public helpers
+  and public certificate pin only. Keys/APK/config/tool/auth caches stayed ignored.
+
+### Final verification
+
+- testDebugUnitTest lintDebug :app:spotlessCheck passed (11m 12s): 9 Debug JUnit
+  suites, 125 tests, 0 failures/errors. All 15 module Lint XMLs inspected: 0 Error/Fatal,
+  146 warnings remain. Narrow category-wall tests 7/7 and formatting passed.
+- Actual production packer smoke: 8 boundaries, 10000-category case, 500 seeded
+  property cases PASS. git diff --check and resource XML parsing passed.
+- :app:assembleRelease passed (15m 14s), R8/resource shrinking enabled. Exact universal
+  APK (not Debug/ABI-only substitute) verified: app.jokemihon, 0.21.2-joke.1, code 39,
+  minSdk 26, targetSdk 36, 4 ABIs. Signature v2, RSA4096, one signer matches public pin.
+  Generated COMMIT_SHA and updater=false/telemetry=false inspected.
+- Installed exact published Release on isolated Android 16 / API 36 Google APIs x86_64
+  AVD JOKEMIHON_CategoryWall_Test. Blank DB exported before inserting 40 synthetic
+  categories / 30 fake local books; no media/chapters/covers. Onboarding skipped only
+  for fixture setup, not fully tested. AVD stopped after tests; no phone install.
+- 14 saved XML/log assertions PASS: English/Chinese controls; expansion; independent
+  vertical scroll retaining book 01; direct category 40 empty-page jump; selected
+  highlight and expansion retained; collapse synchronization; rotation; 150% font;
+  two-line long-label selection; cold restart; existing count switch hide/restore
+  via UI; horizontal page swipe to book 08 and synchronized highlight; no FATAL/own
+  ANR/SQLite/OOM in final captured log; only deliberate force-stop exit reasons.
+- Screenshots for normal wall, category 40, landscape, 150% font inspected. Evidence and
+  scripts remain ignored .tools/verification; public build manifest gives test scope.
+
+### Limits and safest next action
+
+- First emulator boot showed one System UI not responding dialog; observed Wait
+  recovered. No app.jokemihon crash/ANR found. Do not claim global crash-free behavior.
+- Landscape expanded wall crowds/clips upstream empty-category illustration;
+  collapse for book area. Selection/scrolling/state restoration still work.
+- Not a physical-phone test, performance benchmark or complete reader/extension,
+  tracking-login, backup/restore or migration regression. Inherited Comick
+  app.mihon callback unchanged; co-installed OAuth flows not validated.
+- Independent app.jokemihon coexists with official Mihon; does not automatically
+  import its library. Back up original before restore; confirm download directories
+  and permissions separately. Upstream updater and telemetry stay disabled.
+- Persistent private signer: ignored .signing/jokemihon-release.p12 AND
+  keystore.properties. Public certificate SHA256:
+  f31ab9d9683c6e60fc92083a2493d754969ab10ae4b765871642a946bf5330a5.
+  Owner OFFLINE backup of BOTH remains pending. Local cached duplicate is NOT an
+  offline backup. NEVER upload, delete, regenerate or silently rotate the signer.
+- Owner should try the APK on a phone and report density/height preferences.
+  Future code slices preserve package/signer, increment versionCode above 39, verify,
+  and publish NEW tags/assets. No release overwrite. Receipt-only docs need no APK.
+
+---
+
+## Pre-release source checkpoint (historical, superseded by receipt above)
 
 Owner selected a multi-row category wall, not a searchable picker. Work is in this
 independent Mihon checkout; JOKESONG source is untouched.
@@ -56,7 +130,7 @@ independent Mihon checkout; JOKESONG source is untouched.
   stopped for build memory. Port5588, separate ADB server5038, localhost:5589.
   Start helper .tools/emulator/Start-TestEmulator.ps1; guard exact AVD name first.
   .tools/verification/ui_probe.py prepares only a blank test library with 40 fake
-  categories/30 fake books, preserving raw baseline separately. No personal media.
+  categories / 30 fake books, preserving raw baseline separately. No personal media.
   Release fixture injection requires root on this guarded userdebug AVD only.
 
 ### Safest next action
