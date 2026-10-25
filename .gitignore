@@ -38,3 +38,8 @@ local.properties
 /local-test-media/
 /private-exports/
 /tmp/
+/hs_err_pid*.log
+/replay_pid*.log
+
+# Persistent private signer (never treat as disposable tool cache)
+/.signing/

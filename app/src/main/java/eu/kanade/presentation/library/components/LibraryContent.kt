@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
@@ -56,6 +57,7 @@ fun LibraryContent(
         val pagerState = rememberPagerState(currentPage) { categories.size }
 
         val scope = rememberCoroutineScope()
+        val latestCategories by rememberUpdatedState(categories)
         var isRefreshing by remember(pagerState.currentPage) { mutableStateOf(false) }
 
         if (showPageTabs && categories.isNotEmpty() && (categories.size > 1 || !categories.first().isSystemCategory)) {
@@ -68,9 +70,11 @@ fun LibraryContent(
                 categories = categories,
                 pagerState = pagerState,
                 getItemCountForCategory = getItemCountForCategory,
-                onTabItemClick = {
+                onCategoryClick = { categoryId ->
                     scope.launch {
-                        pagerState.animateScrollToPage(it)
+                        // JOKEMIHON: resolve stable IDs at click time and skip intermediate category pages.
+                        val index = latestCategories.indexOfFirst { it.id == categoryId }
+                        if (index >= 0) pagerState.scrollToPage(index)
                     }
                 },
             )

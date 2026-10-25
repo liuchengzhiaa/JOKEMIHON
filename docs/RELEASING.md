@@ -14,8 +14,10 @@
 
 ## Current initialization
 
-No custom application code, identity, icon or signing has been changed. No APK has
-been compiled, tested or published. Do not mistake upstream README download badges
+First custom candidate: 0.21.2-joke.1 (39), package app.jokemihon. Category wall,
+name/icon and disabled upstream updater/telemetry are implemented. Persistent local
+signing configured; public certificate pinned in tools/release-signing-certificate.sha256.
+No verified APK is published yet; see latest HANDOFF for exact build/test state. Do not mistake upstream README download badges
 or upstream version tags for JOKEMIHON releases.
 
 The initial shallow checkout was expanded to preserve original commit history.
@@ -39,12 +41,12 @@ was rejected. Archiving them avoids extra authorization and accidental execution
    signing certificate SHA256 and selected package ID in repository documentation.
 3. Confirm Android tooling from this checkout: JDK 21 is selected by upstream CI;
    Gradle wrapper is 9.8.1, compile SDK 37.2 and NDK 29.0.14206865. Confirm actual
-   availability before changing dependency versions; these have not been executed.
+   availability before changing dependency versions; see HANDOFF for completed checks.
 4. Keep private SDK paths in ignored local.properties and tool/auth caches out of Git.
 
 ## Verification and publication
 
-Run focused tests first. Initial candidate commands, not yet executed here:
+Run focused tests first. Standard verification commands:
 
 ```powershell
 .\gradlew.bat testDebugUnitTest lintDebug -Pinclude-telemetry=false -Penable-updater=false
@@ -76,3 +78,49 @@ without assessing compatibility with this multi-module project.
 
 If blocked, record the exact failed command and safest next action instead of
 claiming delivery. No automated publishing script or CI signer is configured yet.
+## This host's isolated build environment (2026-10-25)
+
+The bundled Android Studio JDK 21 crashes; C: is nearly full. Do not delete user
+files, alter other projects or downgrade this project's dependencies to mask it.
+Use the checksum-verified, project-local JDK and D: cache created for this task:
+
+```powershell
+$root = (Get-Location).Path
+$env:JAVA_HOME = (Resolve-Path '.tools/jdk/jdk-21.0.12.1+1').Path
+$env:PATH = "$env:JAVA_HOME\bin;$env:PATH"
+$env:GRADLE_USER_HOME = Join-Path $root '.tools/gradle-user-home'
+$env:TEMP = Join-Path $root 'tmp'
+$env:TMP = $env:TEMP
+# If Git ownership differs for this terminal, scope safe.directory to this process;
+# use the current checkout path, never a global wildcard exception.
+$env:GIT_CONFIG_COUNT = '1'
+$env:GIT_CONFIG_KEY_0 = 'safe.directory'
+$env:GIT_CONFIG_VALUE_0 = $root.Replace('\', '/')
+.\tools\test-category-wall.ps1
+.\gradlew.bat :app:testDebugUnitTest --tests '*CategoryWallRowsTest' --max-workers=2 --console=plain
+.\gradlew.bat testDebugUnitTest --max-workers=2 --console=plain
+.\gradlew.bat lintDebug --max-workers=2 --console=plain
+.\gradlew.bat assembleRelease --max-workers=2 --console=plain
+```
+
+SDK location is only in ignored local.properties. No JOKESONG ASCII init script is
+needed for this ASCII checkout. Missing SDK components may require setup on a new host. Use HANDOFF for actual
+verification results; the isolated JVM smoke alone does not establish Android success.
+
+Never overwrite/regenerate .signing/jokemihon-release.p12 or local signing
+properties. The owner must back up BOTH files offline to retain update capability;
+the key has been generated locally but an offline backup is not yet confirmed.
+For memory-constrained full checks on this host, use a string argument array in
+PowerShell (quote dotted -P/-D properties; do not let PowerShell split them):
+
+```powershell
+$flags = @('--max-workers=1', '-Pkotlin.compiler.execution.strategy=in-process',
+           '-Dorg.gradle.jvmargs=-Xmx3g -Dfile.encoding=UTF-8', '--console=plain')
+.\gradlew.bat testDebugUnitTest lintDebug :app:spotlessCheck @flags
+.\gradlew.bat assembleRelease @flags
+```
+
+Stop only this project's dedicated Gradle daemon before emulator UI verification to
+release memory. The isolated test AVD is JOKEMIHON_CategoryWall_Test, port 5588;
+ADB server 5038 connects to localhost:5589. It contains only synthetic test data.
+Do not install to a physical phone or reuse another project's emulator implicitly.

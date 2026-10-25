@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- JOKEMIHON category navigation. -->
+    <string name="jokemihon_all_categories">All categories (%1$d)</string>
+    <string name="jokemihon_expand_categories">Expand category wall</string>
+    <string name="jokemihon_collapse_categories">Collapse category wall</string>
+</resources>

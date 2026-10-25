@@ -4,11 +4,12 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 **v0.21.2**. Independent project; not an official Mihon release.
 
 - [Project status and handoff](docs/HANDOFF.md)
+- [Expandable category wall](docs/CATEGORY_WALL.md)
 - [Tasks](docs/TASKS.md) | [Source and APK delivery](docs/RELEASING.md)
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**Initialization only: no custom APK has been built or published yet.** This
+**Category wall implemented and source checks passed; first APK verification/publication pending.** This
 repository is public by owner request (2026-10-25); source and future published APK
 downloads do not require GitHub sign-in. The original upstream introduction and links below are preserved
 for attribution, not as download links for JOKEMIHON.

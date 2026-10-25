@@ -22,10 +22,25 @@
 - [x] Push this documentation-only slice and verify remote commit/settings.
       Verified main=4147715d30595861627d492951f3d17330522814 (before receipt-only docs).
 
+## Category wall slice (2026-10-25, in progress)
+
+- [x] Owner selected multi-row category wall; fixed toggle, bounded scrolling,
+      original order, counts/highlight and direct category jumps implemented.
+- [x] Add pure row packer/JUnit cases and pass SDK-free smoke verification.
+- [x] Configure independent identity and persistent dedicated local signer; pin
+      public certificate only. Disable upstream updater and telemetry.
+- [x] Work around full C: and broken bundled JDK with isolated D: cache and verified JDK 21.
+- [x] Android narrow tests (7), full Debug tests (125), formatting and Lint passed;
+      parsed 15 Lint reports: 0 errors, 146 warnings. Inherited errors fixed.
+- [ ] Build/inspect APK and test actual UI on available emulator/device or explicitly
+      record lack of device verification.
+- [ ] Review/commit/push completed source and publish verified first APK.
+- [ ] Owner offline backup of local keystore + keystore.properties (not yet done).
+
 ## Before first custom APK
 
-- [ ] Confirm first customization scope with the owner.
-- [ ] Set independent app name/icon/applicationId; disable or replace upstream
+- [x] Confirm first customization scope with the owner: multi-row category wall.
+- [x] Set independent app name/icon/applicationId; disable or replace upstream
       updater and telemetry. Preserve licensing/attribution.
 - [ ] Establish dedicated persistent signing identity and offline backup; keep keys
       and passwords out of Git. Record public certificate fingerprint only.

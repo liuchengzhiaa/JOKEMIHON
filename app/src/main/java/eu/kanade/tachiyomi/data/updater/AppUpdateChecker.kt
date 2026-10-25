@@ -36,13 +36,8 @@ class AppUpdateChecker(
     }
 }
 
-val GITHUB_REPO: String by lazy {
-    if (isNightlyBuildType) {
-        "mihonapp/mihon-preview"
-    } else {
-        "mihonapp/mihon"
-    }
-}
+// JOKEMIHON: release links must point to the owner, never offer an incompatible upstream APK.
+const val GITHUB_REPO = "liuchengzhiaa/JOKEMIHON"
 
 val RELEASE_TAG: String by lazy {
     if (isNightlyBuildType) {

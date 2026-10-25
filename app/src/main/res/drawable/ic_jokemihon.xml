@@ -1,0 +1,7 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp" android:height="108dp"
+    android:viewportWidth="108" android:viewportHeight="108">
+    <!-- JOKEMIHON: original open-book mark with a J, distinct from the upstream icon. -->
+    <path android:fillColor="#E4DEFF" android:pathData="M25,31 Q39,27 53,35 L53,76 Q39,68 25,72 Z M55,35 Q69,27 83,31 L83,72 Q69,68 55,76 Z" />
+    <path android:fillColor="#4B36A5" android:pathData="M62,41 L75,41 L75,56 Q75,66 65,66 Q58,66 58,59 L63,59 Q63,62 66,62 Q70,62 70,56 L70,46 L62,46 Z" />
+</vector>

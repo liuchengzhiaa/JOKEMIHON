@@ -1,5 +1,77 @@
 # JOKEMIHON handoff
 
+## Latest development: category wall (2026-10-25, APK verification pending)
+
+Owner selected a multi-row category wall, not a searchable picker. Work is in this
+independent Mihon checkout; JOKESONG source is untouched.
+
+### Implemented
+
+- Fixed right-side expand/collapse arrow; original horizontal tabs remain collapsed.
+- Expanded variable-width chips retain order/count preference, selected highlight,
+  two-line names and 48dp minimum height. Height is min(280dp, 35% screen height),
+  with vertical lazy rows. It stays expanded after a direct stable-ID pager jump.
+- rememberSaveable retains expansion through activity recreation; selected row is
+  brought into view only when offscreen. No new cover fetch/query/schema migration.
+- Independent name/icon/package: JOKEMIHON / app.jokemihon (debug .dev).
+  Candidate 0.21.2-joke.1 / versionCode 39. Upstream updater/telemetry disabled;
+  release links point to liuchengzhiaa/JOKEMIHON.
+- Dedicated persistent signer is ignored .signing/jokemihon-release.p12, configured
+  by ignored keystore.properties. Public certificate SHA256 is pinned in
+  tools/release-signing-certificate.sha256. NEVER regenerate or upload the key.
+  Owner offline backup of BOTH files remains pending; no offline backup claimed.
+- Fixed inherited Lint issues without disabling checks: presentation-core default
+  splash color and observable calendar locale/weekday cache invalidation.
+
+### Verified source/build checks
+
+- git diff --check and resource XML parsing passed; app:spotlessCheck passed.
+- tools/test-category-wall.ps1: 8 boundary cases, 10000-category case and 500
+  deterministic property cases PASS against the actual production Kotlin packer.
+- Narrow :app:testDebugUnitTest --tests '*CategoryWallRowsTest': 7 tests PASS.
+- Final testDebugUnitTest lintDebug :app:spotlessCheck: BUILD SUCCESSFUL in 11m12s.
+  Parsed all 9 Debug JUnit suites: 125 tests, 0 failures, 0 errors.
+  Inspected all 15 module Lint XMLs: 0 Error/Fatal, 146 warnings remain (including
+  upstream/dependency warnings and a screen-height heuristic in the wall).
+  Log: ignored .tools/verification/final-checks.log. Do not rely on exit code alone:
+  upstream app lint abortOnError=false previously hid 3 locale errors.
+- Earlier Debug APK assembly passed; metadata and dedicated certificate inspected.
+  That Debug APK predates the calendar Lint fix and is NOT the release deliverable.
+- Minified Release build, actual Release UI/startup, remote push and publication
+  are still pending. No custom Release/APK is published yet.
+
+### Host build environment / reproducibility
+
+- Bundled Android Studio JDK21 crashes in jimage.dll; left untouched. System JDK17
+  cannot run Metro1.4.5. Verified official Adoptium21 lives in ignored
+  .tools/jdk/jdk-21.0.12.1+1. Archive SHA256:
+  f9d6e191ab098c0d416e7d588a24420a8621cd2f4720dab2459b8b7b2d2d8b4e.
+- C: filled during initial wrapper extraction. Removed ONLY this task's failed
+  gradle-9.8.1-bin extraction; unrelated caches/files untouched. Keep Gradle home and
+  temp on D: via .tools/Set-BuildEnv.ps1 / docs/RELEASING.md. SDK path is ignored.
+- Memory-safe flags (PowerShell argument array): --max-workers=1,
+  '-Pkotlin.compiler.execution.strategy=in-process',
+  '-Dorg.gradle.jvmargs=-Xmx3g -Dfile.encoding=UTF-8', --console=plain.
+- Isolated empty AVD JOKEMIHON_CategoryWall_Test (Android36 x86_64) is currently
+  stopped for build memory. Port5588, separate ADB server5038, localhost:5589.
+  Start helper .tools/emulator/Start-TestEmulator.ps1; guard exact AVD name first.
+  .tools/verification/ui_probe.py prepares only a blank test library with 40 fake
+  categories/30 fake books, preserving raw baseline separately. No personal media.
+  Release fixture injection requires root on this guarded userdebug AVD only.
+
+### Safest next action
+
+Review/stage exact source+docs (never .tools/.signing/keystore.properties), make a
+local source commit, then build minified assembleRelease against that commit.
+Inspect package/version/signer and test the actual universal Release APK on the
+isolated AVD: expansion, vertical scrolling, far empty category, collapse sync,
+rotation and large font. If successful, push main normally, publish unique
+v0.21.2-joke.1 with JOKEMIHON.apk + SHA256/build manifest, read back remote refs/assets
+and anonymously verify the download. Record a documentation-only receipt afterward.
+Physical-phone and complete extension/tracker regression remain outside these checks.
+
+---
+
 ## Latest continuation: public access and library research (2026-10-25)
 
 This section supersedes the PRIVATE visibility statements in the historical

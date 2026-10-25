@@ -24,13 +24,13 @@ val Project.Config: BuildConfig get() = object : BuildConfig {
         }
         ?: Distribution.LOCAL
 
-    override val includeTelemetry: Boolean = project.flag("include-telemetry")
-        ?: (distribution == Distribution.CI || distribution == Distribution.GITHUB)
+    // JOKEMIHON: never send custom usage/crashes to upstream services.
+    override val includeTelemetry: Boolean = false
 
     override val uploadCrashlyticsMapping: Boolean = includeTelemetry && (distribution == Distribution.GITHUB)
 
-    override val enableUpdater: Boolean = project.flag("enable-updater")
-        ?: (distribution != Distribution.LOCAL)
+    // JOKEMIHON: upstream APK updates are incompatible with this independent application.
+    override val enableUpdater: Boolean = false
 
     override val includeDependencyInfo: Boolean = project.flag("include-dependency-info") ?: false
 }
