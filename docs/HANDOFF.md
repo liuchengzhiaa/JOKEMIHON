@@ -1,37 +1,72 @@
 # JOKEMIHON handoff
 
-## Current work: local manager polish (2026-10-25, IN PROGRESS)
+## Latest delivery: joke.3 local manager preview (2026-10-25, PUBLISHED)
 
-Owner requested nicer pages, manual logical-directory merge/rename persistence,
-long-press-only cover selection controls, removable tags and backup clarity. Also
-explicitly requested simple validation and APK handoff for owner testing, not another
-long emulator run. Candidate joke.3/code41, same package and dedicated signer.
+Owner requested compact UI, manual logical-directory merge/rename, long-press-only
+cover checkboxes, removable tags and backup clarity. Explicitly requested simple
+validation and APK handoff for owner testing, NOT another extended emulator run.
+Completed code/source/static verification and public APK delivery; phone UI acceptance
+is still PENDING, not implied by the previous joke.2 device receipt below.
 
-Implemented: rounded compact directory cards/search and132dp-min cover grid; root
-long-press ordered selection, merge/rename/default first name/dissolve; pure validated
-physical-name mapping records in app-state preferences. No files or existing work IDs
-changed. Existing rules remember temporarily missing folders and repeated merges flatten.
-Cover checkboxes and select-all appear only while in long-press multi-selection mode.
-Category checkboxes load current memberships; explicit toggles add/remove, mixed untouched
-tags stay. Existing collection member previews edit the saved collection's categories.
-Direct category editing needs no online media access and never changes favorite/read state.
+### Publication receipt
 
-New library-backup field107 carries manual-group JSON, even if App settings is off;
-restoring Library validates then replaces this record atomically. Old backups without
-field107 retain current groups. Existing manga memo/page-cover backups stay unchanged.
-Backup help is in the manager info button. No real media/phone or JOKESONG touched.
+- Preview: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.3
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.3/JOKEMIHON.apk
+- Package app.jokemihon, 0.21.2-joke.3 / code41; same pinned RSA4096/v2 signer.
+- Source/APK commit c2f1fd2872178c757da6961af8e06240c514c312 / embedded c2f1fd287;
+  annotated tag v0.21.2-joke.3 immutable at that commit. Normal push/readback verified.
+- Release ID 423199881, published 2026-10-25T06:58:05Z;
+  draft=false, prerelease=true, PUBLIC. The previous stable/latest remains joke.2;
+  this preview has a direct public URL. Actions remain disabled.
+- Reviewed18-file source upload; exactly3 release assets, all remote sizes/digests
+  verified before publication: APK67871487 bytes, checksum81, manifest3634.
+- APK SHA256 d96c1773059f68f6ce63d2634c785c65dabfe8e9e5220fa413cd5c184c019342.
+- Independent opener without token/auth/cookies downloaded entire APK, HTTP200,
+  matching size and hash. Receipt ignored .tools/releases/v0.21.2-joke.3/
+  public-download-check/receipt.json. Keys/config/tools/media/backup files not uploaded.
+- Subsequent docs-only receipt advances main; no identical APK rebuild, tag move or
+  asset overwrite. Working source scope is this Mihon fork, not JOKESONG.
 
-Focused37 tests passed (17 models+12 service+8 manual/backup); initial combined task
-failed only format max-line-length. Those expressions were reflowed without suppression.
-Full testDebugUnitTest/lintDebug and app/source-local format checks passed in8m18s.
-All12 JUnit XML suites:162 tests, zero failures/errors/skips. All15 Lint XMLs inspected:
-zero Error/Fatal,152 warnings. Resource parity49 keys. git diff --check passes.
-Logs in ignored .tools/verification/local-polish-gates.log/.json; isolated JDK21/cache,
-serial3GB flags. Release not yet built/published. Do NOT reuse joke.2 device evidence as joke.3 validation.
-Next: inspect final gates/XMLs, commit reviewed source/docs, signed/minified universal
-APK build and package/code41/signer/embedded-commit check; no AVD regression. Push/tag
-unique v0.21.2-joke.3 and verify public assets + anonymous whole APK hash. Then receipt.
-Owner offline signer backup remains pending. Keep keys/config/cache/APKs out of Git.
+### Implementation and basic verification
+
+- Rounded compact directory cards/search/grid. Root long-press ordered selection:
+  merge2+ with first name by default, rename single, repeated flat merge, dissolve to
+  auto grouping. UUID/name + original directory membership saved in app-state preference.
+  No physical files, existing manga identities/titles/progress or DB schema altered.
+  Missing recorded folders stay remembered; new unrecorded folders stay auto grouped.
+- Work checkboxes/select-all hidden until long-press; clear/back/last deselection exits.
+- Current category memberships load into tri-state checkboxes; explicit add/remove only,
+  untouched mixed tags preserved. Removing all named tags keeps favorite in Default.
+  Existing member preview edits actual saved single/collection categories, no accidental
+  standalone duplicate. Category-only edits require no media availability.
+- Optional backup field107 carries validated manual-rule JSON with Library, independent
+  of App settings. Restore Library with field replaces manual rules only after complete
+  validation; older absent-field backups keep current rules. Existing manga memo/page
+  covers and chapter progress keep original backup fields. Include Chapters/Categories.
+- Focused37 tests passed; 11 added (8 grouping/backup +3 category service). Initial
+  combined task failed only a max-line-length format error; reflowed, no suppression.
+- Full testDebugUnitTest/lintDebug/app+source-local spotlessCheck passed in8m18s:
+  12 JUnit XML suites,162 tests, zero failures/errors/skips. Inspected15 Lint XMLs:
+  zero Error/Fatal,152 warnings. Resource parity49 keys; git diff --check passes.
+- app:assembleRelease passed in9m10s. Static universal APK checks: package/code41/name,
+  same signer pin,4 ABIs, min26/target36, embedded source commit, updater/telemetry false,
+  size/hash. Build used isolated D: JDK21/cache and serial/in-process3GB settings.
+  Dedicated Gradle daemon stopped; NO AVD/physical-device actions this slice.
+- Local logs, test reports and release artifacts remain ignored under .tools.
+
+### Pending owner acceptance / safest next step
+
+Install preview over previous JOKEMIHON AFTER a normal backup. Check both revised
+screens, long-press selection, merge/rename/dissolve across restart, removal of tags,
+and ordinary backup/restore of new manual groups on owner phone. No code41 device
+startup/upgrade/UI/restore test has been performed by Codex. Do not label it device-
+verified or reuse joke.2 screenshots as new evidence. Report owner findings for code42.
+
+Backups contain references/metadata, NOT comics/gallery-cover caches. Preserve relative
+paths and grant storage after restore. Legacy/new progress stays independent after
+one-time inheritance. Dissolve is auto regrouping, not nested undo history. Normal
+backup bounds/semantics in LOCAL_WORKS.md. Signer offline backup of BOTH ignored master
+and properties still owner-pending; never delete/regenerate/upload either.
 
 ---
 

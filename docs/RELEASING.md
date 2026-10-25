@@ -14,7 +14,12 @@
 
 ## Current releases
 
-Latest published custom version: 0.21.2-joke.2 (40), package app.jokemihon.
+Latest preview: 0.21.2-joke.3 (41), same app.jokemihon and pinned signer.
+Source/APK commit c2f1fd2872178c757da6961af8e06240c514c312 / v0.21.2-joke.3.
+Published PUBLIC prerelease; static/unit/Lint checks and anonymous whole download pass.
+Owner explicitly requested no extended emulator regression; phone acceptance pending.
+
+Previous device-checked stable/latest: 0.21.2-joke.2 (40), package app.jokemihon.
 Source/APK commit f4630606ea10b0d89d1cccb5270c2ff35b573740, tag v0.21.2-joke.2.
 Local works manager delivered; signed universal APK and anonymous whole download verified.
 See HANDOFF for upgrade/SAF/reader/cover/actual backup-restore checks and known limits.
@@ -26,7 +31,7 @@ updater/telemetry are delivered. See HANDOFF for the exact verified public downl
 tests and known limits. Do not mistake upstream badges/tags for JOKEMIHON releases.
 
 Subsequent APKs MUST retain app.jokemihon and the certificate pinned in
-tools/release-signing-certificate.sha256, with versionCode greater than 40. No signing
+tools/release-signing-certificate.sha256, with versionCode greater than 41. No signing
 rotation, tag reuse or release-asset overwrite. Documentation receipts do not need
 an identical APK rebuild and may advance main beyond the immutable APK source tag.
 

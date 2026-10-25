@@ -61,7 +61,7 @@ restore after removing synthetic virtual entries, and source refresh. All34 medi
 names/hashes unchanged. See HANDOFF/build manifest for exact evidence and untested areas.
 Normal backups preserve virtual references but not media; do not move original files.
 
-## joke.3 follow-up (candidate, 2026-10-25)
+## joke.3 follow-up (published preview, 2026-10-25)
 
 - Directory cards/search/grid polished. Long-press a logical directory to select in
   click order. Merge2+ with first selected name by default, or rename a single one.
@@ -86,3 +86,9 @@ Normal backups preserve virtual references but not media; do not move original f
   Chapters and Categories when creating backups. Media and gallery caches are not included.
 - Owner requested simple validation: unit/Lint/format and signed APK static checks,
   no new extended AVD/device test. Previous joke.2 device receipt remains historical.
+
+Published preview: [v0.21.2-joke.3](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.3),
+code41/source c2f1fd287.162 tests pass, Lint0 errors/152 warnings, formatting/resources
+and same-signer universal APK static checks pass. Public whole APK hash verified.
+New screen/interaction/new backup-field device restore acceptance is owner-pending;
+no new device run was performed. See HANDOFF for exact verification boundaries.

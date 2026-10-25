@@ -2,7 +2,7 @@
 
 ## 0.21.2-joke.3 (41) - 2026-10-25
 
-### Local directory polish and manual grouping - candidate
+### Local directory polish and manual grouping - published preview
 - Compact rounded author cards and search, clearer cover grid and selection state.
 - Long-press logical directories to merge in selection order, rename or dissolve
   manual groups; persist explicit physical-directory membership without moving files.
@@ -15,7 +15,9 @@
 - Add11 focused grouping/category/backup tests. Per owner request, no long emulator
   regression this slice: compile/unit/Lint/signature checks only; phone acceptance pending.
 - Full162 tests pass; Lint0 errors/152 warnings, format and49-resource parity pass.
-- Build, publication and public download verification pending; see HANDOFF.
+- Signed/minified universal APK built, same signer verified, source c2f1fd287 pushed;
+  v0.21.2-joke.3 preview published and anonymous whole APK hash checked.
+  Owner device acceptance remains pending; no code41 UI/upgrade/restore test claimed.
 
 ## 0.21.2-joke.2 (40) - 2026-10-25
 

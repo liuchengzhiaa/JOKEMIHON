@@ -54,11 +54,23 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
 - Release/source tag v0.21.2-joke.1 points to b0a183dd8. Receipt-only docs can
   advance main without rebuilding that exact APK or moving its tag.
 
-## Latest release (2026-10-25)
+## Previous device-checked release (2026-10-25)
 
-- Published 0.21.2-joke.2 / code40, same app.jokemihon and pinned signer. Next APK code>40.
+- Published 0.21.2-joke.2 / code40, same app.jokemihon and pinned signer. Superseded versionCode floor is below.
 - Source/tag f4630606ea10b0d89d1cccb5270c2ff35b573740 / v0.21.2-joke.2 immutable.
 - Local works are namespaced memo-backed original-path references; never migrate or
   rewrite physical media to make virtual entries. Preserve backup compatibility and
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
+
+## Latest preview (2026-10-25)
+
+- Published PUBLIC prerelease 0.21.2-joke.3 / code41, same package/signer; next APK code>41.
+- Source/tag c2f1fd2872178c757da6961af8e06240c514c312 / v0.21.2-joke.3 immutable.
+- Manual logical-directory rules are original-name presentation mappings; optional
+  backup field107 travels with Library. Do not write them to user media or make them
+  depend on App settings. Keep old absent-field backups compatible.
+- Categories now support explicit removal; untouched mixed batch tags stay intact.
+- 162 tests/0-error Lint/static APK/public download verified. This slice explicitly
+  used simple validation by owner request; NO code41 device run. Owner acceptance
+  pending. Do not conflate previous joke.2 AVD evidence with this preview.

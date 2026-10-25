@@ -10,7 +10,17 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**Latest: [0.21.2-joke.2 · local works manager](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.2).**
+**New preview: [0.21.2-joke.3 · directory grouping and UI polish](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.3).**
+[Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.3/JOKEMIHON.apk)
+without sign-in. Code41, same signer; back up before upgrading. Long-press directory
+cards to merge/rename/ungroup; work checkboxes appear only after long-press. Existing
+work preview supports removable categories. Manual groups/names join Library backups
+independently of App settings. Include Chapters/Categories; comics are not copied.
+162 unit tests/zero Lint errors (152 warnings), formatting and APK static checks pass.
+Per owner request no repeated device regression; phone UI/upgrade/restore acceptance
+is pending. This is a pre-release; the prior device-checked stable/latest stays below.
+
+**Previous device-checked release: [0.21.2-joke.2 · local works manager](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.2).**
 [Download JOKEMIHON.apk](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.2/JOKEMIHON.apk)
 without GitHub sign-in. Same package/signer as joke.1, versionCode40; back up before upgrading.
 
