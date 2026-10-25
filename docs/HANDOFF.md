@@ -1,6 +1,6 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.4 optional removal of originals (2026-10-25, BUILD/PUBLICATION PENDING)
+## Current slice: joke.4 optional removal of originals (2026-10-25, PUBLISHED; NOT TESTED)
 
 Owner explicitly requested this option and NO tests; do not run unit tests, Lint,
 format checks, emulator or phone tests for this slice. Compile/package only.
@@ -15,8 +15,24 @@ format checks, emulator or phone tests for this slice. Compile/package only.
   Old tags no longer display the unfavorited item; new tags are explicitly selected.
   Progress inheritance is unchanged (legacy parents only, one-time, no later sync).
 - Same package/signer, candidate 0.21.2-joke.4 / code42. No new backup schema needed.
-- Pending: build signed Release, source/doc commit and normal push, unique public
-  prerelease and APK link. This build is NOT tested; owner phone acceptance pending.
+- app:assembleRelease passed in 9m42s; code42 universal signed/minified APK packaged.
+  No unit/Lint/format/static-signature/device/behavior tests were run, by request.
+- Source/main ea772c0fa161da903f917441c3c5e03ae8586e83 pushed/read back;
+  immutable annotated v0.21.2-joke.4 targets this source commit.
+- PUBLIC prerelease ID423210499, published 2026-10-25T07:20:38Z; draft=false,
+  prerelease=true; previous stable/latest remains joke.2 (not promoted).
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.4
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.4/JOKEMIHON.apk
+- APK67873035 bytes, SHA256 0db37a2cc44a0cc5ea622ff2f66f6a2efc39f47f82cd8f0b4a50576dc75c6899.
+  Three remote asset sizes/digests match local APK/checksum/manifest; anonymous public
+  API readback confirms published APK URL. No repeated whole-download check this slice.
+  Local receipt: .tools/releases/v0.21.2-joke.4/publication-receipt.json (ignored).
+- Reviewed10-file source upload and later receipt-only docs; no keys/config/media/APKs
+  in Git. Signer configuration unchanged; owner offline backup remains pending.
+- Safest next step: owner creates Library+Chapters+Categories backup BEFORE replacing
+  originals, installs preview and checks on phone. Re-add can restore original favorite
+  membership; backups created AFTER removal omit unfavorited originals. No behavioral
+  guarantees inferred from successful compilation or previous-version test counts.
 
 ---
 

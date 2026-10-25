@@ -63,7 +63,18 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview (2026-10-25)
+## Latest preview: joke.4 (2026-10-25)
+
+- PUBLIC prerelease 0.21.2-joke.4 / code42; next APK code>42, same package/signer config.
+- Source/tag ea772c0fa161da903f917441c3c5e03ae8586e83 / v0.21.2-joke.4 immutable.
+- Optional original unfavorite only after combined target saved and full coverage;
+  keep partial originals, files and chapter/history/category rows. See LOCAL_WORKS.
+- Explicit owner exception THIS SLICE: NO tests/Lint/format/device checks. Build only
+  passed9m42s. Remote asset digests/sizes and public API delivery readback confirmed.
+  Owner acceptance pending; never reuse older tests as joke.4 evidence. Resume normal
+  standing verification for future slices unless owner gives another exception.
+
+## Previous preview: joke.3 (2026-10-25)
 
 - Published PUBLIC prerelease 0.21.2-joke.3 / code41, same package/signer; next APK code>41.
 - Source/tag c2f1fd2872178c757da6961af8e06240c514c312 / v0.21.2-joke.3 immutable.

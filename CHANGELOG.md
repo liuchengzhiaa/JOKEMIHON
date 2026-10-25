@@ -6,6 +6,7 @@
 - Original entries disappear from all library categories; files, chapter/history rows and saved categories remain untouched. Partial originals stay visible; new collection categories are not inherited.
 - Save the new collection before unfavoriting originals; no physical media mutation.
 - Owner explicitly requested NO tests: unit/Lint/format checks and device runs are skipped; build only, owner acceptance pending.
+- Release build passed9m42s; source ea772c0fa and v0.21.2-joke.4 preview published; remote asset digests/sizes and public API URL readback confirmed. No device or behavioral validation claimed.
 
 ## 0.21.2-joke.3 (41) - 2026-10-25
 

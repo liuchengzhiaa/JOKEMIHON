@@ -10,7 +10,16 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**New preview: [0.21.2-joke.3 · directory grouping and UI polish](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.3).**
+**New preview: [0.21.2-joke.4 · optional replacement of combined originals](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.4).**
+[Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.4/JOKEMIHON.apk)
+without sign-in. Code42, existing package/signing configuration. Combined import now
+has a default-off option to unfavorite fully covered originals after saving the new
+collection. Partial originals remain. No media/chapters/history are deleted. Back up
+BEFORE replacement; new library backups omit unfavorited entries. **NO tests run by
+explicit owner request** (no unit/Lint/format/device tests); Release build only.
+Owner phone acceptance pending. Prior version checks below do not validate this build.
+
+**Previous preview: [0.21.2-joke.3 · directory grouping and UI polish](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.3).**
 [Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.3/JOKEMIHON.apk)
 without sign-in. Code41, same signer; back up before upgrading. Long-press directory
 cards to merge/rename/ungroup; work checkboxes appear only after long-press. Existing

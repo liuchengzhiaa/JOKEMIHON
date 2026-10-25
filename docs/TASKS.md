@@ -5,7 +5,7 @@
 - [x] Default-off remove-originals checkbox, fully covered originals only.
 - [x] Preserve media/chapters/history/category rows; never remove new target.
 - [x] Skip ALL tests/Lint/device/format checks by explicit owner request this slice.
-- [ ] Signed code42 Release build; reviewed source/doc push; public APK delivery.
+- [x] Signed code42 Release build9m42s; reviewed10-file source ea772c0fa pushed; v0.21.2-joke.4 PUBLIC preview,3 remote asset digests/sizes and anonymous API URL readback confirmed.
 - [ ] Owner phone acceptance (no automated/device tests this slice).
 
 ## Local manager polish (2026-10-25, preview delivered)
