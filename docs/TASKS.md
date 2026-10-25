@@ -2,7 +2,7 @@
 
 ## Compact tag marker (2026-10-25)
 
-- [x] Explain top-left Check=in library, not selection; leave its behavior unchanged.
+- [x] Explain Check=in library; remove redundant top-left Check per owner follow-up. Keep status text and multi-selection checkboxes.
 - [x] Shrink bottom-right tag badge28dp->16dp without new assets or logic changes.
 - [x] Continue no-test workflow; compile/package only.
 - [ ] code45 Release compile, source/docs push and public preview APK delivery.

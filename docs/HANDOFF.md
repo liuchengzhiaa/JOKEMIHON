@@ -3,12 +3,16 @@
 ## Current slice: joke.7 smaller tag badge (2026-10-25, BUILD/PUBLICATION PENDING)
 
 Owner asks what the upper-left Check means and says the lower-right category badge
-is too large. Explained Check = already in library, not selection; leave it unchanged.
+is too large. Explained Check = already in library, not selection. Owner then said
+it is redundant with tags; remove the Check overlay in the SAME unpublished code45
+slice. Do not publish the earlier shrink-only build or create another version for it.
 
 - ONLY bottom-right Label badge sizing changed: outer28dp ->16dp (glyph18->12dp,
   padding5->2dp), rounded corners10->5dp, edge inset6->4dp. Existing status colors,
   own/related meaning and content descriptions unchanged. No clickable target added.
-- No category/data/legacy-match/selection/backup/media logic changed. No new assets.
+- Remove ONLY top-left in-library Check overlay/import. Keep under-cover in-library
+  status text and long-press multi-selection checkboxes. No category/data/legacy-match/
+  selection/backup/media logic changed. No new assets.
 - Candidate0.21.2-joke.7/code45; existing app.jokemihon/signing configuration.
 - Continue owner no-test workflow: no unit/Lint/format/static-signature/emulator/device
   tests. Pending Release compile, source/docs push, unique public preview APK delivery.

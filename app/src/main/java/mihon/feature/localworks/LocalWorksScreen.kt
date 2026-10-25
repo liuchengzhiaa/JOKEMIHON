@@ -71,7 +71,6 @@ import eu.kanade.tachiyomi.ui.setting.SettingsScreen
 import eu.kanade.tachiyomi.util.system.toast
 import kotlinx.coroutines.CancellationException
 import mihon.icons.materialsymbols.MaterialSymbols
-import mihon.icons.materialsymbols.rounded.Check
 import mihon.icons.materialsymbols.rounded.Folder
 import mihon.icons.materialsymbols.rounded.Info
 import mihon.icons.materialsymbols.rounded.KeyboardArrowDown
@@ -663,15 +662,6 @@ private fun WorkCard(
     ) {
         Box {
             MangaCover.Book(manga, Modifier.fillMaxWidth(), shape = RoundedCornerShape(12.dp))
-            if (added && !selectionMode) {
-                Surface(Modifier.align(Alignment.TopStart).padding(6.dp), shape = RoundedCornerShape(10.dp)) {
-                    Icon(
-                        MaterialSymbols.Rounded.Check,
-                        stringResource(R.string.local_works_in_library),
-                        Modifier.padding(5.dp).size(18.dp),
-                    )
-                }
-            }
             if (item.folder != null) {
                 Surface(
                     Modifier.align(Alignment.BottomStart).padding(6.dp),

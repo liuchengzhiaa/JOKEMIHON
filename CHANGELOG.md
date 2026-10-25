@@ -5,7 +5,8 @@
 - Reduce cover bottom-right category status badge from28dp to16dp overall:12dp
   vector,2dp padding,5dp corners,4dp edge inset. Same own/related category colors
   and accessibility descriptions; no new images, animations or hit targets.
-- Top-left Check still means in library, not multi-selection. Check size, long-press
+- Remove redundant top-left in-library Check overlay per owner follow-up. Keep
+  in-library text under cover, including Default-only favorites. Long-press selection
   checkboxes, category lookup/editing, backups and media behavior unchanged.
 - Continue owner no-test workflow: compile/package only; publication/phone acceptance pending.
 

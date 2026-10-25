@@ -181,8 +181,9 @@ run for code44; owner phone acceptance pending, including legacy and mixed batch
 
 ## joke.7: smaller category status badge
 
-Top-left Check means this resolved entry is in the library, not selected. Selection
-checkboxes only appear after long-press. Bottom-right Label means own or related named
+Top-left in-library Check overlay was removed per owner follow-up because it duplicates
+the category marker. Under-cover in-library text stays, including Default-only entries.
+Selection checkboxes still only appear after long-press. Bottom-right Label means own or related named
 categories as above, not an action button. Its overall badge is now16dp instead of28dp
 (12dp vector +2dp padding each side),5dp rounded corners and4dp cover-edge inset.
 Status colors/descriptions and all identity/category/backup behavior are unchanged.
