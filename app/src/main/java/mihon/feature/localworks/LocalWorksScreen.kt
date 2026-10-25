@@ -77,7 +77,7 @@ import mihon.icons.materialsymbols.rounded.Info
 import mihon.icons.materialsymbols.rounded.KeyboardArrowDown
 import mihon.icons.materialsymbols.rounded.KeyboardArrowRight
 import mihon.icons.materialsymbols.rounded.KeyboardArrowUp
-import mihon.icons.materialsymbols.rounded.Label
+import mihon.icons.materialsymbols.automirroredrounded.Label
 import mihon.icons.materialsymbols.rounded.Refresh
 import mihon.icons.materialsymbols.rounded.Search
 import tachiyomi.domain.category.model.Category
@@ -651,7 +651,7 @@ private fun WorkCard(
                     color = MaterialTheme.colorScheme.primaryContainer,
                 ) {
                     Icon(
-                        MaterialSymbols.Rounded.Label,
+                        MaterialSymbols.AutoMirroredRounded.Label,
                         stringResource(R.string.local_works_has_tags),
                         Modifier.padding(5.dp).size(18.dp),
                     )
@@ -911,7 +911,7 @@ private fun ImportDialog(
                         enabled = memberships != null && !saving,
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Icon(MaterialSymbols.Rounded.Label, null, Modifier.size(18.dp))
+                        Icon(MaterialSymbols.AutoMirroredRounded.Label, null, Modifier.size(18.dp))
                         Text(stringResource(R.string.local_works_choose_tags), Modifier.padding(start = 8.dp))
                     }
                     val selectedNames = categories.filter {
