@@ -7,7 +7,7 @@
 - [x] Portable directory covers even without import; backup Library field108.
 - [x] Lightweight named-tag vector badges and searchable tri-state grid picker.
 - [x] Continue explicit no-test workflow; no unit/Lint/format/emulator/device checks.
-- [ ] Signed code43 Release compile, source/docs push and public preview APK delivery.
+- [x] Release compile9m11s; source438de729c and immutable v0.21.2-joke.5 PUBLIC preview;3 asset sizes/digests and anonymous public API delivery readback confirmed.
 - [ ] Owner phone acceptance, including new-phone ordinary backup/restore.
 
 ## Combined-import replacement option (2026-10-25)

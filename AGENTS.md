@@ -63,7 +63,23 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview: joke.4 (2026-10-25)
+## Latest preview: joke.5 (2026-10-25)
+
+- PUBLIC prerelease0.21.2-joke.5 / code43; next APK code>43, same package/signer config.
+- Source/tag438de729ced6e71ac5048230cfc1d489050d423a / v0.21.2-joke.5 immutable.
+- Logical work-directory creation is separate from import. Exact directory/child
+  library identities/categories/covers; no member-to-parent fallback. Old favorited
+  combinations adopted without identity migration. Original media never moved.
+- Optional108 includes ALL work directories/names/order/page covers with Library,
+  including unfavorited directories; independent of App settings. Keep107 unchanged.
+  Absent108 preserves existing records; present108 validated before replacement.
+- Continued owner no-test exception for this slice: no unit/Lint/format/static-signer/
+  emulator/device checks. Final Release compile9m11s only. Remote asset sizes/digests
+  and anonymous public API delivery readback confirmed, phone acceptance pending.
+  Do not reuse old tests/device evidence as code43 proof. Default future verification
+  remains the standing rule unless owner requests otherwise. See LOCAL_WORKS/HANDOFF.
+
+## Previous preview: joke.4 (2026-10-25)
 
 - PUBLIC prerelease 0.21.2-joke.4 / code42; next APK code>42, same package/signer config.
 - Source/tag ea772c0fa161da903f917441c3c5e03ae8586e83 / v0.21.2-joke.4 immutable.

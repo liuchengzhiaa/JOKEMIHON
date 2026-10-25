@@ -14,7 +14,9 @@
 - Choose child first page as directory cover, or open directory reader and long-press
   any page. Neither needs library import or changes the child cover.
 - Owner no-test workflow continued: NO unit/Lint/format/emulator/device tests; compile
-  and package only. Release/publication pending, owner acceptance required.
+  and package only. Final Release build9m11s; source438de729c and public preview
+  v0.21.2-joke.5 published, remote asset sizes/digests and public API URL read back.
+  Owner phone/new-phone restore acceptance remains pending.
 
 ## 0.21.2-joke.4 (42) - 2026-10-25
 

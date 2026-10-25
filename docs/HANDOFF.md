@@ -1,6 +1,6 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.5 logical work directories/tags (2026-10-25, BUILD/PUBLICATION PENDING)
+## Current slice: joke.5 logical work directories/tags (2026-10-25, PUBLISHED; NOT TESTED)
 
 Owner asked to implement the agreed separation plus lightweight tag badges and a
 searchable tag-grid picker. Continued the requested NO-test workflow: no unit/Lint/
@@ -31,9 +31,28 @@ format/static-signature/emulator/device tests; only compile/package and delivery
   outer Save/Confirm applies explicit deltas, preserving untouched mixed tags.
 - Existing default-off removal option kept ONLY on directory import; creation never
   removes original favorites, and children/dirs otherwise remain independent.
-- Candidate 0.21.2-joke.5 / code43, existing package/private signer configuration.
-  Pending: source/docs review+commit; Release compile, push/tag/public APK publication.
-  Owner should back up Library+Chapters+Categories before installing and test on phone.
+- Published 0.21.2-joke.5 / code43, existing package/private signer configuration.
+- First compile failed2m16s ONLY because Label was in AutoMirroredRounded, not Rounded;
+  reused existing icon/import, committed fix. Final app:assembleRelease passed9m11s.
+  Existing test fixture constructor adjusted for new injected store, NOT executed.
+  No unit/Lint/format/static-signature/emulator/device/behavior tests this slice.
+- Reviewed16 unique source/resource/fixture/docs files; source commits5b8f368b8 and
+  438de729ced6e71ac5048230cfc1d489050d423a pushed/read back. Immutable annotated
+  v0.21.2-joke.5 targets438de729c; subsequent receipt-only docs do not rebuild APK.
+- PUBLIC prerelease ID423237475, published2026-10-25T08:05:51Z; draft=false,
+  prerelease=true, not promoted to latest/stable. Existing stable remains joke.2.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.5
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.5/JOKEMIHON.apk
+- APK67900535 bytes, SHA2569baacf1eb16e3f00a9b18e6437d9aee526950499774669e4db6ac1e3c23dfdbc.
+  Three remote asset sizes/digests match local APK/checksum/manifest (67900535/80/1982
+  bytes). Anonymous public API readback confirms public APK URL; no whole-download
+  test repeated. Receipt ignored .tools/releases/v0.21.2-joke.5/publication-receipt.json.
+- Only reviewed source/docs and Release APK/checksum/manifest uploaded; no keys,
+  local config/auth caches/media/backups. Signer offline backup still owner-pending.
+- Safest next action: owner backs up Library+Chapters+Categories BEFORE installing;
+  phone check creation without import, directory vs child independent tags/covers,
+  old combination compatibility, badges/picker and new-phone ordinary backup/restore.
+  Build success/older tests are NOT runtime acceptance for this preview.
 
 ---
 

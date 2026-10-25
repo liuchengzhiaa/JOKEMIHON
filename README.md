@@ -10,7 +10,19 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**New preview: [0.21.2-joke.4 · optional replacement of combined originals](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.4).**
+**New preview: [0.21.2-joke.5 · independent work directories and tag grid](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.5).**
+[Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.5/JOKEMIHON.apk)
+without sign-in. Code43, existing package/signing configuration. Creating a logical
+work directory no longer imports it; click to browse children, long-press or Directory
+options to import the directory. Directory/children have independent tags/covers.
+Existing combinations retain their identities. Vector Label badge shows named tags;
+Choose tags opens a searchable, filled/partial-state grid. Library backup includes
+unfavorited directory names/members/order/page covers via108, author groups via107;
+include Chapters/Categories too, preserve media paths and regrant storage on restore.
+**NO tests run this slice; Release build only. Back up before install; owner phone
+and new-phone restore acceptance pending.** Older checks below do not validate code43.
+
+**Previous preview: [0.21.2-joke.4 · optional replacement of combined originals](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.4).**
 [Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.4/JOKEMIHON.apk)
 without sign-in. Code42, existing package/signing configuration. Combined import now
 has a default-off option to unfavorite fully covered originals after saving the new
