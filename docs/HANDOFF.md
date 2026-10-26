@@ -31,6 +31,8 @@ Source-confirmed issues vs inferred symptom:
 - Reader/work cover IO, data/backup107/108 and layout settings unchanged. Cache is private
   disposable encoded images, not persistent media backup. Existing cover error artwork
   kept, local logcat reports fetch/decode errors, no telemetry upload.
+- First compile failed1m25s only on nullable EPUB input stream at line95; added explicit
+  missing-stream failure before scoped use. No APK produced/published from failed build.
 - Candidate joke.10/code48, same package/signer. Four regression source cases added,
   NOT compiled/executed. Build/source review/publication pending. Owner phone acceptance
   (cold first page, explicit cover, back/restart, refresh, ZIP/SAF cancellation) pending.

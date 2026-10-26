@@ -92,7 +92,8 @@ class LocalChapterCoverManager(
                 } else if (path.entry.substringAfterLast('.').equals("epub", true)) {
                     file.epubReader(context).use { reader ->
                         val image = reader.getImagesFromPages().firstOrNull() ?: error("Chapter has no readable image")
-                        reader.getInputStream(image).use { copyBounded(it, output) }
+                        val stream = reader.getInputStream(image) ?: error("Image is unavailable")
+                        stream.use { copyBounded(it, output) }
                     }
                 } else {
                     file.archiveReader(context).use { reader ->
