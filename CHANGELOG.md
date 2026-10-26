@@ -1,6 +1,6 @@
 # JOKEMIHON changelog
 
-## 0.21.2-joke.9 (47) - 2026-10-26 (candidate)
+## 0.21.2-joke.9 (47) - 2026-10-26
 
 - Replace chapter layout text with accessible existing ViewModule vector icon.
 - Reuse library SettingsChipRow/SliderItem/CheckboxItem in an adaptive display sheet:
@@ -14,7 +14,9 @@
   Preserve old layout2 as comfortable grid, chapter IDs/order/selection/swipe/download
   callbacks and missing-marker rows. No cover IO/backup107/108 changes.
 - Continued owner no-test workflow. Three regression sources added but NOT run;
-  no unit/Lint/format/static-signature/device checks. Build/publication pending.
+  no unit/Lint/format/static-signature/device checks. Release build12m26s;
+  source0d7503ce6/v0.21.2-joke.9 PUBLIC preview delivered, all3 asset digests/sizes
+  and anonymous public API download URL read back. Owner phone acceptance pending.
 
 ## 0.21.2-joke.8 (46) - 2026-10-26
 

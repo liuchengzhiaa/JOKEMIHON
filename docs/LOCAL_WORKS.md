@@ -231,3 +231,7 @@ no tests/device checks. Owner phone acceptance pending. See HANDOFF for full rec
   backups. New preferences travel with App settings, no automatic media writes.
 - Continued no-test workflow; new regression sources unexecuted. Owner phone visual,
   rotation/columns/selection acceptance pending. See HANDOFF for delivery state.
+
+Delivery: joke.9/code47, source0d7503ce6, immutable v0.21.2-joke.9 PUBLIC preview.
+Release compile12m26s;3 asset digests/sizes/public API URL readback confirmed. No
+tests/device checks; owner phone acceptance pending. Full receipt in HANDOFF.

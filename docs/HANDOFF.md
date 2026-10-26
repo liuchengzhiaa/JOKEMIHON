@@ -1,6 +1,6 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.9 library-style chapter display (2026-10-26, CANDIDATE)
+## Current slice: joke.9 library-style chapter display (2026-10-26, PUBLISHED; NOT TESTED)
 
 Owner screenshot asks icon instead of text layout button and library-style grid/
 column choices. Clarified book-style columns x scrolling rows, not fixed square page
@@ -8,7 +8,7 @@ counts; auto or1-10 columns, portrait/landscape remembered separately. All chapt
 share settings independently from actual library settings. Continue owner no-test
 workflow: compile/package only; no unit/Lint/format/static-signature/device checks.
 
-- Candidate0.21.2-joke.9/code47, existing app.jokemihon/signer configuration.
+- Published0.21.2-joke.9/code47, existing app.jokemihon/signer configuration.
 - ChapterLayoutSelector now existing RoundedFilled.ViewModule IconButton with localized
   accessibility description; adaptive sheet reuses library SettingsChipRow, SliderItem,
   CheckboxItem. List/cover list/compact/comfortable/cover-only. Old chapter layout2
@@ -26,10 +26,26 @@ workflow: compile/package only; no unit/Lint/format/static-signature/device chec
 - Layout/columns/badge preferences travel with App settings; no backup field changes,
   no media or chapter/work cover-setting changes. Three regression case sources added
   for policy/rows, NOT compiled/executed. No owner media/DB inspected.
-- Build, exact source upload review and public preview publication pending. Owner
-  phone acceptance pending including icon/sheet, rotation/pane widths/columns and
-  grid selection/reading. Signer offline backup still owner-pending. Safest next:
-  compile/package without tests, publish exact source/new tag, owner backs up/accepts.
+- app:assembleRelease SUCCESS12m26s,388 tasks/37 executed. No unit/Lint/format/
+  static-signature/device checks; three new regression source cases NOT compiled/run.
+  Existing Compose stack mapping/deprecation warnings only, no build failure.
+- Reviewed15-file source/resource/docs/test-source set; source
+  0d7503ce629d59450add60b26a357986c37359c9 pushed/read back. Immutable annotated
+  v0.21.2-joke.9 targets this APK source; later receipt docs do not rebuild/move tag.
+- PUBLIC prerelease ID424374530, published2026-10-26T14:49:20Z; draft=false,
+  prerelease=true, explicitly not promoted to stable/latest. Existing package/signer
+  configuration and disabled inherited Actions unchanged.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.9
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.9/JOKEMIHON.apk
+- APK67925491 bytes; sha256:6219425fcfb03067e5d93cb701c50dc86c54ef64869bc06f30098f85c3571d60.
+  All3 remote sizes/digests match APK/checksum/manifest67925491/80/1560 bytes.
+  Anonymous public API delivery URL/readback confirmed, full APK download NOT repeated.
+  Ignored .tools/releases/v0.21.2-joke.9/publication-receipt.json has receipt. No keys,
+  local config/auth caches/media/backups uploaded. No owner media/DB/device inspected.
+- Safest next: owner backs up, installs and accepts icon/sheet, five modes, real pane/
+  rotation/1-10 columns and grid reading/selection. Signer offline backup still pending.
+  Future verification remains standing default unless owner requests otherwise; older
+  tests/builds do not validate this preview.
 
 ---
 

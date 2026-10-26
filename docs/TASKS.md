@@ -7,7 +7,8 @@
 - [x] Independent global chapter portrait/landscape0(auto)..10 columns/badge toggles.
 - [x] Preserve old layout values, callbacks/IDs/order/metadata and backup compatibility.
 - [x] Three regression source cases added, NOT compiled/run per no-test workflow.
-- [ ] Release build, reviewed source push and public preview publication.
+- [x] Release build12m26s; reviewed15-file source0d7503ce6 and immutable v0.21.2-joke.9
+      PUBLIC preview delivered;3 asset sizes/digests and anonymous API URL confirmed.
 - [ ] Owner phone/rotation/column/style acceptance; no Codex device tests this slice.
 
 ## Shared chapter layouts and independent chapter covers (2026-10-26)

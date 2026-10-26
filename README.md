@@ -10,7 +10,16 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**New preview: [0.21.2-joke.8 · chapter layouts and independent chapter artwork](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.8).**
+**New preview: [0.21.2-joke.9 · library-style chapter display](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.9).**
+[Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.9/JOKEMIHON.apk)
+without sign-in. Code47, existing package/signing configuration. Chapter header icon
+opens book-style display sheet: list/cover-list plus actual library compact/comfortable/
+cover-only grids, portrait/landscape auto or1-10 columns and badge switches. Settings
+shared by all chapters, independent from library settings. No cover IO/media/backup
+schema changes; app settings backup includes display preferences. **Build only, NO
+tests/device checks; owner phone style/rotation/columns acceptance pending. Back up first.**
+
+**Previous preview: [0.21.2-joke.8 · chapter layouts and independent chapter artwork](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.8).**
 [Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.8/JOKEMIHON.apk)
 without sign-in. Code46, existing package/signing config. Chapter header offers shared
 List/Cover list/Cover grid. Local chapters prefer internal cover images or archive

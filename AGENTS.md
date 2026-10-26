@@ -63,7 +63,21 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview: joke.8 (2026-10-26)
+## Latest preview: joke.9 (2026-10-26)
+
+- PUBLIC prerelease joke.9/code47; next APK code>47, same package/signer configuration.
+- Source/tag0d7503ce629d59450add60b26a357986c37359c9 / v0.21.2-joke.9 immutable.
+- Icon display sheet reuses book chips/sliders/checkboxes and actual library grid
+  components through optional cover slots (normal callers unchanged). Chapter-global
+  styles/portrait-landscape auto or1-10 columns/badge preferences are independent of
+  library settings. Old layout2 stays comfortable. IDs/order/handlers/cover IO stay.
+- App settings includes display preferences; Library107/108/media rules unchanged.
+- Build12m26s only; three new regression sources NOT compiled/run. No unit/Lint/
+  format/static-signature/device checks.3 asset sizes/digests/public API readback
+  confirmed; owner phone acceptance pending. Resume standing future verification
+  unless owner requests otherwise; older tests do not validate code47.
+
+## Previous preview: joke.8 (2026-10-26)
 
 - PUBLIC prerelease joke.8/code46; next APK code>46, same package/signer configuration.
 - Source/tag0dfb2c4912079d5bbcbdf361dcf512b2420bb6c8 / v0.21.2-joke.8 immutable.
