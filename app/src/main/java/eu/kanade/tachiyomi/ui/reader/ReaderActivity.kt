@@ -327,6 +327,7 @@ class ReaderActivity : BaseActivity() {
                 ReaderPageActionsDialog(
                     onDismissRequest = onDismissRequest,
                     onSetAsCover = viewModel::setAsCover,
+                    onSetAsChapterCover = viewModel::setAsChapterCover.takeIf { viewModel.manga?.source == 0L },
                     onShare = viewModel::shareImage,
                     onSave = viewModel::saveImage,
                 )

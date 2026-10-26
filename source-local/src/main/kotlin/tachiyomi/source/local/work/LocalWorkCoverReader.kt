@@ -9,6 +9,7 @@ import kotlinx.coroutines.sync.Semaphore
 import mihon.core.archive.archiveReader
 import mihon.core.archive.epubReader
 import tachiyomi.core.common.util.system.ImageUtil
+import tachiyomi.source.local.image.LocalChapterCoverManager
 import tachiyomi.source.local.io.Format
 import java.io.Closeable
 import java.io.FilterInputStream
@@ -21,7 +22,7 @@ import java.io.InputStream
 class LocalWorkCoverReader(private val context: Context, private val catalog: LocalWorkCatalog) {
     private val permits = Semaphore(2)
 
-    suspend fun open(url: String): InputStream {
+    suspend fun open(url: String, preferNamedCover: Boolean = false): InputStream {
         val cover = LocalWorkCover.fromUrl(url)
         permits.acquire()
         var owner: Closeable? = null
@@ -30,7 +31,7 @@ class LocalWorkCoverReader(private val context: Context, private val catalog: Lo
                 ?: error("Local cover file is unavailable")
             val stream = when (val format = Format.valueOf(file)) {
                 is Format.Directory -> {
-                    val images = format.file.listFiles().orEmpty()
+                    val images = LocalChapterCoverManager.readingFiles(format.file.listFiles().orEmpty().toList())
                         .filter { !it.isDirectory && ImageUtil.isImage(it.name) { it.openInputStream() } }
                         .sortedWith { a, b -> a.name.orEmpty().compareToCaseInsensitiveNaturalOrder(b.name.orEmpty()) }
                     images.getOrNull(cover.page)?.openInputStream() ?: error("Cover page is unavailable")
@@ -39,9 +40,15 @@ class LocalWorkCoverReader(private val context: Context, private val catalog: Lo
                     val reader = format.file.archiveReader(context)
                     owner = reader
                     val image = reader.useEntries { entries ->
-                        entries.filter { it.isFile && ImageUtil.isImage(it.name) { reader.getInputStream(it.name)!! } }
+                        val images = entries.filter { it.isFile && ImageUtil.isImage(it.name) { reader.getInputStream(it.name)!! } }
                             .sortedWith { a, b -> a.name.compareToCaseInsensitiveNaturalOrder(b.name) }
-                            .elementAtOrNull(cover.page)?.name
+                            .toList()
+                        val named = if (preferNamedCover) {
+                            images.firstOrNull { it.name.substringAfterLast('/').substringBeforeLast('.').equals("cover", true) }
+                        } else {
+                            null
+                        }
+                        (named ?: images.getOrNull(cover.page))?.name
                     } ?: error("Cover page is unavailable")
                     reader.getInputStream(image) ?: error("Cover page is unavailable")
                 }

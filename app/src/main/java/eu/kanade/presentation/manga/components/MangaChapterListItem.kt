@@ -1,16 +1,23 @@
 package eu.kanade.presentation.manga.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.sizeIn
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.contentColorFor
 import androidx.compose.runtime.Composable
@@ -64,6 +71,9 @@ fun MangaChapterListItem(
     onDownloadClick: ((ChapterDownloadAction) -> Unit)?,
     onChapterSwipe: (LibraryPreferences.ChapterSwipeAction) -> Unit,
     modifier: Modifier = Modifier,
+    cover: (@Composable () -> Unit)? = null,
+    grid: Boolean = false,
+    selectionMode: Boolean = false,
 ) {
     val start = getSwipeAction(
         action = chapterSwipeStartAction,
@@ -89,7 +99,46 @@ fun MangaChapterListItem(
         swipeThreshold = swipeActionThreshold,
         backgroundUntilSwipeThreshold = MaterialTheme.colorScheme.surfaceContainerLowest,
     ) {
-        Row(
+        if (grid && cover != null) {
+            Surface(
+                modifier = modifier.fillMaxWidth().combinedClickable(onClick = onClick, onLongClick = onLongClick),
+                shape = MaterialTheme.shapes.medium,
+                color = if (selected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.surfaceContainer,
+                border = if (selected) BorderStroke(2.dp, MaterialTheme.colorScheme.primary) else null,
+            ) {
+                Column {
+                    Box {
+                        cover()
+                        if (selectionMode) {
+                            Checkbox(
+                                checked = selected,
+                                onCheckedChange = { onClick() },
+                                modifier = Modifier.align(Alignment.TopEnd),
+                            )
+                        }
+                    }
+                    Column(Modifier.padding(10.dp), verticalArrangement = Arrangement.spacedBy(4.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
+                            if (bookmark) Icon(MaterialSymbols.RoundedFilled.Bookmark, stringResource(MR.strings.action_filter_bookmarked), Modifier.size(14.dp))
+                            if (!read) Icon(MaterialSymbols.RoundedFilled.Circle, stringResource(MR.strings.unread), Modifier.size(7.dp), tint = MaterialTheme.colorScheme.primary)
+                            Text(title, maxLines = 2, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.bodyMedium,
+                                color = LocalContentColor.current.copy(alpha = if (read) DISABLED_ALPHA else 1f))
+                        }
+                        if (readProgress != null) Text(readProgress, style = MaterialTheme.typography.labelSmall)
+                        if (scanlator != null) Text(scanlator, maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelSmall)
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            if (date != null) Text(date, Modifier.weight(1f), maxLines = 1, overflow = TextOverflow.Ellipsis, style = MaterialTheme.typography.labelSmall)
+                            ChapterDownloadIndicator(
+                                enabled = downloadIndicatorEnabled,
+                                downloadStateProvider = downloadStateProvider,
+                                downloadProgressProvider = downloadProgressProvider,
+                                onClick = { onDownloadClick?.invoke(it) },
+                            )
+                        }
+                    }
+                }
+            }
+        } else Row(
             modifier = modifier
                 .selectedBackground(selected)
                 .combinedClickable(
@@ -98,6 +147,9 @@ fun MangaChapterListItem(
                 )
                 .padding(start = 16.dp, top = 12.dp, end = 8.dp, bottom = 12.dp),
         ) {
+            if (cover != null) {
+                Box(Modifier.width(56.dp).padding(end = 8.dp)) { cover() }
+            }
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(6.dp),

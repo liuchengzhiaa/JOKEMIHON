@@ -132,6 +132,7 @@ class ReaderViewModel(
     private val chapterCache: ChapterCache,
     private val downloadCache: DownloadCache,
     private val localWorkLibrary: LocalWorkLibrary,
+    private val chapterCovers: tachiyomi.source.local.image.LocalChapterCoverManager,
 ) : ViewModel() {
 
     @AssistedFactory
@@ -1057,6 +1058,35 @@ class ReaderViewModel(
                     SetAsCoverResult.Error
                 }
             }.await()
+            eventChannel.send(Event.SetCoverResult(result))
+        }
+    }
+
+    fun setAsChapterCover() {
+        val page = (state.value.dialog as? Dialog.PageActions)?.page ?: return
+        if (page.status != Page.State.Ready) return
+        val manga = manga?.takeIf { it.isLocal() } ?: return
+        val stream = page.stream ?: return
+        val chapterUrl = page.chapter.chapter.url
+        viewModelScope.launch {
+            val result = withContext(Dispatchers.IO) {
+                try {
+                    val path = tachiyomi.source.local.work.LocalWorkPath.fromRelativeUrl(chapterUrl)
+                    if (LocalWorkDefinition.isWorkUrl(manga.url)) {
+                        val definition = LocalWorkDefinition.fromMemo(manga.url, manga.memo)
+                        require(path in definition.members)
+                    } else {
+                        require(path.directory == manga.url)
+                    }
+                    chapterCovers.set(chapterUrl, stream)
+                    SetAsCoverResult.Success
+                } catch (e: CancellationException) {
+                    throw e
+                } catch (e: Exception) {
+                    logcat(LogPriority.ERROR, e) { "Failed to set chapter cover" }
+                    SetAsCoverResult.Error
+                }
+            }
             eventChannel.send(Event.SetCoverResult(result))
         }
     }

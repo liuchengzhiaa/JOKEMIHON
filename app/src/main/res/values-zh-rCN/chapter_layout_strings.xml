@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chapter_layout_list">列表</string>
+    <string name="chapter_layout_cover_list">封面列表</string>
+    <string name="chapter_layout_grid">封面网格</string>
+    <string name="chapter_layout_button">布局：%1$s</string>
+    <string name="chapter_set_cover">设为章节封面</string>
+    <string name="chapter_set_work_cover">设为作品封面</string>
+    <string name="chapter_cover_confirm">将这张图片复制为当前章节的封面？图片目录保存在章节内部，压缩包保存在旁边的同名 .cover 图片中。原始页面和作品封面不变，旧章节封面保留为隐藏备份。</string>
+</resources>

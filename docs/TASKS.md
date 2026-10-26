@@ -1,5 +1,14 @@
 # JOKEMIHON tasks
 
+## Shared chapter layouts and independent chapter covers (2026-10-26)
+
+- [x] Confirm global layout, internal directory/sibling archive artwork rules.
+- [x] Add phone/tablet lazy layouts and independent confirmed chapter-cover copy.
+- [x] Preserve chapter IDs/order/callbacks; bounded temp/hash/type/rename/backup writes.
+- [x] Add six regression sources only, NOT compiled/executed per no-test workflow.
+- [ ] Compile/package, upload review, commit/push and public preview publication.
+- [ ] Owner phone acceptance; no Codex unit/Lint/emulator/device checks this slice.
+
 ## Compact tag marker (2026-10-25)
 
 - [x] Explain Check=in library; remove redundant top-left Check per owner follow-up. Keep status text and multi-selection checkboxes.

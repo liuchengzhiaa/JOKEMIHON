@@ -31,6 +31,9 @@ class LibraryPreferences(
         LibrarySort.Serializer::deserialize,
     )
 
+    // 0=list, 1=cover list, 2=cover grid; shared by all manga.
+    val chapterLayout: Preference<Int> = preferenceStore.getInt("jokemihon_chapter_layout", 0)
+
     val randomSortSeed: Preference<Int> = preferenceStore.getInt("library_random_sort_seed", 0)
 
     val portraitColumns: Preference<Int> = preferenceStore.getInt("pref_library_columns_portrait_key", 0)

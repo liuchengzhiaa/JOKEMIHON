@@ -1,5 +1,43 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.8 chapter layouts/covers (2026-10-26, CANDIDATE)
+
+Owner confirmed global layout, chapter-internal directory cover, archive sibling
+cover and independent chapter/work artwork actions. Continue prior NO-test workflow:
+only compile/package and delivery checks. Six regression sources added but NOT
+compiled/run; no unit/Lint/format/static-signature/device checks. Older receipts do
+not validate this candidate. Same app.jokemihon/signer; candidate joke.8/code46.
+
+- Header on phone/tablet: List(default), Cover list, lazy Cover grid. Cached lazy
+  rows preserve chapter order/IDs and full-width missing markers. Shared original
+  read/bookmark/download/swipe/multi-selection handlers. Global ordinary preference
+  travels with App settings backup. Online layout uses work art, no extra scraping.
+- LocalChapterCoverManager resolves existing SAF two-segment relative paths. Cover
+  priority: directory-internal cover or archive sibling basename.cover.<image>, then
+  archive internal named cover, then first page. Visible thumbnails Coil sampled/
+  memory-cached; existing archive reader limits2 streams/64MiB. No eager decoding.
+- Reader long-press has separate confirmed chapter-cover action, local only; validates
+  current raw parent/virtual memo membership. Explicit copy <=64MiB, SHA256/byte count
+  and actual image header validated in hidden sibling temporary, then rename. Existing
+  cover kept as hidden backup, NEVER deleted; failed publish attempts rollback. Read-
+  only/no-safe-rename providers fail rather than in-place overwrite. Hidden failed
+  temps/backups may remain. Original pages and archives never renamed/rewritten.
+- New directory cover copy gets hidden marker before publish. Reader and portable
+  work-page-cover enumeration both exclude added copy to preserve indices; preexisting
+  cover pages retain positions. Hidden temp/backup files excluded. Choosing a page
+  that is already a cover replaces that cover (old copy retained); artwork referencing
+  that exact physical cover can naturally change, but no manga thumbnail/memo setting
+  is written. Normal work-cover action unchanged.
+- Keep hidden marker when copying local media to a new phone. Ordinary backup does
+  NOT include cover bytes/markers/media. App settings carries layout; Library107/108
+  and folder/child category/progress semantics unchanged. No owner media/DB accessed.
+- Build/publication pending. Phone acceptance pending for all layouts, chapter/work
+  cover separation, directory/ZIP writes, SAF rename and read progress. Signer offline
+  backup still owner-pending. Safest next: review/compile, publish exact source/new tag,
+  then owner backs up/installs/accepts. No tests to run in this continued owner workflow.
+
+---
+
 ## Current slice: joke.7 compact status badges (2026-10-25, PUBLISHED; NOT TESTED)
 
 Owner asks what the upper-left Check means and says the lower-right category badge

@@ -85,6 +85,7 @@ interface AppGraph : ViewModelGraph {
     val uiPreferences: UiPreferences
     val readerPreferences: ReaderPreferences
     val networkPreferences: NetworkPreferences
+    val chapterCovers: tachiyomi.source.local.image.LocalChapterCoverManager
     val libraryPreferences: LibraryPreferences
     val sourcePreferences: SourcePreferences
     val trackPreferences: TrackPreferences

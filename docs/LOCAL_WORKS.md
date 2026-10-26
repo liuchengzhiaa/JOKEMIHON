@@ -188,3 +188,26 @@ categories as above, not an action button. Its overall badge is now16dp instead 
 (12dp vector +2dp padding each side),5dp rounded corners and4dp cover-edge inset.
 Status colors/descriptions and all identity/category/backup behavior are unchanged.
 No tests performed for this visual-only slice; owner phone sizing acceptance pending.
+
+## joke.8 chapter layouts and explicit cover copies (2026-10-26)
+
+Explicit exception to the older reference-only media policy: ONLY the new confirmed
+Set as chapter cover copies a file. Work/directory cover settings retain their
+existing page-reference behavior and are not automatically changed.
+
+- Global chapter header List(default)/Cover list/Cover grid; App settings backup
+  carries layout. Online chapters use work artwork, no generic chapter-cover scraping.
+- Image chapter cover.jpg/png/etc. stays INSIDE chapter. ZIP/CBZ/EPUB sibling
+  basename.cover.<image> wins, then (archive) internal named cover, then first page.
+- Reader long-press > Set as chapter cover > confirm copies selected bytes <=64MiB
+  into hidden sibling temporary; hash/size/type validated before rename. Existing
+  cover saved as hidden backup, no original page/archive rename or repack. Unsupported
+  safe-rename/read-only providers fail. Hidden failed temps/backups may remain.
+- New directory cover copies receive hidden markers and are excluded by reader AND
+  portable page-cover ordering, so they do not add reading pages. Pre-existing cover
+  pages retain indices. Artwork referencing a replaced pre-existing cover image can
+  naturally show the new content; no manga thumbnail setting is automatically changed.
+- Normal backups do NOT copy cover bytes/markers/media. Transfer complete local media
+  tree including hidden markers, grant SAF, restore backup.107/108 remain unchanged.
+- Six regression sources added, NOT compiled/run. Compile/delivery do not substitute
+  for owner phone acceptance. Continued owner no-test workflow applies to this slice.

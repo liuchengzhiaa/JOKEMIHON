@@ -1,5 +1,20 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.8 (46) - 2026-10-26 (candidate)
+
+- Shared chapter layouts: list(default), cover list and lazy cover grid. Preserve
+  chapter order/filter/read/bookmark/selection/download/swipe callbacks.
+- Local chapter covers: directory-internal cover images; archive sibling
+  basename.cover images, then internal named cover, then first page. Online chapters
+  use work artwork; no chapter/page network scraping added.
+- Separate confirmed reader action copies chapter cover using bounded validated
+  sibling temp/rename and hidden old-cover backup. Source pages/archive contents
+  unchanged; generated copy marker keeps new copies out of reading page indices.
+- Layout travels with App settings backup; cover bytes/markers travel with local
+  media, not normal backups. Existing Library107/108 and work-cover settings stay.
+- Continue owner no-test workflow: six regression cases added as source only, NOT
+  compiled/executed; no unit/Lint/format/static-signer/device checks. Delivery pending.
+
 ## 0.21.2-joke.7 (45) - 2026-10-25
 
 - Reduce cover bottom-right category status badge from28dp to16dp overall:12dp

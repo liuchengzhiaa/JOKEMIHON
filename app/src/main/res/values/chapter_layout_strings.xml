@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="chapter_layout_list">List</string>
+    <string name="chapter_layout_cover_list">Cover list</string>
+    <string name="chapter_layout_grid">Cover grid</string>
+    <string name="chapter_layout_button">Layout: %1$s</string>
+    <string name="chapter_set_cover">Set as chapter cover</string>
+    <string name="chapter_set_work_cover">Set as work cover</string>
+    <string name="chapter_cover_confirm">Copy this image as this chapter’s cover? Directory chapters use cover inside the chapter; archives use a sibling named after the archive plus .cover. Original pages and the work cover are unchanged. Previous chapter artwork is kept as a hidden backup.</string>
+</resources>
