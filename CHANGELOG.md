@@ -1,5 +1,22 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.10 (48) - 2026-10-26 (candidate)
+
+- Fix chapter cover read flow: no open SAF/archive stream or semaphore permit crosses
+  dispatcher return. Copy ONLY chosen cover/first image to app-private encoded cover
+  cache, close resources before Coil decodes a measured thumbnail from a local file.
+- Dedicated bounded256MiB Coil disk LRU + memory cache, same-key fill/decode de-dup;
+  at most2 fills. Persist cache generation across restarts, root-specific keys and
+  source-change guards. Explicit save/pull-refresh invalidates; automatic loading
+  no longer destroys cached covers on every book entry.
+- Cache directory listings by URI/generation (20k children bound); filter filenames
+  BEFORE SAF metadata/header queries. Only inspect selected cover/first image, no
+  per-page type check/full decode of all images. Natural order/cover priority retained.
+- Existing chapter cover files/write rules, media, chapter state and backups unchanged;
+  private cache not a backup. Add local failure logging using existing error artwork.
+- Four policy regression sources added, NOT run. Continued owner no-test workflow;
+  no unit/Lint/format/static-signature/device checks. Build/publication pending.
+
 ## 0.21.2-joke.9 (47) - 2026-10-26
 
 - Replace chapter layout text with accessible existing ViewModule vector icon.

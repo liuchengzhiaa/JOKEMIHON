@@ -241,7 +241,7 @@ class App : Application(), DefaultLifecycleObserver, SingletonImageLoader.Factor
                 add(ImageDecoder.Factory())
                 // Fetcher.Factory
                 add(BufferedSourceFetcher.Factory())
-                add(eu.kanade.tachiyomi.data.coil.ChapterCoverFetcher.Factory(context.appGraph.chapterCovers))
+                add(eu.kanade.tachiyomi.data.coil.ChapterCoverFetcher.Factory(context.appGraph.chapterCoverDiskCache))
                 add(eu.kanade.tachiyomi.data.coil.ChapterCoverFetcher.RequestKeyer())
                 add(MangaCoverFetcher.MangaCoverFactory(callFactoryLazy, coverCache, sourceManager))
                 add(MangaCoverFetcher.MangaFactory(callFactoryLazy, coverCache, sourceManager))

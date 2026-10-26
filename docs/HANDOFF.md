@@ -1,5 +1,47 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.10 chapter cover loading/cache (2026-10-26, CANDIDATE)
+
+Owner screenshot shows gray chapter placeholder, also reports explicit chapter cover
+loads much slower than library. Earlier claim that fallback branch meant runtime
+works was too strong; NO owner DB/logs/media or phone repro available. Continue
+owner no-test workflow, compile/package only, no unit/Lint/format/static-signer/device.
+
+Source-confirmed issues vs inferred symptom:
+- Original findCovers evaluated isFile BEFORE name filter, one SAF metadata query per
+  sibling. Local unifile08f224c8f9 bytecode confirms TreeDocumentFile caches names but
+  isFile/isDirectory delegate fresh DocumentsContractApi19 queries. Generic fallback
+  also classified every page. No chapter disk cache, no request de-dup.
+- Original manager returned owned InputStream through withContext(IO), permit/owner
+  released only on later close. Prompt cancellation at dispatcher return can discard
+  resource and strand shared2 permits. Plausible endless-placeholder cause, NOT proven
+  on owner's phone. Fix ownership rather than claim a reproduced root cause.
+- Chapter read now owns source streams/archive readers inside one bounded copy scope,
+  finishes/closes them before returning to Coil. Dedicated private DiskCache256MiB
+  encoded covers,2 fills,64MiB image bound; measured thumbnail decode/memory reuse.
+  No whole archive extraction or user media mutation. Same key/size decode de-dup and
+  cross-size fill de-dup. Cancellation aborts editor, exits scoped read/semaphore.
+- Listing snapshots URI+generation bounded20k retained children, one serial cold
+  listing per directory. Filename filter before metadata; explicit cover/sidecar then
+  internal named cover then natural-first readable image. Known upper-case/jpeg/heic
+  names do not open every page header; unknown candidate first image can be sniffed.
+- Persistent app-state cache epoch; request root/relative chapter/generation identity.
+  Save or explicit pull/menu refresh invalidates; initial auto fetch DOES NOT. Check
+  expected root/current epoch before finishing read. External media edits need refresh.
+- Reader/work cover IO, data/backup107/108 and layout settings unchanged. Cache is private
+  disposable encoded images, not persistent media backup. Existing cover error artwork
+  kept, local logcat reports fetch/decode errors, no telemetry upload.
+- Candidate joke.10/code48, same package/signer. Four regression source cases added,
+  NOT compiled/executed. Build/source review/publication pending. Owner phone acceptance
+  (cold first page, explicit cover, back/restart, refresh, ZIP/SAF cancellation) pending.
+- Host C:0 free caused default sandbox helper startup error; scoped escalated commands
+  work and isolated D: tool/cache/build paths have space. No user files deleted, no
+  unrelated directories inspected. Signer offline backup remains pending.
+- Safest next: review/compile without tests, publish exact successful source/new tag,
+  owner checks actual media. Do not claim measured performance or reproduced phone fix.
+
+---
+
 ## Current slice: joke.9 library-style chapter display (2026-10-26, PUBLISHED; NOT TESTED)
 
 Owner screenshot asks icon instead of text layout button and library-style grid/

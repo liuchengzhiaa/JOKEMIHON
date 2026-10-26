@@ -33,7 +33,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.animateFloatingActionButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -140,6 +139,10 @@ fun MangaScreen(
     onInvertSelection: () -> Unit,
 ) {
     val context = LocalContext.current
+    val refreshWithCovers: () -> Unit = {
+        if (state.manga.isLocal()) context.appGraph.chapterCovers.invalidate()
+        onRefresh()
+    }
     val onCopyTagToClipboard: (tag: String) -> Unit = {
         if (it.isNotEmpty()) {
             context.copyToClipboard(it, it)
@@ -164,7 +167,7 @@ fun MangaScreen(
             onTagSearch = onTagSearch,
             onCopyTagToClipboard = onCopyTagToClipboard,
             onFilterClicked = onFilterButtonClicked,
-            onRefresh = onRefresh,
+            onRefresh = refreshWithCovers,
             onContinueReading = onContinueReading,
             onSearch = onSearch,
             onCoverClicked = onCoverClicked,
@@ -201,7 +204,7 @@ fun MangaScreen(
             onTagSearch = onTagSearch,
             onCopyTagToClipboard = onCopyTagToClipboard,
             onFilterButtonClicked = onFilterButtonClicked,
-            onRefresh = onRefresh,
+            onRefresh = refreshWithCovers,
             onContinueReading = onContinueReading,
             onSearch = onSearch,
             onCoverClicked = onCoverClicked,
@@ -290,9 +293,6 @@ private fun MangaScreenSmallImpl(
         (if (isLargeChapterPane) configuration.screenWidthDp / 2 else configuration.screenWidthDp).toFloat()
     }
     val columns = chapterGridColumns(paneWidthDp, requestedColumns)
-    LaunchedEffect(state.isRefreshingData) {
-        if (state.isRefreshingData && state.manga.isLocal()) graph.chapterCovers.invalidate()
-    }
 
     val (chapters, listItem, isAnySelected) = remember(state) {
         Triple(
@@ -561,9 +561,6 @@ fun MangaScreenLargeImpl(
         (if (isLargeChapterPane) configuration.screenWidthDp / 2 else configuration.screenWidthDp).toFloat()
     }
     val columns = chapterGridColumns(paneWidthDp, requestedColumns)
-    LaunchedEffect(state.isRefreshingData) {
-        if (state.isRefreshingData && state.manga.isLocal()) graph.chapterCovers.invalidate()
-    }
 
     val chapterRows = remember(listItem, chapterLayout, columns) {
         chapterRows(listItem, if (chapterLayout in 2..4) columns else 1)

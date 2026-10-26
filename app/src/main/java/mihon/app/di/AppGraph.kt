@@ -85,6 +85,7 @@ interface AppGraph : ViewModelGraph {
     val uiPreferences: UiPreferences
     val readerPreferences: ReaderPreferences
     val networkPreferences: NetworkPreferences
+    val chapterCoverDiskCache: eu.kanade.tachiyomi.data.coil.ChapterCoverDiskCache
     val chapterCovers: tachiyomi.source.local.image.LocalChapterCoverManager
     val libraryPreferences: LibraryPreferences
     val sourcePreferences: SourcePreferences

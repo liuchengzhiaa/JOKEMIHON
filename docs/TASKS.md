@@ -1,5 +1,15 @@
 # JOKEMIHON tasks
 
+## Chapter covers blank/slow (2026-10-26)
+
+- [x] Inspect existing reader/fetcher/SAF dependency; distinguish source issues from
+      unproven owner-phone cause. No owner DB/logs/media supplied or device tests.
+- [x] Close sources before decoder handoff; bounded private disk cache and de-dup.
+- [x] Filename-first lookup/listing reuse; persistent epoch, explicit-only refresh.
+- [x] Four regression policy sources added, NOT run per owner no-test workflow.
+- [ ] Compile/package, reviewed source push and public preview publication.
+- [ ] Owner phone cold/warm/restart/explicit-cover/ZIP/cancellation acceptance.
+
 ## Library-style chapter display settings (2026-10-26)
 
 - [x] Icon-only accessible entry, library settings chips/sliders/checkboxes sheet.

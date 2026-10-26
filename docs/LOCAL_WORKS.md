@@ -235,3 +235,21 @@ no tests/device checks. Owner phone acceptance pending. See HANDOFF for full rec
 Delivery: joke.9/code47, source0d7503ce6, immutable v0.21.2-joke.9 PUBLIC preview.
 Release compile12m26s;3 asset digests/sizes/public API URL readback confirmed. No
 tests/device checks; owner phone acceptance pending. Full receipt in HANDOFF.
+
+## joke.10 chapter-cover read/cache repair (2026-10-26)
+
+Owner reports blank/sluggish covers; earlier source-only fallback statement did not
+prove real-phone behavior. Read flow now materializes ONLY chosen encoded cover/first
+page in bounded private256MiB disk LRU, closes SAF/archive resources before decoding,
+then Coil samples/memory-caches visible thumbnails.2 cache fills/64MiB image bound;
+no whole archive extraction, no new cover files written into media automatically.
+
+Directory listings bounded20k children and shared per URI/generation. Filter names
+before per-document isFile/header checks; preserve cover priority/natural image order.
+Epoch stored app-state across restart; root/path/generation keys and source-change
+checks. Explicit reader cover save or pull/menu refresh invalidates. Automatic book
+metadata loading no longer invalidates. External file edits need explicit refresh.
+Private cache is disposable, not backed-up cover bytes; user cover files/markers,
+reader progress/bookmarks/folders and Library107/108 unchanged. Existing error artwork
+and local fetch/decode error logs aid diagnosis. No owner logs/media/DB inspected;
+no performance measurements/device repro or tests this slice. See HANDOFF.

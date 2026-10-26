@@ -17,7 +17,7 @@ class CoverRequestInterceptor : Interceptor {
 
     override suspend fun intercept(chain: Interceptor.Chain): ImageResult {
         val data = chain.request.data
-        if (data !is MangaCover && data !is Manga) return chain.proceed()
+        if (data !is MangaCover && data !is Manga && data !is ChapterCoverRequest) return chain.proceed()
 
         return concurrentRequests.apply(data to chain.size) { chain.proceed() }
     }
