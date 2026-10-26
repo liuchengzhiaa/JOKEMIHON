@@ -7,6 +7,28 @@ import org.junit.jupiter.api.Test
 import tachiyomi.domain.chapter.model.Chapter
 
 class ChapterRowsTest {
+    @Test
+    fun `fixed columns support one through ten independently of pane width`() {
+        chapterGridColumns(360f, 1) shouldBe 1
+        chapterGridColumns(360f, 10) shouldBe 10
+    }
+
+    @Test
+    fun `auto uses library padding spacing and adaptive minimum`() {
+        chapterGridColumns(407f, 0) shouldBe 2
+        chapterGridColumns(408f, 0) shouldBe 3
+        chapterGridColumns(144f, 0) shouldBe 1
+        chapterGridColumns(100f, -1) shouldBe 1
+    }
+
+    @Test
+    fun `ten column rows preserve trailing item`() {
+        val chapters = (1L..11L).map(::item)
+        val rows = chapterRows(chapters, 10)
+        rows.map { it.size } shouldBe listOf(10, 1)
+        rows.flatten() shouldBe chapters
+    }
+
     private fun item(id: Long) = ChapterList.Item(Chapter.create().copy(id = id), Download.State.NOT_DOWNLOADED)
 
     @Test

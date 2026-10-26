@@ -7,4 +7,13 @@
     <string name="chapter_set_cover">设为章节封面</string>
     <string name="chapter_set_work_cover">设为作品封面</string>
     <string name="chapter_cover_confirm">将这张图片复制为当前章节的封面？图片目录保存在章节内部，压缩包保存在旁边的同名 .cover 图片中。原始页面和作品封面不变，旧章节封面保留为隐藏备份。</string>
+    <string name="chapter_layout_settings">章节显示设置</string>
+    <string name="chapter_columns_portrait">竖屏列数</string>
+    <string name="chapter_columns_landscape">横屏列数</string>
+    <string name="chapter_show_read_state">显示已读／未读标记</string>
+    <string name="chapter_show_progress">显示阅读进度</string>
+    <string name="chapter_show_bookmark">显示书签标记</string>
+    <string name="chapter_show_download">显示下载按钮</string>
+    <string name="chapter_state_read">已读</string>
+    <string name="chapter_state_unread">未读</string>
 </resources>

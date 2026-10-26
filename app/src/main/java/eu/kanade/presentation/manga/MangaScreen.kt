@@ -1,5 +1,6 @@
 package eu.kanade.presentation.manga
 
+import android.content.res.Configuration
 import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.layout.Arrangement
@@ -52,6 +53,7 @@ import androidx.compose.ui.util.fastAll
 import androidx.compose.ui.util.fastAny
 import androidx.compose.ui.util.fastMap
 import eu.kanade.presentation.components.relativeDateText
+import eu.kanade.presentation.library.components.CommonMangaItemDefaults
 import eu.kanade.presentation.manga.components.ChapterCover
 import eu.kanade.presentation.manga.components.ChapterDownloadAction
 import eu.kanade.presentation.manga.components.ChapterHeader
@@ -75,6 +77,7 @@ import mihon.icons.materialsymbols.roundedfilled.PlayArrow
 import tachiyomi.domain.chapter.model.Chapter
 import tachiyomi.domain.library.service.LibraryPreferences
 import tachiyomi.domain.manga.model.Manga
+import tachiyomi.domain.manga.model.asMangaCover
 import tachiyomi.domain.source.model.StubSource
 import tachiyomi.i18n.MR
 import tachiyomi.presentation.core.components.TwoPanelBox
@@ -274,9 +277,19 @@ private fun MangaScreenSmallImpl(
     val chapterListState = rememberLazyListState()
     val graph = LocalContext.current.appGraph
     val savedLayout by graph.libraryPreferences.chapterLayout.collectAsState()
-    val chapterLayout = savedLayout.takeIf { it in 0..2 } ?: 0
-    val screenWidth = LocalConfiguration.current.screenWidthDp
-    val columns = ((if (isLargeChapterPane) screenWidth / 2 else screenWidth) / 160).coerceIn(2, 6)
+    val chapterLayout = savedLayout.takeIf { it in 0..4 } ?: 0
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val columnPreference = remember(isLandscape) {
+        if (isLandscape) graph.libraryPreferences.chapterLandscapeColumns else graph.libraryPreferences.chapterPortraitColumns
+    }
+    val requestedColumns by columnPreference.collectAsState()
+    var chapterPaneWidth by remember { mutableIntStateOf(0) }
+    val chapterDensity = LocalDensity.current
+    val paneWidthDp = if (chapterPaneWidth > 0) with(chapterDensity) { chapterPaneWidth.toDp().value } else {
+        (if (isLargeChapterPane) configuration.screenWidthDp / 2 else configuration.screenWidthDp).toFloat()
+    }
+    val columns = chapterGridColumns(paneWidthDp, requestedColumns)
     LaunchedEffect(state.isRefreshingData) {
         if (state.isRefreshingData && state.manga.isLocal()) graph.chapterCovers.invalidate()
     }
@@ -290,7 +303,7 @@ private fun MangaScreenSmallImpl(
     }
 
     val chapterRows = remember(listItem, chapterLayout, columns) {
-        chapterRows(listItem, if (chapterLayout == 2) columns else 1)
+        chapterRows(listItem, if (chapterLayout in 2..4) columns else 1)
     }
 
     BackHandler(enabled = isAnySelected) {
@@ -379,7 +392,7 @@ private fun MangaScreenSmallImpl(
                 endContentPadding = contentPadding.calculateEndPadding(layoutDirection),
             ) {
                 LazyColumn(
-                    modifier = Modifier.fillMaxHeight(),
+                    modifier = Modifier.fillMaxHeight().onSizeChanged { chapterPaneWidth = it.width },
                     state = chapterListState,
                     contentPadding = PaddingValues(
                         start = contentPadding.calculateStartPadding(layoutDirection),
@@ -535,15 +548,25 @@ fun MangaScreenLargeImpl(
     val chapterListState = rememberLazyListState()
     val graph = LocalContext.current.appGraph
     val savedLayout by graph.libraryPreferences.chapterLayout.collectAsState()
-    val chapterLayout = savedLayout.takeIf { it in 0..2 } ?: 0
-    val screenWidth = LocalConfiguration.current.screenWidthDp
-    val columns = ((if (isLargeChapterPane) screenWidth / 2 else screenWidth) / 160).coerceIn(2, 6)
+    val chapterLayout = savedLayout.takeIf { it in 0..4 } ?: 0
+    val configuration = LocalConfiguration.current
+    val isLandscape = configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val columnPreference = remember(isLandscape) {
+        if (isLandscape) graph.libraryPreferences.chapterLandscapeColumns else graph.libraryPreferences.chapterPortraitColumns
+    }
+    val requestedColumns by columnPreference.collectAsState()
+    var chapterPaneWidth by remember { mutableIntStateOf(0) }
+    val chapterDensity = LocalDensity.current
+    val paneWidthDp = if (chapterPaneWidth > 0) with(chapterDensity) { chapterPaneWidth.toDp().value } else {
+        (if (isLargeChapterPane) configuration.screenWidthDp / 2 else configuration.screenWidthDp).toFloat()
+    }
+    val columns = chapterGridColumns(paneWidthDp, requestedColumns)
     LaunchedEffect(state.isRefreshingData) {
         if (state.isRefreshingData && state.manga.isLocal()) graph.chapterCovers.invalidate()
     }
 
     val chapterRows = remember(listItem, chapterLayout, columns) {
-        chapterRows(listItem, if (chapterLayout == 2) columns else 1)
+        chapterRows(listItem, if (chapterLayout in 2..4) columns else 1)
     }
 
     BackHandler(enabled = isAnySelected) {
@@ -668,7 +691,7 @@ fun MangaScreenLargeImpl(
                         topContentPadding = contentPadding.calculateTopPadding(),
                     ) {
                         LazyColumn(
-                            modifier = Modifier.fillMaxHeight(),
+                            modifier = Modifier.fillMaxHeight().onSizeChanged { chapterPaneWidth = it.width },
                             state = chapterListState,
                             contentPadding = PaddingValues(
                                 top = contentPadding.calculateTopPadding(),
@@ -765,7 +788,7 @@ private fun LazyListScope.sharedChapterItems(
     onChapterSelected: (ChapterList.Item, Boolean, Boolean) -> Unit,
     onChapterSwipe: (ChapterList.Item, LibraryPreferences.ChapterSwipeAction) -> Unit,
 ) {
-    val width = if (layout == 2) columns else 1
+    val width = if (layout in 2..4) columns else 1
     items(
         items = rows,
         key = { row ->
@@ -774,12 +797,15 @@ private fun LazyListScope.sharedChapterItems(
                 is ChapterList.Item -> "chapter-${item.id}"
             }
         },
-        contentType = { if (layout == 2) "chapter-cover-row" else MangaScreenItem.CHAPTER },
+        contentType = { if (layout in 2..4) "chapter-cover-row" else MangaScreenItem.CHAPTER },
     ) { row ->
         val haptic = LocalHapticFeedback.current
         Row(
-            Modifier.fillMaxWidth().padding(horizontal = if (layout == 2) 12.dp else 0.dp, vertical = if (layout == 2) 6.dp else 0.dp),
-            horizontalArrangement = Arrangement.spacedBy(if (layout == 2) 10.dp else 0.dp),
+            Modifier.fillMaxWidth().padding(
+                horizontal = if (layout in 2..4) 8.dp else 0.dp,
+                vertical = if (layout in 2..4) CommonMangaItemDefaults.GridVerticalSpacer / 2 else 0.dp,
+            ),
+            horizontalArrangement = Arrangement.spacedBy(if (layout in 2..4) CommonMangaItemDefaults.GridHorizontalSpacer else 0.dp),
         ) {
             row.forEach { item ->
                 Box(Modifier.weight(1f)) {
@@ -808,8 +834,9 @@ private fun LazyListScope.sharedChapterItems(
                                 },
                             scanlator = item.chapter.scanlator.takeIf { !it.isNullOrBlank() },
                             cover = if (layout != 0) { { ChapterCover(manga, item.chapter.url) } } else null,
-                            grid = layout == 2,
-                            selectionMode = isAnyChapterSelected,
+                            grid = layout in 2..4,
+                            gridLayout = layout,
+                            gridCoverData = manga.asMangaCover(),
                             read = item.chapter.read,
                             bookmark = item.chapter.bookmark,
                             selected = item.selected,

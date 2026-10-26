@@ -1,5 +1,15 @@
 # JOKEMIHON tasks
 
+## Library-style chapter display settings (2026-10-26)
+
+- [x] Icon-only accessible entry, library settings chips/sliders/checkboxes sheet.
+- [x] Reuse actual library compact/comfortable/cover-only card components.
+- [x] Independent global chapter portrait/landscape0(auto)..10 columns/badge toggles.
+- [x] Preserve old layout values, callbacks/IDs/order/metadata and backup compatibility.
+- [x] Three regression source cases added, NOT compiled/run per no-test workflow.
+- [ ] Release build, reviewed source push and public preview publication.
+- [ ] Owner phone/rotation/column/style acceptance; no Codex device tests this slice.
+
 ## Shared chapter layouts and independent chapter covers (2026-10-26)
 
 - [x] Confirm global layout, internal directory/sibling archive artwork rules.

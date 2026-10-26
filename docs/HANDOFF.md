@@ -1,5 +1,38 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.9 library-style chapter display (2026-10-26, CANDIDATE)
+
+Owner screenshot asks icon instead of text layout button and library-style grid/
+column choices. Clarified book-style columns x scrolling rows, not fixed square page
+counts; auto or1-10 columns, portrait/landscape remembered separately. All chapters
+share settings independently from actual library settings. Continue owner no-test
+workflow: compile/package only; no unit/Lint/format/static-signature/device checks.
+
+- Candidate0.21.2-joke.9/code47, existing app.jokemihon/signer configuration.
+- ChapterLayoutSelector now existing RoundedFilled.ViewModule IconButton with localized
+  accessibility description; adaptive sheet reuses library SettingsChipRow, SliderItem,
+  CheckboxItem. List/cover list/compact/comfortable/cover-only. Old chapter layout2
+  retained as comfortable;0/1 unchanged. Grid badges toggle read state/progress/bookmark/
+  online download button; local availability no longer shows a misleading download tick.
+- Existing library MangaCompactGridItem/MangaComfortableGridItem receive OPTIONAL
+  chapter artwork slots, leaving ordinary library callers/default art/behavior intact.
+  Chapter cards now use actual library cover/title/selection outline/padding. Large
+  date/scanlator/download footer removed only from grid; list retains full metadata.
+  Real chapter artwork still uses existing lazy Coil model, not parent work artwork.
+- Portrait/landscape requested columns0(auto)..10 independent preferences. Real measured
+  LazyColumn pane width on phone/tablet drives adaptive128dp minimum with book8dp
+  outer/4dp gap rules. Lazy row packer accepts1..10; keeps missing markers full-width,
+  original order/IDs/handlers. No paging, fixed row count or media/data migrations.
+- Layout/columns/badge preferences travel with App settings; no backup field changes,
+  no media or chapter/work cover-setting changes. Three regression case sources added
+  for policy/rows, NOT compiled/executed. No owner media/DB inspected.
+- Build, exact source upload review and public preview publication pending. Owner
+  phone acceptance pending including icon/sheet, rotation/pane widths/columns and
+  grid selection/reading. Signer offline backup still owner-pending. Safest next:
+  compile/package without tests, publish exact source/new tag, owner backs up/accepts.
+
+---
+
 ## Current slice: joke.8 chapter layouts/covers (2026-10-26, PUBLISHED; NOT TESTED)
 
 Owner confirmed global layout, chapter-internal directory cover, archive sibling

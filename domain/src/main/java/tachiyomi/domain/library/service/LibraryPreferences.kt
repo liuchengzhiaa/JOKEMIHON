@@ -31,8 +31,16 @@ class LibraryPreferences(
         LibrarySort.Serializer::deserialize,
     )
 
-    // 0=list, 1=cover list, 2=cover grid; shared by all manga.
+    // 0=list, 1=cover list, 2=comfortable grid (legacy), 3=compact, 4=cover-only.
     val chapterLayout: Preference<Int> = preferenceStore.getInt("jokemihon_chapter_layout", 0)
+
+    // Chapter settings are global but independent from library/category settings.
+    val chapterPortraitColumns: Preference<Int> = preferenceStore.getInt("jokemihon_chapter_columns_portrait", 0)
+    val chapterLandscapeColumns: Preference<Int> = preferenceStore.getInt("jokemihon_chapter_columns_landscape", 0)
+    val chapterReadBadge: Preference<Boolean> = preferenceStore.getBoolean("jokemihon_chapter_read_badge", true)
+    val chapterProgressBadge: Preference<Boolean> = preferenceStore.getBoolean("jokemihon_chapter_progress_badge", true)
+    val chapterBookmarkBadge: Preference<Boolean> = preferenceStore.getBoolean("jokemihon_chapter_bookmark_badge", true)
+    val chapterDownloadBadge: Preference<Boolean> = preferenceStore.getBoolean("jokemihon_chapter_download_badge", true)
 
     val randomSortSeed: Preference<Int> = preferenceStore.getInt("library_random_sort_seed", 0)
 

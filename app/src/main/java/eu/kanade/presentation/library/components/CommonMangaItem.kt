@@ -79,6 +79,7 @@ fun MangaCompactGridItem(
     coverAlpha: Float = 1f,
     coverBadgeStart: @Composable (RowScope.() -> Unit)? = null,
     coverBadgeEnd: @Composable (RowScope.() -> Unit)? = null,
+    coverContent: (@Composable () -> Unit)? = null,
 ) {
     GridItemSelectable(
         isSelected = isSelected,
@@ -87,12 +88,18 @@ fun MangaCompactGridItem(
     ) {
         MangaGridCover(
             cover = {
-                MangaCover.Book(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .alpha(if (isSelected) GRID_SELECTED_COVER_ALPHA else coverAlpha),
-                    data = coverData,
-                )
+                if (coverContent != null) {
+                    Box(Modifier.alpha(if (isSelected) GRID_SELECTED_COVER_ALPHA else coverAlpha)) {
+                        coverContent()
+                    }
+                } else {
+                    MangaCover.Book(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .alpha(if (isSelected) GRID_SELECTED_COVER_ALPHA else coverAlpha),
+                        data = coverData,
+                    )
+                }
             },
             badgesStart = coverBadgeStart,
             badgesEnd = coverBadgeEnd,
@@ -185,6 +192,7 @@ fun MangaComfortableGridItem(
     coverBadgeStart: (@Composable RowScope.() -> Unit)? = null,
     coverBadgeEnd: (@Composable RowScope.() -> Unit)? = null,
     onClickContinueReading: (() -> Unit)? = null,
+    coverContent: (@Composable () -> Unit)? = null,
 ) {
     GridItemSelectable(
         isSelected = isSelected,
@@ -194,12 +202,18 @@ fun MangaComfortableGridItem(
         Column {
             MangaGridCover(
                 cover = {
-                    MangaCover.Book(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .alpha(if (isSelected) GRID_SELECTED_COVER_ALPHA else coverAlpha),
-                        data = coverData,
-                    )
+                    if (coverContent != null) {
+                        Box(Modifier.alpha(if (isSelected) GRID_SELECTED_COVER_ALPHA else coverAlpha)) {
+                            coverContent()
+                        }
+                    } else {
+                        MangaCover.Book(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .alpha(if (isSelected) GRID_SELECTED_COVER_ALPHA else coverAlpha),
+                            data = coverData,
+                        )
+                    }
                 },
                 badgesStart = coverBadgeStart,
                 badgesEnd = coverBadgeEnd,

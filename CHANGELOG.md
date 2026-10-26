@@ -1,5 +1,21 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.9 (47) - 2026-10-26 (candidate)
+
+- Replace chapter layout text with accessible existing ViewModule vector icon.
+- Reuse library SettingsChipRow/SliderItem/CheckboxItem in an adaptive display sheet:
+  original list, cover list, compact grid, comfortable grid and cover-only grid;
+  portrait/landscape automatic or1-10 columns, optional read/progress/bookmark/download
+  badges. Settings global to chapters but independent from actual library settings.
+- Reuse actual library grid cover/title/selection components through optional artwork
+  slots; normal library callers/default behavior unchanged. Remove large chapter grid
+  footer, keep progress/bookmarks as badges. List metadata remains unchanged.
+- Measure real chapter pane width; library128dp adaptive minimum/8dp padding/4dp gaps.
+  Preserve old layout2 as comfortable grid, chapter IDs/order/selection/swipe/download
+  callbacks and missing-marker rows. No cover IO/backup107/108 changes.
+- Continued owner no-test workflow. Three regression sources added but NOT run;
+  no unit/Lint/format/static-signature/device checks. Build/publication pending.
+
 ## 0.21.2-joke.8 (46) - 2026-10-26
 
 - Shared chapter layouts: list(default), cover list and lazy cover grid. Preserve

@@ -215,3 +215,19 @@ existing page-reference behavior and are not automatically changed.
 Delivery receipt: joke.8/code46 source0dfb2c491, immutable v0.21.2-joke.8 PUBLIC
 preview. Release compile14m41s,3 asset digests/sizes/public API URL readback confirmed;
 no tests/device checks. Owner phone acceptance pending. See HANDOFF for full receipt.
+
+## joke.9 book-style chapter display settings (2026-10-26)
+
+- Chapter header now has an icon opening an adaptive display sheet. Reuses book
+  chips/sliders/checkboxes and actual compact/comfortable/cover-only card components;
+  list and cover-list retained. Large grid metadata footer removed, progress/read/
+  bookmark/download badges configurable; local files do not show online download tick.
+- All manga share CHAPTER settings, independently of book/category display settings.
+  Portrait and landscape support auto or1-10 columns; rows scroll with content, NOT a
+  fixed x-by-x page. Automatic width uses actual chapter pane and library128dp minimum,
+  8dp outer padding/4dp gaps. Selected outline/title styles reuse actual book code.
+- Existing layout2 maps to comfortable grid without data migration. Same chapter
+  order/IDs/read/selection/swipe/download handlers, same cover read/write and107/108
+  backups. New preferences travel with App settings, no automatic media writes.
+- Continued no-test workflow; new regression sources unexecuted. Owner phone visual,
+  rotation/columns/selection acceptance pending. See HANDOFF for delivery state.
