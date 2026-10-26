@@ -6,7 +6,8 @@
 - [x] Add phone/tablet lazy layouts and independent confirmed chapter-cover copy.
 - [x] Preserve chapter IDs/order/callbacks; bounded temp/hash/type/rename/backup writes.
 - [x] Add six regression sources only, NOT compiled/executed per no-test workflow.
-- [ ] Compile/package, upload review, commit/push and public preview publication.
+- [x] Release compile14m41s; reviewed25-file source0dfb2c491 pushed, immutable
+      v0.21.2-joke.8 PUBLIC preview,3 asset sizes/digests and anonymous API URL confirmed.
 - [ ] Owner phone acceptance; no Codex unit/Lint/emulator/device checks this slice.
 
 ## Compact tag marker (2026-10-25)

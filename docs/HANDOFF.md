@@ -1,12 +1,12 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.8 chapter layouts/covers (2026-10-26, CANDIDATE)
+## Current slice: joke.8 chapter layouts/covers (2026-10-26, PUBLISHED; NOT TESTED)
 
 Owner confirmed global layout, chapter-internal directory cover, archive sibling
 cover and independent chapter/work artwork actions. Continue prior NO-test workflow:
 only compile/package and delivery checks. Six regression sources added but NOT
 compiled/run; no unit/Lint/format/static-signature/device checks. Older receipts do
-not validate this candidate. Same app.jokemihon/signer; candidate joke.8/code46.
+not validate this candidate. Same app.jokemihon/signer configuration; published joke.8/code46.
 
 - Header on phone/tablet: List(default), Cover list, lazy Cover grid. Cached lazy
   rows preserve chapter order/IDs and full-width missing markers. Shared original
@@ -31,10 +31,27 @@ not validate this candidate. Same app.jokemihon/signer; candidate joke.8/code46.
 - Keep hidden marker when copying local media to a new phone. Ordinary backup does
   NOT include cover bytes/markers/media. App settings carries layout; Library107/108
   and folder/child category/progress semantics unchanged. No owner media/DB accessed.
-- Build/publication pending. Phone acceptance pending for all layouts, chapter/work
-  cover separation, directory/ZIP writes, SAF rename and read progress. Signer offline
-  backup still owner-pending. Safest next: review/compile, publish exact source/new tag,
-  then owner backs up/installs/accepts. No tests to run in this continued owner workflow.
+- app:assembleRelease SUCCESS14m41s,388 tasks/39 executed; no tests/Lint/format/
+  static-signature/device checks. Inherited Compose stack-trace mapping warning,
+  Gradle deprecations only. Six regression sources NOT compiled/executed.
+- Reviewed25-file source/resource/docs/test-source set, pushed source
+  0dfb2c4912079d5bbcbdf361dcf512b2420bb6c8. Immutable annotated v0.21.2-joke.8
+  targets that exact APK source. Later receipt docs do not rebuild/move the tag.
+- PUBLIC prerelease ID424130956, published2026-10-26T10:51:25Z;
+  draft=false/prerelease=true, explicitly not promoted to stable/latest. Existing
+  package/signer configuration and disabled inherited Actions unchanged.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.8
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.8/JOKEMIHON.apk
+- APK67921139 bytes; sha256:9899bc29ef2b4d3dd91585e0e2ffd026f4315fbade6f6a5fbcaede824b8fc539.
+  All3 remote sizes/digests match APK/checksum/manifest67921139/80/1406 bytes.
+  Anonymous public API delivery URL/readback confirmed, full APK download NOT repeated.
+  Initial draft-by-tag API404 resolved by listing existing drafts and exact numeric ID;
+  no duplicate release or asset overwrite. Ignored .tools/releases/v0.21.2-joke.8/
+  contains publication-receipt.json. No keys/config/auth caches/media/backups uploaded.
+- Safest next: owner backs up, installs and accepts all layouts, chapter/work cover
+  actions, directory/ZIP writes, SAF rename and reading progress. No owner DB/phone
+  was inspected. Signer offline backup still owner-pending. Future verification stays
+  standing default unless owner requests otherwise; historical tests are not proof.
 
 ---
 

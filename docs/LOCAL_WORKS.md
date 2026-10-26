@@ -211,3 +211,7 @@ existing page-reference behavior and are not automatically changed.
   tree including hidden markers, grant SAF, restore backup.107/108 remain unchanged.
 - Six regression sources added, NOT compiled/run. Compile/delivery do not substitute
   for owner phone acceptance. Continued owner no-test workflow applies to this slice.
+
+Delivery receipt: joke.8/code46 source0dfb2c491, immutable v0.21.2-joke.8 PUBLIC
+preview. Release compile14m41s,3 asset digests/sizes/public API URL readback confirmed;
+no tests/device checks. Owner phone acceptance pending. See HANDOFF for full receipt.

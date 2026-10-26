@@ -63,7 +63,22 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview: joke.7 (2026-10-25)
+## Latest preview: joke.8 (2026-10-26)
+
+- PUBLIC prerelease joke.8/code46; next APK code>46, same package/signer configuration.
+- Source/tag0dfb2c4912079d5bbcbdf361dcf512b2420bb6c8 / v0.21.2-joke.8 immutable.
+- Shared chapter list/cover-list/lazy-grid, ordinary App settings preference. New
+  explicit chapter-cover action copies local bytes only after confirmation, bounded
+  temp/hash/type/rename; old cover retained as hidden backup, archives/pages untouched.
+  New generated directory copy markers preserve reading/page-cover indices. Preserve
+  hidden markers with media; standard backups do NOT contain cover bytes/markers.
+- Work-cover action, Library107/108 and exact child/directory identities unchanged.
+- Release build14m41s only, six regression case sources NOT compiled/run. No unit/
+  Lint/format/static-signature/device checks.3 asset digests/sizes/public API readback
+  confirmed; owner phone acceptance pending. Resume standing future verification
+  unless owner requests otherwise. No old-version test receipt validates code46.
+
+## Previous preview: joke.7 (2026-10-25)
 
 - PUBLIC prerelease0.21.2-joke.7/code45; next APK code>45, same package/signer config.
 - Source/tag59d6626aad9b5cd55520394a7baf3de23e1299ae / v0.21.2-joke.7 immutable.

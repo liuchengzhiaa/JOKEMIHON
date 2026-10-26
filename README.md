@@ -10,7 +10,17 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**New preview: [0.21.2-joke.7 · compact status badges](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.7).**
+**New preview: [0.21.2-joke.8 · chapter layouts and independent chapter artwork](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.8).**
+[Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.8/JOKEMIHON.apk)
+without sign-in. Code46, existing package/signing config. Chapter header offers shared
+List/Cover list/Cover grid. Local chapters prefer internal cover images or archive
+sibling basename.cover artwork; reader long-press has an independent confirmed chapter
+cover copy action. Source pages/archives stay unchanged; old cover kept as hidden
+backup. Preserve hidden generated-cover markers when copying media to a new phone;
+normal backups do NOT contain media/cover bytes. Layout travels with App settings.
+**Release build only, NO tests/device checks; owner acceptance pending. Back up first.**
+
+**Previous preview: [0.21.2-joke.7 · compact status badges](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.7).**
 [Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.7/JOKEMIHON.apk)
 without sign-in. Code45, existing package/signing config. Remove redundant upper-left
 in-library Check; keep footer status text and long-press selection checkboxes. Shrink
