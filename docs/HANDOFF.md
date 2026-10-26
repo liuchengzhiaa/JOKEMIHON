@@ -33,6 +33,9 @@ Source-confirmed issues vs inferred symptom:
   kept, local logcat reports fetch/decode errors, no telemetry upload.
 - First compile failed1m25s only on nullable EPUB input stream at line95; added explicit
   missing-stream failure before scoped use. No APK produced/published from failed build.
+- Second compile failed1m08s on logger receiver in top-level ChapterCover; qualified
+  the existing Any.logcat extension with context. Source/cache API compilation passed.
+  No APK produced/published from either failed compile.
 - Candidate joke.10/code48, same package/signer. Four regression source cases added,
   NOT compiled/executed. Build/source review/publication pending. Owner phone acceptance
   (cold first page, explicit cover, back/restart, refresh, ZIP/SAF cancellation) pending.

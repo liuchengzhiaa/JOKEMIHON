@@ -39,7 +39,7 @@ fun ChapterCover(manga: Manga, chapterUrl: String) {
         contentDescription = null,
         contentScale = ContentScale.Crop,
         onError = { error ->
-            logcat(LogPriority.ERROR, error.result.throwable) { "Chapter cover decode/load failed" }
+            context.logcat(LogPriority.ERROR, error.result.throwable) { "Chapter cover decode/load failed" }
         },
     )
 }
