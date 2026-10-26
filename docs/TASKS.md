@@ -7,7 +7,9 @@
 - [x] Close sources before decoder handoff; bounded private disk cache and de-dup.
 - [x] Filename-first lookup/listing reuse; persistent epoch, explicit-only refresh.
 - [x] Four regression policy sources added, NOT run per owner no-test workflow.
-- [ ] Compile/package, reviewed source push and public preview publication.
+- [x] Final Release8m44s; reviewed14-file source6827a344c and immutable v0.21.2-joke.10
+      PUBLIC preview;3 asset sizes/digests and anonymous API URL readback confirmed.
+      Earlier1m25s/1m08s compile failures repaired, no APK from failed compiles.
 - [ ] Owner phone cold/warm/restart/explicit-cover/ZIP/cancellation acceptance.
 
 ## Library-style chapter display settings (2026-10-26)

@@ -63,7 +63,23 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview: joke.9 (2026-10-26)
+## Latest preview: joke.10 (2026-10-26)
+
+- PUBLIC prerelease joke.10/code48; next APK code>48, same package/signer configuration.
+- Source/tag6827a344c8637c02cd530cd57c96cc82864eb4f5 / v0.21.2-joke.10 immutable.
+- Chapter covers: scoped bounded source copy closes before decoding; private256MiB
+  encoded disk LRU/Coil thumbnail memory reuse, filename-first SAF/listing cache,
+  de-dup. Persist app-state epoch across restart; explicit save/user refresh invalidates,
+  initial automatic fetch does not. No user-media/reader/backup107/108 changes.
+- Final build8m44s only; earlier nullable-EPUB/logger compile errors repaired, no APK
+  from failed builds. Four regression sources NOT compiled/run; no unit/Lint/format/
+  static-signer/device or performance checks.3 asset digests/sizes/public API readback
+  confirmed. Owner-phone cause NOT reproduced, acceptance pending. Source evidence
+  must not be presented as measured runtime verification. Resume standing future
+  verification unless owner requests otherwise. Host C:full; use isolated D: env,
+  do not delete unrelated user files. Signer offline backup still owner-pending.
+
+## Previous preview: joke.9 (2026-10-26)
 
 - PUBLIC prerelease joke.9/code47; next APK code>47, same package/signer configuration.
 - Source/tag0d7503ce629d59450add60b26a357986c37359c9 / v0.21.2-joke.9 immutable.

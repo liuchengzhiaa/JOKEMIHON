@@ -10,7 +10,17 @@ Personal customization of [Mihon](https://github.com/mihonapp/mihon), based on
 - [v0.19.0 to v0.21.2 library performance analysis](docs/MIHON_019_TO_0212_PERFORMANCE.md)
 - [JOKEMIHON releases](https://github.com/liuchengzhiaa/JOKEMIHON/releases)
 
-**New preview: [0.21.2-joke.9 · library-style chapter display](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.9).**
+**New preview: [0.21.2-joke.10 · chapter cover loading/cache](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.10).**
+[Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.10/JOKEMIHON.apk)
+without sign-in. Code48, existing package/signing config. Read only chosen cover/first
+page into private256MiB bounded encoded-cover disk cache, close sources before measured
+thumbnail decode, reuse across navigation/restart. Filename-first SAF lookup, bounded
+listing reuse and request de-dup; explicit cover save/user refresh invalidates cache,
+not every automatic book load. User media/reader state/backup107/108 unchanged. After
+upgrade, open a previously blank work and pull refresh once. **Build only, NO tests/
+device timing or owner-media repro. Phone acceptance pending; back up before install.**
+
+**Previous preview: [0.21.2-joke.9 · library-style chapter display](https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.9).**
 [Download preview APK](https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.9/JOKEMIHON.apk)
 without sign-in. Code47, existing package/signing configuration. Chapter header icon
 opens book-style display sheet: list/cover-list plus actual library compact/comfortable/

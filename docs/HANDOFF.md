@@ -1,6 +1,6 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.10 chapter cover loading/cache (2026-10-26, CANDIDATE)
+## Current slice: joke.10 chapter cover loading/cache (2026-10-26, PUBLISHED; NOT TESTED)
 
 Owner screenshot shows gray chapter placeholder, also reports explicit chapter cover
 loads much slower than library. Earlier claim that fallback branch meant runtime
@@ -36,14 +36,32 @@ Source-confirmed issues vs inferred symptom:
 - Second compile failed1m08s on logger receiver in top-level ChapterCover; qualified
   the existing Any.logcat extension with context. Source/cache API compilation passed.
   No APK produced/published from either failed compile.
-- Candidate joke.10/code48, same package/signer. Four regression source cases added,
-  NOT compiled/executed. Build/source review/publication pending. Owner phone acceptance
-  (cold first page, explicit cover, back/restart, refresh, ZIP/SAF cancellation) pending.
+- Published joke.10/code48, same package/signer configuration. Four regression source
+  cases NOT compiled/executed. Final app:assembleRelease SUCCESS8m44s,384 tasks/22
+  executed; no unit/Lint/format/static-signature/device checks. Earlier compile failures
+  (1m25s nullable EPUB,1m08s logger receiver) produced NO APK; same unpublished code48.
+  Existing Compose mapping warning only. Owner phone cold/warm/explicit-cover/restart/
+  refresh/ZIP/cancellation acceptance and performance measurements remain pending.
 - Host C:0 free caused default sandbox helper startup error; scoped escalated commands
   work and isolated D: tool/cache/build paths have space. No user files deleted, no
   unrelated directories inspected. Signer offline backup remains pending.
-- Safest next: review/compile without tests, publish exact successful source/new tag,
-  owner checks actual media. Do not claim measured performance or reproduced phone fix.
+- Reviewed14 unique source/docs/policy files across source commitsa61095e38,
+  1cb397eb9 and final6827a344c8637c02cd530cd57c96cc82864eb4f5; pushed/read back.
+  Immutable annotated v0.21.2-joke.10 targets final APK source; receipt-only docs do
+  not rebuild/move tag. No keys/config/auth caches/user media/backups uploaded.
+- PUBLIC prerelease ID424442075, published2026-10-26T15:51:10Z; draft=false,
+  prerelease=true, explicitly not promoted to stable/latest. Package/signer configuration
+  and disabled inherited Actions unchanged.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.10
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.10/JOKEMIHON.apk
+- APK67925491 bytes; sha256:0a199025357f94366bb4daafe493f8b0a2df00b4dfef55c136db9098f46918b5.
+  All3 remote sizes/digests match APK/checksum/manifest67925491/80/1592 bytes.
+  Anonymous public API URL/readback confirmed; whole APK download NOT repeated.
+  Ignored .tools/releases/v0.21.2-joke.10/publication-receipt.json has full receipt.
+- Safest next: owner backs up/installs, opens previously blank work and explicitly
+  refreshes once, then checks no-cover first page/explicit cover/back/restart/ZIP.
+  Do not claim measured speed or reproduced owner-phone fix. Future verification
+  remains standing default unless owner requests otherwise; older tests not evidence.
 
 ---
 

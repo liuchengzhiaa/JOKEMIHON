@@ -1,6 +1,6 @@
 # JOKEMIHON changelog
 
-## 0.21.2-joke.10 (48) - 2026-10-26 (candidate)
+## 0.21.2-joke.10 (48) - 2026-10-26
 
 - Fix chapter cover read flow: no open SAF/archive stream or semaphore permit crosses
   dispatcher return. Copy ONLY chosen cover/first image to app-private encoded cover
@@ -15,7 +15,10 @@
 - Existing chapter cover files/write rules, media, chapter state and backups unchanged;
   private cache not a backup. Add local failure logging using existing error artwork.
 - Four policy regression sources added, NOT run. Continued owner no-test workflow;
-  no unit/Lint/format/static-signature/device checks. Build/publication pending.
+  no unit/Lint/format/static-signature/device checks. Final build8m44s; source6827a344c
+  and immutable v0.21.2-joke.10 PUBLIC preview delivered; all3 asset sizes/digests and
+  anonymous API URL read back. Owner phone/performance acceptance pending; exact
+  screenshot cause was not reproduced. Earlier compile errors repaired, no failed APK.
 
 ## 0.21.2-joke.9 (47) - 2026-10-26
 

@@ -253,3 +253,8 @@ Private cache is disposable, not backed-up cover bytes; user cover files/markers
 reader progress/bookmarks/folders and Library107/108 unchanged. Existing error artwork
 and local fetch/decode error logs aid diagnosis. No owner logs/media/DB inspected;
 no performance measurements/device repro or tests this slice. See HANDOFF.
+
+Delivery: joke.10/code48 source6827a344c, immutable v0.21.2-joke.10 PUBLIC preview.
+Final Release8m44s; all3 asset sizes/digests and anonymous API URL readback confirmed.
+Two compile failures repaired, no APK from them. No tests/device timing or owner-media
+repro; acceptance pending. Back up/install, open previously blank work and refresh once.
