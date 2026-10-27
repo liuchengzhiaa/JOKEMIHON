@@ -1,5 +1,17 @@
 # JOKEMIHON tasks
 
+## Optional Folia library wall (2026-10-27)
+
+- [x] Read owner music Folia reference without modifying music project.
+- [x] Optional stable layout, category-local canvas, focus/open and existing selection.
+- [x] Two-axis visibility/thumbnail bounds; preserve old layouts/data/backup schema.
+- [x] Add seven geometry/gesture/serialization regression cases.
+- [x] Focused7 PASS3m48s; full182 tests/16 suites PASS,15 Lint reports0 errors/
+      160 warnings, final full command12m48s; localized5-key parity/diff check clean.
+- [ ] Release build and static package/signer verification.
+- [ ] Reviewed source/docs push, unique public preview and asset readback.
+- [ ] Owner phone visual/gesture/large-library acceptance.
+
 ## Chapter covers blank/slow (2026-10-26)
 
 - [x] Inspect existing reader/fetcher/SAF dependency; distinguish source issues from

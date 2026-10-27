@@ -55,12 +55,14 @@ fun LibraryContent(
         ),
     ) {
         val pagerState = rememberPagerState(currentPage) { categories.size }
+        val displayMode by getDisplayMode(pagerState.currentPage)
+        val isWall = displayMode == LibraryDisplayMode.FoliaWall
 
         val scope = rememberCoroutineScope()
         val latestCategories by rememberUpdatedState(categories)
         var isRefreshing by remember(pagerState.currentPage) { mutableStateOf(false) }
 
-        if (showPageTabs && categories.isNotEmpty() && (categories.size > 1 || !categories.first().isSystemCategory)) {
+        if ((showPageTabs || isWall) && categories.isNotEmpty() && (categories.size > 1 || !categories.first().isSystemCategory)) {
             LaunchedEffect(categories) {
                 if (categories.size <= pagerState.currentPage) {
                     pagerState.scrollToPage(categories.size - 1)
@@ -82,7 +84,7 @@ fun LibraryContent(
 
         PullRefresh(
             refreshing = isRefreshing,
-            enabled = selection.isEmpty(),
+            enabled = selection.isEmpty() && !isWall,
             onRefresh = {
                 scope.launch {
                     if (!onRefresh()) return@launch

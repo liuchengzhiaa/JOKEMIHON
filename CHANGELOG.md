@@ -1,5 +1,21 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.11 (49) - 2026-10-27
+
+- Optional library Folia mosaic canvas: mixed-size covers, two-axis drag and pinch,
+  first tap focuses/full-cover preview, next tap opens; existing long-press selection.
+- Each stable category ID owns its saved viewport/focus; category tabs remain visible
+  in wall mode. Disable pager swipes/pull refresh only in wall mode to avoid gesture
+  conflicts. Keep filtering/sorting/search and existing layouts unchanged.
+- Off-main immutable geometry, 2D block visibility queries, only nearby composed
+  posters and bounded256-1024px Coil image requests; no extra media scan or writes.
+- New stable FOLIA_WALL display setting included with existing App settings backup;
+  viewport is transient saved UI state, not a new library/backup record. Independent
+  Kotlin renderer inspired by owner music project, not a copy of upstream Folia.
+- Seven new regression tests pass, full182 unit tests pass;15 Lint reports0 errors/
+  160 warnings. No device/FPS/memory acceptance; first icon/count verification issues
+  corrected. Release/static package+signer verification/publication pending.
+
 ## 0.21.2-joke.10 (48) - 2026-10-26
 
 - Fix chapter cover read flow: no open SAF/archive stream or semaphore permit crosses

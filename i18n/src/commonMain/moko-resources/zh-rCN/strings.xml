@@ -953,4 +953,11 @@
     <string name="refresh_tracker_profile">刷新跟踪器配置</string>
     <string name="refresh_tracker_success">刷新 %s 配置</string>
     <string name="refresh_tracker_error">%1$s 刷新错误： %2$s</string>
+
+    <!-- Optional library-only mosaic canvas. -->
+    <string name="jokemihon_folia_wall">Folia 拼接墙</string>
+    <string name="jokemihon_folia_hint">拖动 · 双指缩放 · 点封面聚焦，再点进入</string>
+    <string name="jokemihon_folia_reset">回到墙中心</string>
+    <string name="jokemihon_folia_open">打开作品</string>
+    <string name="jokemihon_folia_focus">聚焦封面</string>
 </resources>

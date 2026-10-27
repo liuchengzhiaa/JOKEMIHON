@@ -1088,4 +1088,11 @@
     <string name="donationCampaign.paragraph3">Regardless, Mihon will continue to be maintained by me and the volunteers, and it will stay open source.</string>
     <string name="donationCampaign.contactPlatform">Discord</string>
     <string name="donationCampaign.dismiss">Dismiss</string>
+
+    <!-- Optional library-only mosaic canvas. -->
+    <string name="jokemihon_folia_wall">Folia mosaic wall</string>
+    <string name="jokemihon_folia_hint">Drag · Pinch to zoom · Tap twice to open</string>
+    <string name="jokemihon_folia_reset">Recenter wall</string>
+    <string name="jokemihon_folia_open">Open work</string>
+    <string name="jokemihon_folia_focus">Focus cover</string>
 </resources>

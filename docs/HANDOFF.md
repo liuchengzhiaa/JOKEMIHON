@@ -1,5 +1,42 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.11 optional Folia library wall (2026-10-27, IN PROGRESS)
+
+- Owner asks category-specific mosaic walls, referring to music project Folia. Read
+  music focuswall geometry/spatial-index/docs ONLY; music repository unchanged.
+- Independently authored Mihon-only renderer: deterministic mixed rectangles in a
+  square spiral, two-axis drag/pinch0.6-1.8, focus/second-tap open, long-press existing
+  selection. Focus modestly expands over neighbours and shows uncropped artwork;
+  not the music renderer's local reflow/shapes/ambient/inertia tool suite.
+- Category stable-ID SaveableStateProvider retains viewport/focus across tab changes
+  and book navigation, with normal saved UI state restoration; filtering/order changes
+  recenter. This is NOT guaranteed cross-device viewport backup. Existing App settings
+  backup carries FOLIA_WALL mode; no backup schema/media/reader/category mutations.
+- Category tabs forced visible only in wall mode; pager swipe and pull-refresh disabled
+  there to reserve both drag axes. Existing menu update action remains available.
+- Scene off-main, only intersecting 2D blocks inspected during measurement, only
+  nearby posters composed; fixed decode buckets256-1024 prevent pinch-frame requests
+  at every pixel size. Standard library cover cache/badges reused, no eager media IO.
+- Only the active category wall composes/loads images; adjacent pager walls skip rendering.
+- Seven new regression cases PASS (focused3m48s), including40k deterministic geometry,
+  disjoint partition, bounded queries, gesture anchoring and old/new serialization.
+- Full testDebugUnitTest + lintDebug SUCCESS12m48s,646 tasks130 executed:16 suites,
+  182 tests,0 failures/errors/skipped;15 XML Lint reports0 errors/160 warnings. No
+  Folia/changed-library-file warnings. Five resource keys match base/zhCN/zhTW.
+- First debug compile4m15s failed on two unavailable icon imports; reused existing
+  Refresh/OpenInNew vectors, no new icon assets. First full run2m11s found old
+  display-mode-count assertion4 vs new5; updated that count, kept old value checks.
+  Neither failed verification produced a published APK. git diff --check clean.
+- Standard verification resumed per standing instructions; no format/AVD/phone or
+  frame-rate/memory checks. Geometry40k is NOT phone-performance evidence.
+- Package/signer configuration unchanged, intended code49. Release build/static
+  package/signature checks and source/public preview publication still PENDING.
+- Safest next: commit reviewed source/docs, build Release from that clean SHA,
+  verify pinned signer/package/version, publish unique preview/read back assets.
+  Owner phone gesture/tab-return/rotation/selection/visual acceptance remains pending.
+
+---
+
 ## Current slice: joke.10 chapter cover loading/cache (2026-10-26, PUBLISHED; NOT TESTED)
 
 Owner screenshot shows gray chapter placeholder, also reports explicit chapter cover

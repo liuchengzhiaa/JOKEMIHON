@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveableStateHolder
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -43,13 +44,19 @@ fun LibraryPager(
     onLongClickManga: (Category, LibraryManga) -> Unit,
     onClickContinueReading: ((LibraryManga) -> Unit)?,
 ) {
+    val wallStates = rememberSaveableStateHolder()
+    val currentMode by getDisplayMode(state.currentPage)
     HorizontalPager(
         modifier = Modifier.fillMaxSize(),
         state = state,
+        key = { getCategoryForPage(it).id },
+        userScrollEnabled = currentMode != LibraryDisplayMode.FoliaWall,
         verticalAlignment = Alignment.Top,
     ) { page ->
-        if (page !in ((state.currentPage - 1)..(state.currentPage + 1))) {
-            // To make sure only one offscreen page is being composed
+        if ((currentMode == LibraryDisplayMode.FoliaWall && page != state.currentPage) ||
+            page !in ((state.currentPage - 1)..(state.currentPage + 1))
+        ) {
+            // A 2D wall reserves gestures and only loads covers for the active category.
             return@HorizontalPager
         }
         val category = getCategoryForPage(page)
@@ -79,6 +86,19 @@ fun LibraryPager(
         val onLongClickManga: (LibraryManga) -> Unit = { onLongClickManga(category, it) }
 
         when (displayMode) {
+            LibraryDisplayMode.FoliaWall -> wallStates.SaveableStateProvider(category.id) {
+                LibraryFoliaWall(
+                    items = items,
+                    selection = selection,
+                    contentPadding = contentPadding,
+                    isActive = page == state.currentPage,
+                    onClick = onClickManga,
+                    onLongClick = onLongClickManga,
+                    onClickContinueReading = onClickContinueReading,
+                    searchQuery = searchQuery,
+                    onGlobalSearchClicked = onGlobalSearchClicked,
+                )
+            }
             LibraryDisplayMode.List -> {
                 LibraryList(
                     items = items,

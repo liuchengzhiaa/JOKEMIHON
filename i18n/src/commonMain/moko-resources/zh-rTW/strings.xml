@@ -923,4 +923,11 @@
     <string name="dual_page_view_wide">寬螢幕時</string>
     <string name="pref_filter_update_categories_details">類別同時屬於「排除」及「包含」的更新將不會顯示。</string>
     <string name="pref_filter_upcoming_categories_details">類別同時屬於「排除」及「包含」的作品將不會顯示。</string>
+
+    <!-- Optional library-only mosaic canvas. -->
+    <string name="jokemihon_folia_wall">Folia 拼接牆</string>
+    <string name="jokemihon_folia_hint">拖曳 · 雙指縮放 · 點封面聚焦，再點進入</string>
+    <string name="jokemihon_folia_reset">回到牆中心</string>
+    <string name="jokemihon_folia_open">開啟作品</string>
+    <string name="jokemihon_folia_focus">聚焦封面</string>
 </resources>
