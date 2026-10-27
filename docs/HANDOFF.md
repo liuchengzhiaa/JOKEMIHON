@@ -1,6 +1,6 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.13 root author sync (2026-10-28, IN PROGRESS)
+## Current slice: joke.13 root author sync (2026-10-28, PUBLISHED PREVIEW)
 
 Owner explicitly selected option1: all ROOT author directories (automatic and manual),
 not the child work directories. New home Sync all button confirms scope and ignores
@@ -27,20 +27,46 @@ current search/selection. Destination exact data name 大家之室, created lazi
   PASS16s. Final full211 tests/19 suites PASS8m06s,650 tasks42 executed,0 skipped/
   failure/error.15 Lint reports0 errors/161 warnings (new English PluralsCandidate
   result string, not a runtime/data warning).8-key EN/CN/TW format parameter parity
-  and diff check pass. Signed build/static/device/publication PENDING.
-- Code51 / 0.21.2-joke.13 planned, same package/pinned signer. No APK yet delivered.
+  and diff check pass. Signed/static/guarded smoke/publication verified below.
+- Code51 / 0.21.2-joke.13 PUBLIC preview delivered, same package/pinned signer.
 - Host: user authorized freeing C: or D: workaround. One exclusive-open old Temp file
   (116769748 bytes) copied to D: private ignored backup, size/SHA256 verified before
   removing original; three other candidates skipped on access/exclusive-open failure.
-  No broad Temp deletion/personal media/keys/config cleanup. Receipt is in MUSIC's
+  Four additional old unlocked Temp files and2 stale VS installer-cache packages later
+  migrated using the same exclusive-open/backup/hash/unchanged-original checks: total
+  7 files/472537679 bytes.3 further recent locked/denied files skipped too. No broad
+  Temp deletion, software uninstall, personal media/keys/config cleanup. Receipts in MUSIC's
   ignored .tools/host-temp-backup/2026-10-28/receipt.json. Do not upload it or backups.
   Use .tools/Set-BuildEnv.ps1 every build: JDK/cache/TEMP/TMP all D:. Small C: headroom
   still required by Codex host; do not claim all system writes redirected to D:.
 - Previous joke.12 API36 hardware-back focus issue remains OPEN (X workaround).
   This slice does not change Folia/back logic or validate a fix for it.
-- Safest next: focused tests -> scoped formatting -> full tests/Lint -> reviewed source
-  commit -> signed Release/static guard -> narrow guarded API36 sync smoke if viable ->
-  push/read remote, immutable unique prerelease + assets, verify and receipt docs.
+- Release SUCCESS9m41s,388 tasks31 executed/1 from cache; static app.jokemihon/
+  code51/version0.21.2-joke.13,min26/target36,4ABIs,pinned-v2-signer and exact BuildConfig
+  source 058f9fa5f/updater+telemetry=false verified. No signer change.
+- Guarded API36 upgrade:5 ROOT authors/13 works sync successfully twice, same IDs and
+  complete saved book/chapter/tag state.58 old books/tags and9 old chapter rows intact;
+  all34 synthetic media file hashes unchanged. Result dialog screenshot visually viewed.
+  Crash buffer empty. Initial cold-boot System UI (NOT JOKEMIHON) Wait dialog dismissed;
+  helper resumed only after full baseline equality, no product code changed for helper.
+- No owner phone, real device backup restore, cancellation UI or1000-item workload run.
+  Unit tests cover new memo backup/cancellation/limit policy; prior Folia Back/X remains.
+- Reviewed18-file source058f9fa5f7ef87a51d98d6470c1f5dc84a53b786 pushed/read back; immutable annotated
+  v0.21.2-joke.13 targets that exact APK source. Main receipt docs do not move the tag.
+- PUBLIC prerelease ID425759100, published2026-10-27T17:16:00Z; draft=false,
+  prerelease=true, make_latest=false. All3 remote sizes/digests match68010063/80/2759
+  bytes. Fresh anonymous public API URLs/assets verified; whole APK download not repeated.
+  Stable/latest remains v0.21.2-joke.2. Only APK/checksum/build manifest uploaded, no
+  private keys/auth/config/cache/fixtures/media/host-temp backup. Ignored full receipts
+  in .tools/releases/v0.21.2-joke.13 and .tools/verification/author-sync-ui.
+- APK sha256 5a677652f1c0fd8a281a7db893f4438c42f86f9b6a30a6ed4b7e2fb2d300be20.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.13
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.13/JOKEMIHON.apk
+- Dedicated Gradle daemon stopped before AVD; app/guarded AVD and dedicated5038 server
+  stopped after checks. No real phone touched. Owner signer offline backup pending.
+- Safest next: owner backs up, installs preview, More > Local works manager > Sync all;
+  confirm real author books in 大家之室 and check failed names before retry. Preserve
+  original paths and other tags. Next APK code>51; no immutable tag/asset overwrite.
 
 ---
 

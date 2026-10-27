@@ -9,9 +9,12 @@
 - [x] Add13 regression cases for identity/backup/adoption/import/tag/retry/fail/cancel.
 - [x] Focused42 PASS5m30s; scoped format16s; full211/19 suites PASS8m06s,
       15 Lint reports0 errors/161 warnings;8-key locale parameters/diff check.
-- [ ] Signed/static APK verification.
-- [ ] Narrow guarded synthetic API36 sync smoke; no owner phone/media mutations.
-- [ ] Review/push code51, publish unique joke.13 preview + verify assets and receipt.
+- [x] Release9m41s; static package/code51/4ABI/pinned v2 signer/source flags pass.
+- [x] Guarded API36:5 authors/13 works, repeat IDs/state unchanged;58 old books/tags,
+      9 chapters and34 media hashes intact. Crash buffer empty. System UI Wait dismissed
+      before baseline-checked resume. No phone/real backup-restore workload run.
+- [x] Reviewed18-file source058f9fa5f pushed; joke.13 PUBLIC preview425759100,
+      3 asset sizes/digests and anonymous public API URL readback confirmed.
 - [ ] Owner phone directory/tag/reading/backup acceptance.
 
 ## Music Folia visual fidelity (2026-10-27)

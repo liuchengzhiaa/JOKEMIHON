@@ -63,23 +63,32 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Current candidate: joke.13 (2026-10-28, APK/PUBLICATION PENDING)
+## Latest preview: joke.13 (2026-10-28)
 
-- Planned code51 / joke.13, same app.jokemihon/pinned signer; no published APK yet.
-- Root/home Sync all -> fixed 大家之室 category, automatic/manual groups, no search
-  filtering. Each author is one independent book; optional stable authorKey memo URL
-  updates chapters/name without duplicates, preserves original files/other tags/state.
-- No nested work-folder adoption; backup uses ordinary manga memo/categories/chapters,
- 107/108 unchanged. Additive, not a deletion mirror; changed group keys retain old books.
-- Cancellable sequential IO/progress/bounded failures; empty skip; >1000 reported.
-- Focused42 PASS5m30s; scoped format16s; full211/19 suites PASS8m06s,15 Lint reports
-  0 errors/161 warnings;8-key locale parity. Signed/static/device/publish pending.
-- Use D: .tools/Set-BuildEnv.ps1. Owner-authorized old Temp migration freed116769748
-  bytes with verified private D: backup; three locked/denied files untouched. No broad
-  cleanup or personal data/signing changes. Codex still needs some C: host headroom.
-- Existing joke.12 API36 Folia hardware Back limitation unchanged, explicit X works.
+- PUBLIC prerelease joke.13/code51; next APK code>51, same app.jokemihon/pinned signer.
+- Immutable source/tag058f9fa5f7ef87a51d98d6470c1f5dc84a53b786 / v0.21.2-joke.13.
+- Root/home Sync all -> exact 大家之室, fresh automatic/manual groups, no UI-search
+  filtering. Each author one independent book; stable authorKey memo updates name/
+  membership on same ID. Preserve original/child entries, other tags/covers/state/media.
+- No nested-folder adoption; ordinary memo backup,107/108 unchanged. Additive, not a
+  deletion mirror: changed group keys retain old books. Sequential cancellable IO,
+  progress/first5 failures; empty skip; >1000 reported without truncating.
+- Focused42 PASS5m30s; full211/19 suites PASS8m06s,15 Lint reports0 errors/161 warnings;
+  scoped format16s/8-key locale parameters. Release9m41s/static pinned-signer/source pass.
+- Guarded API36 upgrade:5 authors/13 works, repeat IDs/state unchanged;58 old books/
+  tags,9 chapters and34 media hashes intact. Crash buffer empty. Cold-boot System UI
+  Wait dismissed and helper baseline checked; not an app crash/product patch.
+- PUBLIC release425759100, all3 asset hashes/sizes/anonymous URLs verified;
+  no whole re-download, phone/real restore/cancel-UI/large workload test. See HANDOFF.
+- D: build JDK/cache/TEMP/TMP. User-authorized Temp migration:7 unlocked stale temp/
+  installer-cache files,472537679 bytes backed up/hashed on D: before removing originals;
+  6 locked/denied candidates skipped. No broad cleanup/uninstall; Codex still needs
+  C: headroom. Private receipts in music ignored .tools/host-temp-backup/2026-10-28,
+  NEVER upload them or private signer. Remaining C: space is volatile; no global fix.
+- Project daemon/guarded AVD/dedicated5038 server stopped. Owner signer offline backup
+  and phone acceptance pending. Prior API36 Folia hardware Back open, X workaround.
 
-## Latest preview: joke.12 (2026-10-27)
+## Previous preview: joke.12 (2026-10-27)
 
 - PUBLIC prerelease joke.12/code50; next APK code>50, same app.jokemihon/pinned signer.
 - Source/tag1efe5df1cc08307c5487124541829a2143a9b988 / v0.21.2-joke.12 immutable.

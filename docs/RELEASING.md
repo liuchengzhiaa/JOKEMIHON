@@ -1,11 +1,14 @@
 # JOKEMIHON source and APK delivery
 
-Current candidate: 0.21.2-joke.13 (51), NOT YET PUBLISHED. Root author sync to
-大家之室, stable author-key memo, additive/non-destructive, backup107/108 unchanged.
-Focused42/full211 PASS, Lint0 errors/161 warnings, scoped format/8-key locales pass.
-Release/static/guarded synthetic smoke and remote publication remain pending.
-Existing package/pinned signer; never overwrite joke.12 assets/tag. Keep known
-API36 Folia Back issue in preview notes (X workaround), no unrelated fix claim.
+Current preview: 0.21.2-joke.13 (51), PUBLIC prerelease425759100.
+Source/tag058f9fa5f7ef87a51d98d6470c1f5dc84a53b786 / v0.21.2-joke.13.
+211 tests/0-error Lint161 warnings/scoped format/8-key locale checks pass. Release
+9m41s/static package/4ABI/pinned v2 signer/BuildConfig verified. Guarded API36 repeats
+5 authors/13 works; old58 books/tags,9 chapters,34 media hashes unchanged. All3 remote
+sizes/digests and anonymous API URLs match; no whole APK re-download or real phone/
+backup-restore/large workload run. Known Folia hardware Back issue unchanged, X works.
+Only APK/checksum/build manifest uploaded. Use next code>51, never overwrite tags/assets.
+
 
 ## Destination and owner requirement
 
@@ -110,7 +113,7 @@ updater/telemetry are delivered. See HANDOFF for the exact verified public downl
 tests and known limits. Do not mistake upstream badges/tags for JOKEMIHON releases.
 
 Subsequent APKs MUST retain app.jokemihon and the certificate pinned in
-tools/release-signing-certificate.sha256, with versionCode greater than 50. No signing
+tools/release-signing-certificate.sha256, with versionCode greater than 51. No signing
 rotation, tag reuse or release-asset overwrite. Documentation receipts do not need
 an identical APK rebuild and may advance main beyond the immutable APK source tag.
 

@@ -1,6 +1,6 @@
 # JOKEMIHON changelog
 
-## 0.21.2-joke.13 (51) - 2026-10-28 (APK/publication pending)
+## 0.21.2-joke.13 (51) - 2026-10-28
 
 - More > Local works manager home adds confirmed Sync all to the fixed 大家之室 tag.
   Rescan ALL automatic/manual root author groups, ignoring UI search and selection.
@@ -17,7 +17,11 @@
   work folders108 remain unchanged. Retain media paths and regrant storage on restore.
 - Focused42 tests PASS5m30s; full211 tests/19 suites PASS8m06s,15 Lint reports
   0 errors/161 warnings (one added English plural-candidate warning). Scoped format
-  PASS16s,8-key EN/CN/TW parameter parity/diff check pass. APK/device/publish pending.
+  PASS16s,8-key EN/CN/TW parameter parity/diff check pass. Release9m41s/static signer
+  pass; guarded API36 repeats5 authors/13 works without duplicates, preserves58 old
+  books/tags,9 chapters and34 media hashes. PUBLIC joke.13/source058f9fa5f
+  verified,3 asset sizes/digests and anonymous URLs match. No owner phone/real backup
+  restore/large workload test; prior Folia Back issue unchanged, explicit X workaround.
 
 ## 0.21.2-joke.12 (50) - 2026-10-27
 
