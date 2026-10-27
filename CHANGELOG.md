@@ -16,7 +16,12 @@
   coordinates, no library migration. App settings includes the new appearance keys.
 - Final198 tests pass (23 Folia cases),15 Lint reports0 errors/160 warnings; scoped
   format and locale24-key parity pass. Density commits on release; obsolete geometry
-  cancels between blocks. Release/AVD/publication pending. Music remains read-only.
+  cancels between blocks. Release9m39s/static signer pass; synthetic API36 confirms
+  portrait2:3/landscape3:2, complete corners, styles and explicit X/reset. Known API36
+  hardware-back exits to launcher rather than dismissing focus; X workaround, root
+  cause pending. No phone/FPS/RAM proof. Source1efe5df1c / immutable v0.21.2-joke.12
+  PUBLIC preview delivered;3 asset sizes/digests and anonymous URL readback confirmed.
+  Music stays read-only; return-key limitation disclosed, not an all-green device claim.
 
 ## 0.21.2-joke.11 (49) - 2026-10-27
 

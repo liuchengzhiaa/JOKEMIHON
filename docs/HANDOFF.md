@@ -1,6 +1,6 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.12 music Folia fidelity (2026-10-27, IN PROGRESS)
+## Current slice: joke.12 music Folia fidelity (2026-10-27, PUBLISHED PREVIEW; BACK ISSUE OPEN)
 
 Owner screenshot rejects joke.11's fixed shape/Fit,1.18x scaling, gaps/rounding and
 persistent instruction row. This slice supersedes that approximate visual model.
@@ -32,11 +32,45 @@ persistent instruction row. This slice supersedes that approximate visual model.
   byte-for-byte, no code ran with a changed project config. Initial full gate10m44s
   superseded by final8m24s after the cancellation/density changes. Material Slider
   overload has a compile-time deprecation warning only. git diff --check clean.
-- No media/DB/backup schema changes. Release/static-signer/guarded AVD/publication
-  still PENDING. No phone/FPS/memory validation implied by geometry success.
+- Release SUCCESS9m39s,388 tasks33 executed; package app.jokemihon/code50/version
+  0.21.2-joke.12, min26/target36,4ABIs, one pinned-v2-signer, exact BuildConfig source
+  1efe5df1cc08307c5487124541829a2143a9b988, updater/telemetry=false statically verified.
+- After stopping dedicated Gradle daemon, guarded API36 JOKEMIHON_CategoryWall_Test
+  AVD only: install-r, append24 synthetic own-app covers/book entries after copying DB/
+  prefs baseline. No owner phone/media read. Source/display bounds confirm a portrait
+  formerly450x180 preview becomes360x540 (2:3), landscape540x360 (3:2), both centred.
+  Screenshots visually show all4 corner markers; no instruction row, sharp/flush
+  posters, styles accessible and explicit X dismiss/reset work. Scoped app fatal log
+  empty. No FPS/RAM/owner-provider measurement. AVD force-stopped/killed afterward.
+- Cold boot System UI (NOT JOKEMIHON) displayed Wait dialog; dismissed after inspecting
+  foreground. UI helper updated for observed unmerged clickable parents and actual
+  visible13/14 titles, no product code changed to accommodate the helper.
+- KNOWN UNRESOLVED: synthetic API36 KEYCODE_BACK exited to launcher instead of clearing
+  poster focus. Existing BackHandler source is NOT runtime proof. Explicit bottom-left
+  X works; preserve this limitation in notes and investigate host back routing next.
+  Do not describe the whole smoke as all-green or claim this back path repaired.
+- Reviewed22-file source/resource/test/continuity commit1efe5df1c pushed/read back;
+  new annotated v0.21.2-joke.12 targets exact APK source. Source/tag read back remotely;
+  receipt-only main docs do not rebuild or move the immutable APK source tag.
+- PUBLIC prerelease ID425650740, published2026-10-27T15:45:48Z; draft=false,
+  prerelease=true, make_latest=false. All3 asset sizes/digests match68003683/80/2836
+  bytes. Fresh anonymous public API URLs/assets read back; whole APK download NOT
+  repeated. Full ignored receipt: .tools/releases/v0.21.2-joke.12/publication-receipt.json.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.12
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.12/JOKEMIHON.apk
+- Only APK/checksum/build-manifest uploaded; no keys/auth/local config/cache/media or
+  AVD fixtures/screenshots uploaded. Signer offline backup/C:full workaround unchanged.
+  Dedicated Gradle daemon stopped before AVD; guarded AVD and dedicated5038 server
+  stopped afterward. No owner physical phone touched.
+- Candidate APK68003683 bytes, sha256 c40e76c2da872d7e7d0963fd653831c860a5c12ea8770077152a4f62ca6e8859.
+  Ignored .tools/verification/folia-music-ui/{fixture.json,smoke-result.json,*.png/xml}
+  records replay/visual facts; .tools/releases/v0.21.2-joke.12 has candidate assets.
 - Intended code50/same package and pinned signer. Use isolated D: build env, C:full.
-  Safest next: scoped format, focused tests, normal full gates, commit/build; dedicated
-  synthetic AVD smoke if available, then unique preview/readback. No phone/FPS claims.
+  Safest next: owner backs up/installs preview, opens Folia wall and selects default
+  FullCover in the bottom-right style sheet; verify real portrait/landscape/selection/
+  tag return and styles on phone. New coordinates reset old transient view only.
+  Next code work: trace API36 back dispatch priority/lifecycle before changing it; X
+  is the verified workaround. Owner appearance/provider/performance acceptance pending.
 
 ---
 

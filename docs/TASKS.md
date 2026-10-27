@@ -9,8 +9,14 @@
 - [x] Initial main compilation5m11s; add/update geometry/aspect/palette test sources.
 - [x] Scoped format20s; final full198 tests/18 suites,23 Folia cases,15 Lint reports
       0 errors/160 warnings; command8m24s.24-key locale parity/hint removal/diff check.
-- [ ] Release/static signer and guarded synthetic AVD visual smoke.
-- [ ] Reviewed source/docs sync and unique public APK preview/readback.
+- [x] Release9m39s and static package/code50/4ABI/pinned v2 signer/source guard.
+- [x] Guarded synthetic API36 visual smoke: portrait360x540, landscape540x360,
+      complete corners, no hint, styles and explicit X/reset; no app fatal lines.
+- [ ] API36 hardware-back exits Activity rather than dismissing focus; root cause
+      unproven. Record X workaround, do not call back path verified.
+- [x] Reviewed22-file source1efe5df1c pushed; immutable v0.21.2-joke.12 PUBLIC
+      prerelease425650740 delivered,3 remote hashes/sizes and anonymous URL confirmed.
+      Known Back issue disclosed; this is not an all-green device regression.
 - [ ] Owner phone visual/performance acceptance.
 
 ## Optional Folia library wall (2026-10-27)

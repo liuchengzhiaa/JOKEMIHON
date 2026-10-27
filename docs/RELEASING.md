@@ -14,7 +14,17 @@
 
 ## Current releases
 
-Latest preview: 0.21.2-joke.11 (49), existing app.jokemihon/pinned signer.
+Latest preview: 0.21.2-joke.12 (50), existing app.jokemihon/pinned signer.
+Source/APK1efe5df1cc08307c5487124541829a2143a9b988 / v0.21.2-joke.12.
+PUBLIC prerelease425650740; full198 tests/18 suites(23 Folia) PASS,15 Lint reports
+0 errors/160 warnings, scoped format/24-key locale parity pass. Release9m39s and
+static package/code50/4ABI/pinned-v2-signer/BuildConfig SHA verified. Synthetic API36
+portrait360x540/landscape540x360, complete corners/styles/X verified. Known hardware-
+back exits to launcher instead of dismissing focus; disclosed and NOT fixed. No
+owner phone/FPS/RAM/whole-APK-download checks. All3 remote sizes/digests and anonymous
+API URLs read back; stable/latest not promoted. See HANDOFF/FOLIA_PORT for limitations.
+
+Previous preview: 0.21.2-joke.11 (49), existing app.jokemihon/pinned signer.
 Source/APK209b356d7de7ec72100ebc9e0858d155c44c0545 / v0.21.2-joke.11.
 PUBLIC prerelease ID425352594, not promoted to stable/latest. Full182 tests/16 suites
 PASS,15 Lint reports0 errors/160 warnings, Release10m04s; static package/code49/4ABI/
@@ -93,7 +103,7 @@ updater/telemetry are delivered. See HANDOFF for the exact verified public downl
 tests and known limits. Do not mistake upstream badges/tags for JOKEMIHON releases.
 
 Subsequent APKs MUST retain app.jokemihon and the certificate pinned in
-tools/release-signing-certificate.sha256, with versionCode greater than 49. No signing
+tools/release-signing-certificate.sha256, with versionCode greater than 50. No signing
 rotation, tag reuse or release-asset overwrite. Documentation receipts do not need
 an identical APK rebuild and may advance main beyond the immutable APK source tag.
 

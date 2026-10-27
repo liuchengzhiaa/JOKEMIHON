@@ -63,7 +63,31 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview: joke.11 (2026-10-27)
+## Latest preview: joke.12 (2026-10-27)
+
+- PUBLIC prerelease joke.12/code50; next APK code>50, same app.jokemihon/pinned signer.
+- Source/tag1efe5df1cc08307c5487124541829a2143a9b988 / v0.21.2-joke.12 immutable.
+- Replace approximate eight-slot wall with owner's music12x8 engine/reflow, FullCover
+  default follows thumbnail aspect; actual hero/neighbour geometry/camera transitions,
+  inertia, cover palette/depth/light/tint, zero poster gutters/corners and no hint row.
+  Global shape/size/density/zoom/light/tint/motion/lights-out settings; per-tag pan/focus.
+  Density commits on release; stale geometry cancels per block. App settings backup
+  includes appearance. New transient UI namespace resets old wall coordinates only.
+- Music source0c015384a0 READ ONLY, independent owner Kotlin not upstream AGPL source.
+  Book actions/chapter/media/backup107/108 intact; see FOLIA_PORT for intentional differences.
+- Full198 tests/18 suites(23 Folia cases) PASS,15 Lint reports0 errors/160 warnings;
+  scoped format/localization24-key parity pass. Release9m39s/static package/code50/
+  pinned v2 signer/source metadata verified. Guarded API36 synthetic portrait2:3 and
+  landscape3:2/corners/styles/X confirmed; no app fatal lines. NO owner phone/FPS/RAM
+  or whole APK download. All3 remote asset hashes/sizes and anonymous API URLs match.
+- KNOWN: API36 synthetic hardware-back exited to launcher instead of clearing focus;
+  X works, root cause unproven. Do not call the device smoke all-green or claim the
+  BackHandler source proves this path. Next trace host dispatch/lifecycle; phone
+  appearance/back/provider/performance acceptance pending. Stable/latest not promoted.
+- Project daemon stopped, guarded AVD and dedicated5038 ADB server stopped. C:full
+  workaround and owner signer offline backup still pending; no unrelated cleanup.
+
+## Previous preview: joke.11 (2026-10-27)
 
 - PUBLIC prerelease joke.11/code49; next APK code>49, same app.jokemihon/pinned signer.
 - Source/tag209b356d7de7ec72100ebc9e0858d155c44c0545 / v0.21.2-joke.11 immutable.
