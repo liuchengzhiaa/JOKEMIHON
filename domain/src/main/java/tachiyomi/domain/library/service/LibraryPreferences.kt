@@ -42,6 +42,16 @@ class LibraryPreferences(
     val chapterBookmarkBadge: Preference<Boolean> = preferenceStore.getBoolean("jokemihon_chapter_bookmark_badge", true)
     val chapterDownloadBadge: Preference<Boolean> = preferenceStore.getBoolean("jokemihon_chapter_download_badge", true)
 
+    // Global Folia appearance, separate from per-category saved UI pan/focus.
+    val foliaShape = preferenceStore.getString("jokemihon_folia_shape", "FullCover")
+    val foliaSize = preferenceStore.getString("jokemihon_folia_size", "Medium")
+    val foliaDensity = preferenceStore.getInt("jokemihon_folia_density", 100)
+    val foliaZoom = preferenceStore.getInt("jokemihon_folia_zoom", 100)
+    val foliaAmbient = preferenceStore.getInt("jokemihon_folia_ambient", 100)
+    val foliaTint = preferenceStore.getInt("jokemihon_folia_tint", 0)
+    val foliaMotion = preferenceStore.getInt("jokemihon_folia_motion", 100)
+    val foliaLightsOut = preferenceStore.getBoolean("jokemihon_folia_lights_out", true)
+
     val randomSortSeed: Preference<Int> = preferenceStore.getInt("library_random_sort_seed", 0)
 
     val portraitColumns: Preference<Int> = preferenceStore.getInt("pref_library_columns_portrait_key", 0)

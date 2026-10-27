@@ -926,8 +926,27 @@
 
     <!-- Optional library-only mosaic canvas. -->
     <string name="jokemihon_folia_wall">Folia 拼接牆</string>
-    <string name="jokemihon_folia_hint">拖曳 · 雙指縮放 · 點封面聚焦，再點進入</string>
     <string name="jokemihon_folia_reset">回到牆中心</string>
     <string name="jokemihon_folia_open">開啟作品</string>
     <string name="jokemihon_folia_focus">聚焦封面</string>
+    <string name="jokemihon_folia_settings">封面牆樣式</string>
+    <string name="jokemihon_folia_shape">聚焦形狀</string>
+    <string name="jokemihon_folia_full_cover">完整封面（動態）</string>
+    <string name="jokemihon_folia_square">方形</string>
+    <string name="jokemihon_folia_portrait">直式</string>
+    <string name="jokemihon_folia_landscape">橫式</string>
+    <string name="jokemihon_folia_heart">愛心</string>
+    <string name="jokemihon_folia_circle">圓形</string>
+    <string name="jokemihon_folia_size">聚焦大小</string>
+    <string name="jokemihon_folia_small">小</string>
+    <string name="jokemihon_folia_medium">中</string>
+    <string name="jokemihon_folia_large">大</string>
+    <string name="jokemihon_folia_density">拼接密度</string>
+    <string name="jokemihon_folia_zoom">縮放</string>
+    <string name="jokemihon_folia_ambient">氛圍光</string>
+    <string name="jokemihon_folia_tint">封面染色</string>
+    <string name="jokemihon_folia_motion">動畫與慣性</string>
+    <string name="jokemihon_folia_lights_out">聚焦時壓暗其他封面</string>
+    <string name="jokemihon_folia_clear_focus">取消聚焦</string>
+    <string name="jokemihon_folia_work">作品</string>
 </resources>

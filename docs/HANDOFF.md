@@ -1,5 +1,45 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.12 music Folia fidelity (2026-10-27, IN PROGRESS)
+
+Owner screenshot rejects joke.11's fixed shape/Fit,1.18x scaling, gaps/rounding and
+persistent instruction row. This slice supersedes that approximate visual model.
+
+- Read actual music runtime chain FocusCoverWall -> FocusWallScene -> FoliaWallLayout.
+  Music source0c015384a005f042c6bf2eb30370999ed3cd66a6 READ ONLY. Port owner's independent
+  Kotlin geometry/spatial index/palette/ambient maths; NOT upstream AGPL reference code.
+- Replace eight-slot engine with12x8 exact partition and focus-local neighbour reflow.
+  FullCover default uses small Coil facts, aspect observed from visible decodes first,
+  focused128px software decode for palette; no raw/full-size artwork scan or retained bitmap.
+- New hero changes actual rectangle and neighbours, animated320ms geometry/280ms
+  camera; guarded inertial pan, centred pinch, depth/lights-out and music poster chrome.
+  Zero gutters/corners per owner (music uses tiny2dp gutters/corners). No text hint.
+- Bottom-right circle grid tool; global shapes/sizes/density/zoom/light/tint/motion/
+  lights-out. Global memory reacts immediately;240ms debounced preference write.
+  App settings backup carries keys. Category saved UI holds pan/focus only; namespace
+  music-v2 intentionally resets old incompatible coordinates, not library or media.
+- Existing manga/selection/continue-reading callbacks preserved, no audio/player/lyrics
+  controls ported. Other book/chapter/local-work logic, backup107/108 unchanged.
+- Initial debug main compilation PASS5m11s. Focused22 cases PASS2m35s; later added
+  per-block cancellation check/case and density release-only commit (no slider storm).
+- Final full testDebugUnitTest + lintDebug SUCCESS8m24s,646 tasks30 executed:
+  18 suites198 tests,0 failures/errors/skipped;23 Folia cases across3 suites, including
+  9 adapted music geometry contracts.15 Lint XML reports0 errors/160 warnings, no
+  warnings in Folia files.24 new/existing wall resource keys match base/CN/TW, hint absent.
+- Scoped Spotless app/domain changed-file format PASS20s on final source; current
+  .editorconfig unchanged. Initial style-only failures (line lengths/music constant
+  spelling) corrected; one temporary tool-only max-length override attempt was restored
+  byte-for-byte, no code ran with a changed project config. Initial full gate10m44s
+  superseded by final8m24s after the cancellation/density changes. Material Slider
+  overload has a compile-time deprecation warning only. git diff --check clean.
+- No media/DB/backup schema changes. Release/static-signer/guarded AVD/publication
+  still PENDING. No phone/FPS/memory validation implied by geometry success.
+- Intended code50/same package and pinned signer. Use isolated D: build env, C:full.
+  Safest next: scoped format, focused tests, normal full gates, commit/build; dedicated
+  synthetic AVD smoke if available, then unique preview/readback. No phone/FPS claims.
+
+---
+
 ## Current slice: joke.11 optional Folia library wall (2026-10-27, PUBLISHED PREVIEW)
 
 - Owner asks category-specific mosaic walls, referring to music project Folia. Read

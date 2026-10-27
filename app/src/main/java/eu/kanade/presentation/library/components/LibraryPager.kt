@@ -45,6 +45,7 @@ fun LibraryPager(
     onClickContinueReading: ((LibraryManga) -> Unit)?,
 ) {
     val wallStates = rememberSaveableStateHolder()
+    val foliaAppearance = rememberFoliaAppearance()
     val currentMode by getDisplayMode(state.currentPage)
     HorizontalPager(
         modifier = Modifier.fillMaxSize(),
@@ -86,8 +87,9 @@ fun LibraryPager(
         val onLongClickManga: (LibraryManga) -> Unit = { onLongClickManga(category, it) }
 
         when (displayMode) {
-            LibraryDisplayMode.FoliaWall -> wallStates.SaveableStateProvider(category.id) {
+            LibraryDisplayMode.FoliaWall -> wallStates.SaveableStateProvider("music-v2:${category.id}") {
                 LibraryFoliaWall(
+                    appearance = foliaAppearance,
                     items = items,
                     selection = selection,
                     contentPadding = contentPadding,

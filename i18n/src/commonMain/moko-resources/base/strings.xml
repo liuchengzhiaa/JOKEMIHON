@@ -1091,8 +1091,27 @@
 
     <!-- Optional library-only mosaic canvas. -->
     <string name="jokemihon_folia_wall">Folia mosaic wall</string>
-    <string name="jokemihon_folia_hint">Drag · Pinch to zoom · Tap twice to open</string>
     <string name="jokemihon_folia_reset">Recenter wall</string>
     <string name="jokemihon_folia_open">Open work</string>
     <string name="jokemihon_folia_focus">Focus cover</string>
+    <string name="jokemihon_folia_settings">Wall appearance</string>
+    <string name="jokemihon_folia_shape">Focus shape</string>
+    <string name="jokemihon_folia_full_cover">Full cover (dynamic)</string>
+    <string name="jokemihon_folia_square">Square</string>
+    <string name="jokemihon_folia_portrait">Portrait</string>
+    <string name="jokemihon_folia_landscape">Landscape</string>
+    <string name="jokemihon_folia_heart">Heart</string>
+    <string name="jokemihon_folia_circle">Circle</string>
+    <string name="jokemihon_folia_size">Focus size</string>
+    <string name="jokemihon_folia_small">Small</string>
+    <string name="jokemihon_folia_medium">Medium</string>
+    <string name="jokemihon_folia_large">Large</string>
+    <string name="jokemihon_folia_density">Wall density</string>
+    <string name="jokemihon_folia_zoom">Zoom</string>
+    <string name="jokemihon_folia_ambient">Ambient light</string>
+    <string name="jokemihon_folia_tint">Poster tint</string>
+    <string name="jokemihon_folia_motion">Motion / inertia</string>
+    <string name="jokemihon_folia_lights_out">Dim other covers on focus</string>
+    <string name="jokemihon_folia_clear_focus">Clear focus</string>
+    <string name="jokemihon_folia_work">Work</string>
 </resources>

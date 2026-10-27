@@ -1,5 +1,23 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.12 (50) - 2026-10-27
+
+- Replace the joke.11 simplified eight-slot canvas with the owner's music Folia
+  12x8 exact-cover engine and nearest-slot local reflow, not another fixed-frame Fit.
+- Default dynamic FullCover reads focused-cover proportions and changes the hero's
+  footprint; portrait/landscape covers no longer share a fixed square/horizontal frame.
+- Restore centre-follow, animated position/size of hero AND neighbours, momentum pan,
+  depth/lights-out, sampled cover accent/palette, music poster typography and gradients.
+- Zero gutters/square corners per owner; remove the persistent hint text completely.
+  Small bottom-right tool icon opens global shape/size/density/zoom/ambient/tint/motion/
+  lights-out choices. Shape choices include FullCover, square/portrait/landscape/heart/circle.
+- Keep category pan/focus and existing selection/book actions, other layouts and data.
+  Zoom/style are now global as in music. New saved-UI namespace resets only old wall
+  coordinates, no library migration. App settings includes the new appearance keys.
+- Final198 tests pass (23 Folia cases),15 Lint reports0 errors/160 warnings; scoped
+  format and locale24-key parity pass. Density commits on release; obsolete geometry
+  cancels between blocks. Release/AVD/publication pending. Music remains read-only.
+
 ## 0.21.2-joke.11 (49) - 2026-10-27
 
 - Optional library Folia mosaic canvas: mixed-size covers, two-axis drag and pinch,

@@ -1,5 +1,18 @@
 # JOKEMIHON tasks
 
+## Music Folia visual fidelity (2026-10-27)
+
+- [x] Trace/read music actual complete-cover/reflow/animation/chrome chain.
+- [x] Port owner geometry/spatial index, remove approximation/hint/rounding/gutters.
+- [x] Dynamic full-cover/camera/neighbour transitions, palette/depth/ambient/inertia.
+- [x] Global style tools and debounced persistence; preserve data and category actions.
+- [x] Initial main compilation5m11s; add/update geometry/aspect/palette test sources.
+- [x] Scoped format20s; final full198 tests/18 suites,23 Folia cases,15 Lint reports
+      0 errors/160 warnings; command8m24s.24-key locale parity/hint removal/diff check.
+- [ ] Release/static signer and guarded synthetic AVD visual smoke.
+- [ ] Reviewed source/docs sync and unique public APK preview/readback.
+- [ ] Owner phone visual/performance acceptance.
+
 ## Optional Folia library wall (2026-10-27)
 
 - [x] Read owner music Folia reference without modifying music project.

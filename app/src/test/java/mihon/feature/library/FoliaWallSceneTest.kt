@@ -9,12 +9,17 @@ import kotlin.math.abs
 
 class FoliaWallSceneTest {
     @Test
-    fun `eight slots tile one block without overlap`() {
-        val scene = FoliaWallScene.create((0L..7L).toList())
-        scene.tiles.sumOf { (it.width * it.height).toDouble() } shouldBe 64.0
+    fun `twelve slots tile one block without overlap`() {
+        val scene = FoliaWallScene.create((0L..11L).toList())
+        scene.tiles.sumOf { (it.width * it.height).toDouble() } shouldBe 96.0
         scene.tiles.forEach { a ->
-            scene.tiles.filter { it.id != a.id }.forEach { b ->
-                (a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y) shouldBe false
+            scene.tiles.filter { it.itemId != a.itemId }.forEach { b ->
+                (
+                    a.centerX - a.width / 2 < b.centerX + b.width / 2 &&
+                        a.centerX + a.width / 2 > b.centerX - b.width / 2 &&
+                        a.centerY - a.height / 2 < b.centerY + b.height / 2 &&
+                        a.centerY + a.height / 2 > b.centerY - b.height / 2
+                    ) shouldBe false
             }
         }
     }
@@ -25,8 +30,8 @@ class FoliaWallSceneTest {
         val a = FoliaWallScene.create(ids)
         val b = FoliaWallScene.create(ids)
         a.tiles shouldBe b.tiles
-        a.tiles.map { it.id } shouldBe ids
-        a.tiles.map { it.x to it.y }.toSet().size shouldBe ids.size
+        a.tiles.sortedBy { it.index }.map { it.itemId.toLong() } shouldBe ids
+        a.tiles.map { it.centerX to it.centerY }.toSet().size shouldBe ids.size
         (a.minX < -8f && a.maxX > 8f && a.minY < -8f && a.maxY > 8f) shouldBe true
     }
 
@@ -34,9 +39,12 @@ class FoliaWallSceneTest {
     fun `viewport query examines nearby buckets not entire library`() {
         val scene = FoliaWallScene.create((1L..40_000L).toList())
         val query = scene.query(-2f, -2f, 10f, 10f)
-        (query.examined <= 72) shouldBe true
+        (query.examined <= 256) shouldBe true
         query.tiles.toSet() shouldBe scene.tiles.filter {
-            it.x < 10f && it.x + it.width > -2f && it.y < 10f && it.y + it.height > -2f
+            it.centerX - it.width / 2 < 10f &&
+                it.centerX + it.width / 2 > -2f &&
+                it.centerY - it.height / 2 < 10f &&
+                it.centerY + it.height / 2 > -2f
         }.toSet()
     }
 
@@ -67,12 +75,13 @@ class FoliaWallSceneTest {
     fun `pan zoom bounds and invalid gesture stay finite`() {
         val start = FoliaTransform()
         start.gesture(0f, 0f, 50f, -100f, 1f, 50f) shouldBe FoliaTransform(1f, -2f, 1f)
-        start.gesture(0f, 0f, 0f, 0f, 100f, 50f).zoom shouldBe 1.8f
-        start.gesture(0f, 0f, 0f, 0f, 0.01f, 50f).zoom shouldBe 0.6f
+        start.gesture(0f, 0f, 0f, 0f, 100f, 50f).zoom shouldBe 1.35f
+        start.gesture(0f, 0f, 0f, 0f, 0.01f, 50f).zoom shouldBe 0.72f
         start.gesture(Float.NaN, 0f, 0f, 0f, 1f, 50f) shouldBe start
-        FoliaWallScene.create(listOf(1L)).constrain(FoliaTransform(1000f, -1000f)).let {
-            it.x shouldBe 2.5f
-            it.y shouldBe -2.5f
+        val scene = FoliaWallScene.create(listOf(1L))
+        scene.constrain(FoliaTransform(1000f, -1000f)).let {
+            it.x shouldBe -scene.minX
+            it.y shouldBe -scene.maxY
         }
     }
 
