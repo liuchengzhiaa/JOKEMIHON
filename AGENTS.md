@@ -63,6 +63,22 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
+## Current candidate: joke.13 (2026-10-28, APK/PUBLICATION PENDING)
+
+- Planned code51 / joke.13, same app.jokemihon/pinned signer; no published APK yet.
+- Root/home Sync all -> fixed 大家之室 category, automatic/manual groups, no search
+  filtering. Each author is one independent book; optional stable authorKey memo URL
+  updates chapters/name without duplicates, preserves original files/other tags/state.
+- No nested work-folder adoption; backup uses ordinary manga memo/categories/chapters,
+ 107/108 unchanged. Additive, not a deletion mirror; changed group keys retain old books.
+- Cancellable sequential IO/progress/bounded failures; empty skip; >1000 reported.
+- Focused42 PASS5m30s; scoped format16s; full211/19 suites PASS8m06s,15 Lint reports
+  0 errors/161 warnings;8-key locale parity. Signed/static/device/publish pending.
+- Use D: .tools/Set-BuildEnv.ps1. Owner-authorized old Temp migration freed116769748
+  bytes with verified private D: backup; three locked/denied files untouched. No broad
+  cleanup or personal data/signing changes. Codex still needs some C: host headroom.
+- Existing joke.12 API36 Folia hardware Back limitation unchanged, explicit X works.
+
 ## Latest preview: joke.12 (2026-10-27)
 
 - PUBLIC prerelease joke.12/code50; next APK code>50, same app.jokemihon/pinned signer.

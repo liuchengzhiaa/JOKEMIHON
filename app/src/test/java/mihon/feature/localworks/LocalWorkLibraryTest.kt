@@ -15,12 +15,14 @@ import org.junit.jupiter.api.Test
 import tachiyomi.domain.category.interactor.GetCategories
 import tachiyomi.domain.category.model.Category
 import tachiyomi.domain.chapter.model.Chapter
+import tachiyomi.domain.chapter.model.ChapterRemoteUpdate
 import tachiyomi.domain.chapter.repository.ChapterRepository
 import tachiyomi.domain.chapter.service.getChapterSort
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.domain.manga.model.MangaRemoteUpdate
 import tachiyomi.domain.manga.model.MangaUpdate
 import tachiyomi.domain.manga.repository.MangaRepository
+import tachiyomi.source.local.work.LocalAuthorGroup
 import tachiyomi.source.local.work.LocalWorkCatalog
 import tachiyomi.source.local.work.LocalWorkCover
 import tachiyomi.source.local.work.LocalWorkDefinition
@@ -38,7 +40,12 @@ class LocalWorkLibraryTest {
     private val first = LocalWorkPath("423黄金01", "作品D 上.zip")
     private val second = LocalWorkPath("423黄金05", "作品B.zip")
     private val library = LocalWorkLibrary(
-        mangaRepo, chapterRepo, catalog, categories, covers, mockk<LocalWorkFoldersStore>(relaxed = true),
+        mangaRepo,
+        chapterRepo,
+        catalog,
+        categories,
+        covers,
+        mockk<LocalWorkFoldersStore>(relaxed = true),
     )
     private var nextManga = 100L
     private var nextChapter = 1000L
@@ -69,6 +76,7 @@ class LocalWorkLibraryTest {
             val original = mangas.getValue(update.id)
             mangas[update.id] = original.copy(
                 title = update.title ?: original.title,
+                author = update.author,
                 thumbnailUrl = update.thumbnailUrl,
                 memo = update.memo,
                 coverLastModified = update.coverLastModified,
@@ -77,6 +85,18 @@ class LocalWorkLibraryTest {
         }
         coEvery { chapterRepo.getChapterByMangaId(any(), any()) } coAnswers { chapters[firstArg()].orEmpty() }
         coEvery { chapterRepo.updateFromRemote(any(), any(), any()) } coAnswers {
+            check(firstArg<List<Long>>().isEmpty()) // Sync must never delete old reading rows.
+            for (update in thirdArg<List<ChapterRemoteUpdate>>()) {
+                for ((id, rows) in chapters.toMap()) {
+                    chapters[id] = rows.map {
+                        if (it.id == update.id) {
+                            it.copy(sourceOrder = update.sourceOrder, chapterNumber = update.chapterNumber)
+                        } else {
+                            it
+                        }
+                    }
+                }
+            }
             secondArg<List<Chapter>>().map {
                 it.copy(id = nextChapter++).also { chapter ->
                     chapters[chapter.mangaId] = chapters[chapter.mangaId].orEmpty() + chapter
@@ -209,5 +229,64 @@ class LocalWorkLibraryTest {
         library.categoryMembership(listOf(first, second), false) shouldBe listOf(setOf(1L), emptySet())
         library.categoryMembership(listOf(first, second), true) shouldBe listOf(emptySet())
         mangas.size shouldBe 1
+    }
+
+    @Test
+    fun `author sync creates one independent book and does not mutate old library entries`() = runBlocking<Unit> {
+        val original = library.add(listOf(first, second), true, "Existing collection", "author", listOf(1)).single()
+        val group = LocalAuthorGroup("author:423:黄", "423黄金", listOf(first.directory, second.directory))
+        val added = library.syncAuthor(group, listOf(first, second), 2)
+        added.favorite shouldBe true
+        added.title shouldBe group.name
+        tags[added.id] shouldBe listOf(2L)
+        (original.id == added.id) shouldBe false
+        mangas[original.id] shouldBe original
+        tags[original.id] shouldBe listOf(1L)
+        LocalWorkDefinition.fromMemo(added.url, added.memo).authorKey shouldBe group.key
+    }
+
+    @Test
+    fun `author resync retains identity state and cover while adding chapters`() = runBlocking<Unit> {
+        val group = LocalAuthorGroup("author:423:黄", "423黄金", listOf(first.directory, second.directory))
+        val added = library.syncAuthor(group, listOf(first), 1)
+        val old = chapters.getValue(added.id).single().copy(read = true, bookmark = true, lastPageRead = 17)
+        chapters[added.id] = listOf(old)
+        library.setPageCover(added.id, first.relativeUrl, 5)
+        val cover = mangas.getValue(added.id).thumbnailUrl
+        val synced = library.syncAuthor(group.copy(name = "新名称"), listOf(second, first), 2)
+        synced.id shouldBe added.id
+        synced.title shouldBe "新名称"
+        synced.thumbnailUrl shouldBe cover
+        tags[added.id] shouldBe listOf(1L, 2L)
+        mangas.size shouldBe 1
+        val kept = chapters.getValue(added.id).first { it.id == old.id }
+        listOf(kept.read, kept.bookmark, kept.lastPageRead) shouldBe listOf(true, true, 17)
+        chapters.getValue(added.id).sortedWith(getChapterSort(synced)).map { it.url } shouldBe
+            listOf(second.relativeUrl, first.relativeUrl)
+        LocalWorkDefinition.fromMemo(synced.url, synced.memo).members shouldBe listOf(second, first)
+        val again = library.syncAuthor(group.copy(name = "新名称"), listOf(second, first), 2)
+        again shouldBe synced
+        chapters.getValue(added.id).size shouldBe 2
+        tags[added.id] shouldBe listOf(1L, 2L)
+    }
+
+    @Test
+    fun `unavailable author or category creates no book`() = runBlocking<Unit> {
+        val group = LocalAuthorGroup("author:423:黄", "423黄金", listOf(first.directory))
+        runCatching { library.syncAuthor(group, listOf(first), 999) }.isFailure shouldBe true
+        runCatching { library.syncAuthor(group, listOf(second), 1) }.isFailure shouldBe true
+        mangas.isEmpty() shouldBe true
+        every { catalog.requireAvailableWorks(any()) } throws IllegalStateException("Offline")
+        runCatching { library.syncAuthor(group, listOf(first), 1) }.isFailure shouldBe true
+        mangas.isEmpty() shouldBe true
+    }
+
+    @Test
+    fun `failed author initialization never publishes a broken favorite`() = runBlocking<Unit> {
+        val group = LocalAuthorGroup("author:423:黄", "423黄金", listOf(first.directory))
+        coEvery { chapterRepo.updateFromRemote(any(), any(), any()) } throws IllegalStateException("DB failure")
+        runCatching { library.syncAuthor(group, listOf(first), 1) }.isFailure shouldBe true
+        mangas.values.single().favorite shouldBe false
+        tags.isEmpty() shouldBe true
     }
 }

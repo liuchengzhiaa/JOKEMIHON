@@ -1,5 +1,49 @@
 # JOKEMIHON handoff
 
+## Current slice: joke.13 root author sync (2026-10-28, IN PROGRESS)
+
+Owner explicitly selected option1: all ROOT author directories (automatic and manual),
+not the child work directories. New home Sync all button confirms scope and ignores
+current search/selection. Destination exact data name 大家之室, created lazily.
+
+- LocalAuthorSync fresh-scans catalog/authors + current manual rules, processes one
+  group at a time on IO under singleton mutex, reports counts and at most5 names.
+  Empty skips; >1000 entries reports failure without truncating or creating a tag.
+  Cancel propagates and completed entries remain retryable. UI blocks other mutations.
+- LocalWorkDefinition optional authorKey uses work-prefix + author- + SHA256(key).
+  Existing null-key ordered hashes/memos unchanged. Stable group ID survives added
+  files/name edits and normal manga backups. Manual regroup creating a DIFFERENT key
+  creates another book; sync intentionally does not untag/unfavorite old group books.
+- LocalWorkLibrary syncAuthor validates media/category before new mutation, prepares
+  chapters then adds tag/favorite. Author resync adds missing chapters and adjusts
+  source order without deleting old rows or touching read/bookmark/page fields;
+  metadata updates retain cover/other namespaces. Existing child/collection identities
+  and tags remain independent. LocalWorkFoldersStore excludes author-key definitions
+  from old-combination adoption, so syncing does not create nested manager folders.
+- Backup uses existing manga memo/categories/chapters; no protobuf/schema changes.
+  Library107 author rules and108 work directories unchanged. Select Library plus
+  Chapters/Categories for progress/tags. Media files/SAF grants not included.
+- Added13 regression cases. Focused42 PASS5m30s; scoped app/source-local format
+  PASS16s. Final full211 tests/19 suites PASS8m06s,650 tasks42 executed,0 skipped/
+  failure/error.15 Lint reports0 errors/161 warnings (new English PluralsCandidate
+  result string, not a runtime/data warning).8-key EN/CN/TW format parameter parity
+  and diff check pass. Signed build/static/device/publication PENDING.
+- Code51 / 0.21.2-joke.13 planned, same package/pinned signer. No APK yet delivered.
+- Host: user authorized freeing C: or D: workaround. One exclusive-open old Temp file
+  (116769748 bytes) copied to D: private ignored backup, size/SHA256 verified before
+  removing original; three other candidates skipped on access/exclusive-open failure.
+  No broad Temp deletion/personal media/keys/config cleanup. Receipt is in MUSIC's
+  ignored .tools/host-temp-backup/2026-10-28/receipt.json. Do not upload it or backups.
+  Use .tools/Set-BuildEnv.ps1 every build: JDK/cache/TEMP/TMP all D:. Small C: headroom
+  still required by Codex host; do not claim all system writes redirected to D:.
+- Previous joke.12 API36 hardware-back focus issue remains OPEN (X workaround).
+  This slice does not change Folia/back logic or validate a fix for it.
+- Safest next: focused tests -> scoped formatting -> full tests/Lint -> reviewed source
+  commit -> signed Release/static guard -> narrow guarded API36 sync smoke if viable ->
+  push/read remote, immutable unique prerelease + assets, verify and receipt docs.
+
+---
+
 ## Current slice: joke.12 music Folia fidelity (2026-10-27, PUBLISHED PREVIEW; BACK ISSUE OPEN)
 
 Owner screenshot rejects joke.11's fixed shape/Fit,1.18x scaling, gaps/rounding and

@@ -38,18 +38,25 @@ data class LocalWorkPath(val directory: String, val entry: String) {
 }
 
 @Serializable
-data class LocalWorkDefinition(val members: List<LocalWorkPath>, val version: Int = 1) {
+data class LocalWorkDefinition(
+    val members: List<LocalWorkPath>,
+    val version: Int = 1,
+    val authorKey: String? = null,
+) {
     init {
         require(version == 1 && members.size in 1..MAX_MEMBERS && members.distinct().size == members.size) {
             "Invalid local work definition"
         }
+        require(authorKey == null || (authorKey.isNotBlank() && authorKey.length <= 2048 && '\u0000' !in authorKey))
     }
 
     // Ordered, length-independent identity; duplicate basenames in separate directories stay distinct.
     val url: String get() {
-        val canonical = members.joinToString("\u0000") { "${it.directory}\u0000${it.entry}" }
+        // Author identity survives newly added files; old ordered-work identities remain byte-for-byte unchanged.
+        val canonical = authorKey ?: members.joinToString("\u0000") { "${it.directory}\u0000${it.entry}" }
         val digest = MessageDigest.getInstance("SHA-256").digest(canonical.toByteArray(Charsets.UTF_8))
-        return URL_PREFIX + digest.joinToString("") { "%02x".format(it) }
+        val prefix = if (authorKey == null) URL_PREFIX else URL_PREFIX + "author-"
+        return prefix + digest.joinToString("") { "%02x".format(it) }
     }
 
     fun toMemo(existing: JsonObject = JsonObject(emptyMap())): JsonObject =

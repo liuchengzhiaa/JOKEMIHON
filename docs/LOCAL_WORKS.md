@@ -258,3 +258,33 @@ Delivery: joke.10/code48 source6827a344c, immutable v0.21.2-joke.10 PUBLIC previ
 Final Release8m44s; all3 asset sizes/digests and anonymous API URL readback confirmed.
 Two compile failures repaired, no APK from them. No tests/device timing or owner-media
 repro; acceptance pending. Back up/install, open previously blank work and refresh once.
+
+## joke.13: sync all root author directories to 大家之室
+
+Home > Sync all confirms an additive full-root scan. It ignores current search and
+selection and applies automatic grouping plus manual rules. Each ROOT author group
+becomes an independent book; flattened original archive/image directories are its
+chapters. Existing child/collection/legacy favorites keep their tags and identity.
+No original media is written. A missing exact 大家之室 tag is created for the first
+valid nonempty group; an empty scan does not create it.
+
+An optional `authorKey` inside the existing local-work memo gives these author books
+stable `@jokemihon-work/author-<SHA256(key)>` identities. Resync updates membership,
+chapter order and display name on the same manga ID, retaining covers and reading
+state. Null-key work identities retain their original ordered-member hashes.
+Author books are not adopted as extra nested work folders. Ordinary Library backup
+preserves memo/identity, with Chapters/Categories selected for progress/tags. Root
+manual grouping remains field107 and child work-directory records remain108.
+
+This is NOT a deletion mirror: no automatic tag removal/unfavorite or chapter-row
+removal. If you dissolve/recreate author grouping with a different key, its old book
+is retained; remove it from the library yourself if no longer wanted. Physical
+path renames can break references; keep relative local paths and regrant storage
+on a new phone. Earlier app versions do not support the new author-key memo; create
+backups before upgrading and do not assume a downgrade can read these new books.
+
+Sequential scans show processed/total and can be cancelled. Completed groups remain
+saved; retry reuses their IDs. Empty groups skip; unreadable/missing/over1000-work
+or failed groups are counted, with at most5 displayed names. No silent truncation,
+full-cover decoding or all-archive extraction. This slice does not add background
+scheduled sync. Device/backup acceptance follows the version-specific HANDOFF.

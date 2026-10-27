@@ -41,6 +41,7 @@ class LocalWorksViewModel(
     private val library: LocalWorkLibrary,
     private val authorRules: LocalAuthorRulesStore,
     private val workFolders: LocalWorkFoldersStore,
+    private val authorSync: LocalAuthorSync,
     mangaRepository: MangaRepository,
     getCategories: GetCategories,
 ) : ViewModel() {
@@ -50,6 +51,7 @@ class LocalWorksViewModel(
     val events = eventChannel.receiveAsFlow()
     private var loadingJob: Job? = null
     private var aliasJob: Job? = null
+    private var syncJob: Job? = null
     private var loadVersion = 0
     private var automaticAuthors: List<LocalAuthorGroup> = emptyList()
 
@@ -127,13 +129,40 @@ class LocalWorksViewModel(
                         favorites = local.associate { entry -> entry.manga.url to entry.manga },
                         taggedUrls = local.filter { entry -> entry.categories.any { id -> id > 0 } }
                             .mapTo(HashSet()) { entry -> entry.manga.url },
-                        tagsByUrl = local.associate { entry -> entry.manga.url to entry.categories.filter { id -> id > 0 } },
+                        tagsByUrl = local.associate { entry ->
+                            entry.manga.url to entry.categories.filter { id -> id > 0 }
+                        },
                     )
                 }
                 refreshAliases()
             }
         }
         refresh()
+    }
+
+    fun syncAuthors() {
+        val snapshot = state.value
+        if (snapshot.saving || snapshot.loading || snapshot.author != null || snapshot.error) return
+        mutableState.update { it.copy(saving = true, syncProgress = LocalAuthorSyncProgress(0, 0)) }
+        syncJob = viewModelScope.launch {
+            try {
+                val result = authorSync.sync { progress -> mutableState.update { it.copy(syncProgress = progress) } }
+                eventChannel.send(LocalWorksEvent.SyncFinished(result))
+            } catch (e: Exception) {
+                if (e is CancellationException) {
+                    eventChannel.trySend(LocalWorksEvent.Message(R.string.local_works_sync_cancelled))
+                    throw e
+                }
+                logcat(LogPriority.ERROR, e)
+                eventChannel.send(LocalWorksEvent.Message(R.string.local_works_operation_failed))
+            } finally {
+                mutableState.update { it.copy(saving = false, syncProgress = null) }
+            }
+        }
+    }
+
+    fun cancelSync() {
+        syncJob?.cancel()
     }
 
     fun refresh() {
@@ -411,7 +440,14 @@ class LocalWorksViewModel(
         viewModelScope.launch {
             try {
                 library.add(
-                    ordered, combined, title, author, categories, removeCategories, removeOriginals, folder?.cover,
+                    ordered,
+                    combined,
+                    title,
+                    author,
+                    categories,
+                    removeCategories,
+                    removeOriginals,
+                    folder?.cover,
                 )
                 mutableState.update { it.copy(selected = emptyList()) }
                 eventChannel.send(LocalWorksEvent.Message(R.string.local_works_added))
@@ -509,11 +545,13 @@ data class LocalWorksState(
     val tagsByUrl: Map<String, List<Long>> = emptyMap(),
     val loading: Boolean = true,
     val saving: Boolean = false,
+    val syncProgress: LocalAuthorSyncProgress? = null,
     val error: Boolean = false,
 ) {
     val folder get() = folders.firstOrNull { it.id == folderId }
 }
 sealed interface LocalWorksEvent {
     data class Open(val mangaId: Long) : LocalWorksEvent
+    data class SyncFinished(val result: LocalAuthorSyncResult) : LocalWorksEvent
     data class Message(val resource: Int) : LocalWorksEvent
 }

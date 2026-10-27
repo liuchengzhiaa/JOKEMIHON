@@ -1,5 +1,12 @@
 # JOKEMIHON source and APK delivery
 
+Current candidate: 0.21.2-joke.13 (51), NOT YET PUBLISHED. Root author sync to
+大家之室, stable author-key memo, additive/non-destructive, backup107/108 unchanged.
+Focused42/full211 PASS, Lint0 errors/161 warnings, scoped format/8-key locales pass.
+Release/static/guarded synthetic smoke and remote publication remain pending.
+Existing package/pinned signer; never overwrite joke.12 assets/tag. Keep known
+API36 Folia Back issue in preview notes (X workaround), no unrelated fix claim.
+
 ## Destination and owner requirement
 
 - Repository: https://github.com/liuchengzhiaa/JOKEMIHON

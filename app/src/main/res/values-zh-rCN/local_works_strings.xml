@@ -76,4 +76,12 @@
     <string name="local_works_related_tags_help">以下标签属于列出的原目录或组合，不会自动变成当前子作品或新目录自己的标签。可在预览中点击“编辑该条目标签”修改原条目。</string>
     <string name="local_works_edit_related_tags">编辑该条目标签</string>
     <string name="local_works_legacy_match">对应原书架条目：%1$s。直接使用其标签和阅读记录，不另建副本。</string>
+    <string name="local_works_sync_action">一键同步</string>
+    <string name="local_works_sync_title">同步到“大家之室”</string>
+    <string name="local_works_sync_help">将首页的全部作者目录加入“大家之室”标签，不受搜索或选择影响。每个目录作为一本作品，目录内的作品作为章节。重复同步更新同一个作者条目，保留其他标签、子作品、封面和阅读状态。空目录跳过，失败目录（包括超过1000项的目录）会单独报告。不改原文件，首次同步前建议备份。</string>
+    <string name="local_works_sync_scanning">正在扫描全部作者目录…</string>
+    <string name="local_works_sync_progress">已处理 %1$d / %2$d · %3$s</string>
+    <string name="local_works_sync_result">已同步 %1$d / %2$d 个作者目录，空目录 %3$d 个，失败 %4$d 个。完成的目录已保存；失败项可检查存储权限和文件后重试。</string>
+    <string name="local_works_sync_failed_names">失败目录（最多列出5个）：%1$s</string>
+    <string name="local_works_sync_cancelled">已取消同步，已完成的目录会保留，可以再次同步。</string>
 </resources>

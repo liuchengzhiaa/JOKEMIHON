@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="local_works_sync_action">一鍵同步</string>
+    <string name="local_works_sync_title">同步到「大家之室」</string>
+    <string name="local_works_sync_help">將首頁的全部作者目錄加入「大家之室」標籤，不受搜尋或選取影響。每個目錄作為一本作品，目錄內的作品作為章節。重複同步更新同一個作者項目，保留其他標籤、子作品、封面和閱讀狀態。空目錄略過，失敗目錄（包括超過1000項的目錄）會另行報告。不改原始檔案，首次同步前建議備份。</string>
+    <string name="local_works_sync_scanning">正在掃描全部作者目錄…</string>
+    <string name="local_works_sync_progress">已處理 %1$d / %2$d · %3$s</string>
+    <string name="local_works_sync_result">已同步 %1$d / %2$d 個作者目錄，空目錄 %3$d 個，失敗 %4$d 個。完成的目錄已儲存；失敗項可檢查儲存權限和檔案後重試。</string>
+    <string name="local_works_sync_failed_names">失敗目錄（最多列出5個）：%1$s</string>
+    <string name="local_works_sync_cancelled">已取消同步，已完成的目錄會保留，可以再次同步。</string>
+</resources>

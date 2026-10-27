@@ -36,9 +36,13 @@ class LocalWorkFoldersStore(preferences: PreferenceStore) {
         val current = get()
         val folder = current.folders.firstOrNull { it.url == url } ?: return
         require(cover.path in folder.members)
-        preference.set(current.copy(folders = current.folders.map {
-            if (it.id == folder.id) it.copy(cover = cover) else it
-        }).encode())
+        preference.set(
+            current.copy(
+                folders = current.folders.map {
+                    if (it.id == folder.id) it.copy(cover = cover) else it
+                },
+            ).encode(),
+        )
     }
 
     // Earlier releases already backed up combined favorites as manga memos. Expose them without new DB entries.
@@ -51,7 +55,8 @@ class LocalWorkFoldersStore(preferences: PreferenceStore) {
             val definition = runCatching {
                 LocalWorkDefinition.fromMemo(manga.url, manga.memo)
             }.getOrNull() ?: return@mapNotNull null
-            if (definition.members.size < 2) return@mapNotNull null
+            // Root author books must not appear as an extra nested work directory after syncing/restoring.
+            if (definition.authorKey != null || definition.members.size < 2) return@mapNotNull null
             val cover = manga.thumbnailUrl?.let { url ->
                 runCatching { LocalWorkCover.fromUrl(url) }.getOrNull()
             }?.takeIf { it.path in definition.members }

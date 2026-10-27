@@ -1,5 +1,24 @@
 # JOKEMIHON changelog
 
+## 0.21.2-joke.13 (51) - 2026-10-28 (APK/publication pending)
+
+- More > Local works manager home adds confirmed Sync all to the fixed 大家之室 tag.
+  Rescan ALL automatic/manual root author groups, ignoring UI search and selection.
+  Each group is one independent book; original works become its ordered chapters.
+- Create the tag only when a nonempty valid group is ready. Reuse the exact existing
+  tag, preserve all other tags/favorites/covers/progress, and never write media.
+- Stable author-key identities update the same entry when works are added or its
+  display name changes. Existing ordered-work/collection identities are unchanged;
+  root author books are not adopted as nested manager work directories.
+- Sequential cancellable IO, processed-count progress, bounded first-five failures;
+  empty directories skip and >1000-work groups fail explicitly without truncation.
+  Completed groups survive interruption for safe retry. Additive, not a deletion mirror.
+- Standard manga memo/category/chapter backup preserves entries; author rules107 and
+  work folders108 remain unchanged. Retain media paths and regrant storage on restore.
+- Focused42 tests PASS5m30s; full211 tests/19 suites PASS8m06s,15 Lint reports
+  0 errors/161 warnings (one added English plural-candidate warning). Scoped format
+  PASS16s,8-key EN/CN/TW parameter parity/diff check pass. APK/device/publish pending.
+
 ## 0.21.2-joke.12 (50) - 2026-10-27
 
 - Replace the joke.11 simplified eight-slot canvas with the owner's music Folia

@@ -11,6 +11,7 @@ import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
 import tachiyomi.domain.category.interactor.GetCategories
 import tachiyomi.domain.chapter.model.Chapter
+import tachiyomi.domain.chapter.model.ChapterRemoteUpdate
 import tachiyomi.domain.chapter.repository.ChapterRepository
 import tachiyomi.domain.manga.model.Manga
 import tachiyomi.domain.manga.model.MangaRemoteUpdate
@@ -98,6 +99,31 @@ class LocalWorkLibrary(
             added
         }
     }
+
+    /* Sync one root author to an existing tag. Inputs are the live group and its complete ordered works;
+       returns the independent author manga. Other favorites, tags, covers and reading state are retained. */
+    suspend fun syncAuthor(author: LocalAuthorGroup, works: List<LocalWorkPath>, categoryId: Long): Manga =
+        withContext(Dispatchers.IO) {
+            mutation.withLock {
+                val definition = LocalWorkDefinition(works, authorKey = author.key)
+                require(works.all { it.directory in author.directories })
+                catalog.requireAvailableWorks(works)
+                require(categoryId > 0 && getCategories.await().any { it.id == categoryId }) {
+                    "Category no longer exists"
+                }
+                val prepared = prepare(definition, author.name, author.name, inheritedProgress(works))
+                val previous = getCategories.await(prepared.id).map { it.id }.filter { it > 0 }
+                if (categoryId !in previous) {
+                    mangaRepository.setMangaCategories(prepared.id, previous + categoryId)
+                }
+                if (!prepared.favorite) {
+                    check(mangaRepository.update(MangaUpdate(prepared.id) { favoriteAt = Clock.System.now() })) {
+                        "Could not add author directory to library"
+                    }
+                }
+                mangaRepository.getMangaById(prepared.id)
+            }
+        }
 
     private suspend fun coveredOriginals(works: List<LocalWorkPath>): List<Long> {
         val selected = works.toHashSet()
@@ -209,7 +235,11 @@ class LocalWorkLibrary(
         mutation.withLock {
             catalog.requireAvailableWorks(folder.members)
             val manga = prepare(
-                LocalWorkDefinition(folder.members), folder.name, author, inheritedProgress(folder.members), folder.cover,
+                LocalWorkDefinition(folder.members),
+                folder.name,
+                author,
+                inheritedProgress(folder.members),
+                folder.cover,
             )
             val cover = folder.cover
             if (cover != null && manga.thumbnailUrl != folder.coverUrl) updateCover(manga, cover)
@@ -261,7 +291,8 @@ class LocalWorkLibrary(
             ),
         ).single()
         LocalWorkDefinition.fromMemo(manga.url, manga.memo)
-        val stored = chapterRepository.getChapterByMangaId(manga.id).mapTo(HashSet()) { it.url }
+        val storedChapters = chapterRepository.getChapterByMangaId(manga.id)
+        val stored = storedChapters.mapTo(HashSet()) { it.url }
         val missing = definition.members.mapIndexedNotNull { index, path ->
             if (path.relativeUrl in stored) return@mapIndexedNotNull null
             val old = inherited[path.relativeUrl]
@@ -277,7 +308,54 @@ class LocalWorkLibrary(
                 lastPageRead = old?.lastPageRead ?: 0,
             )
         }
-        if (missing.isNotEmpty()) chapterRepository.updateFromRemote(emptyList(), missing, emptyList())
+        val reordered = if (definition.authorKey != null) {
+            val positions = definition.members.mapIndexed { index, path -> path.relativeUrl to index }.toMap()
+            storedChapters.mapNotNull { chapter ->
+                val index = positions[chapter.url] ?: return@mapNotNull null
+                val order = (definition.members.lastIndex - index).toLong()
+                val number = (index + 1).toDouble()
+                if (chapter.sourceOrder == order && chapter.chapterNumber == number) return@mapNotNull null
+                ChapterRemoteUpdate(
+                    chapter.id,
+                    chapter.name,
+                    chapter.scanlator,
+                    number,
+                    chapter.dateUpload,
+                    order,
+                    chapter.memo,
+                )
+            }
+        } else {
+            emptyList()
+        }
+        if (missing.isNotEmpty() || reordered.isNotEmpty()) {
+            // Never delete old chapters or overwrite read/bookmark/page fields during this additive sync.
+            chapterRepository.updateFromRemote(emptyList(), missing, reordered)
+        }
+        if (definition.authorKey != null) {
+            val memo = definition.toMemo(manga.memo)
+            if (memo != manga.memo || manga.title != title || manga.author != author) {
+                check(
+                    mangaRepository.updateRemote(
+                        MangaRemoteUpdate(
+                            id = manga.id,
+                            title = title,
+                            author = author,
+                            artist = manga.artist,
+                            description = manga.description,
+                            genre = manga.genre,
+                            status = manga.status,
+                            thumbnailUrl = manga.thumbnailUrl,
+                            updateStrategy = manga.updateStrategy,
+                            memo = memo,
+                            initialized = manga.initialized,
+                            coverLastModified = manga.coverLastModified,
+                        ),
+                    ),
+                ) { "Could not update author directory" }
+                return mangaRepository.getMangaById(manga.id)
+            }
+        }
         return manga
     }
 

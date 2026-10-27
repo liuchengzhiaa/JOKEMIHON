@@ -1,5 +1,19 @@
 # JOKEMIHON tasks
 
+## Root author sync to 大家之室 (2026-10-28)
+
+- [x] Owner confirmed root/home author groups, including automatic/manual grouping.
+- [x] Confirmed one-shot home action, fresh full scan, progress/cancel/bounded failures.
+- [x] Stable author identity + additive tag merge/chapters; preserve child/old entries.
+- [x] Exclude author books from nested work-directory adoption; ordinary memo backup.
+- [x] Add13 regression cases for identity/backup/adoption/import/tag/retry/fail/cancel.
+- [x] Focused42 PASS5m30s; scoped format16s; full211/19 suites PASS8m06s,
+      15 Lint reports0 errors/161 warnings;8-key locale parameters/diff check.
+- [ ] Signed/static APK verification.
+- [ ] Narrow guarded synthetic API36 sync smoke; no owner phone/media mutations.
+- [ ] Review/push code51, publish unique joke.13 preview + verify assets and receipt.
+- [ ] Owner phone directory/tag/reading/backup acceptance.
+
 ## Music Folia visual fidelity (2026-10-27)
 
 - [x] Trace/read music actual complete-cover/reflow/animation/chrome chain.

@@ -76,4 +76,12 @@
     <string name="local_works_related_tags_help">These tags belong to the listed original directory or collection, not automatically to this child or new directory. Edit that entry explicitly from the preview if needed.</string>
     <string name="local_works_edit_related_tags">Edit this entry’s tags</string>
     <string name="local_works_legacy_match">Using existing library entry: %1$s. Its tags and reading records are kept; no duplicate is created.</string>
+    <string name="local_works_sync_action">Sync all</string>
+    <string name="local_works_sync_title">Sync to 大家之室</string>
+    <string name="local_works_sync_help">Add every author directory on the manager home screen to the 大家之室 category, regardless of search or selection. Each becomes one book containing its works as chapters. Repeating sync updates the same author entry; other tags, child works, covers and reading state are retained. Empty directories are skipped. Failed directories (including those with more than 1,000 works) are reported. No original files are changed. Back up before the first sync.</string>
+    <string name="local_works_sync_scanning">Scanning all author directories…</string>
+    <string name="local_works_sync_progress">Syncing %1$d / %2$d · %3$s</string>
+    <string name="local_works_sync_result">Synced %1$d / %2$d author directories. Empty: %3$d; failed: %4$d. Completed entries are saved; retry failed directories after checking storage permissions and files.</string>
+    <string name="local_works_sync_failed_names">Failed directories (first five): %1$s</string>
+    <string name="local_works_sync_cancelled">Sync cancelled. Completed directories are retained; you can sync again.</string>
 </resources>

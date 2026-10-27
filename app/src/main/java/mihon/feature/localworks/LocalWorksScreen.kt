@@ -71,12 +71,12 @@ import eu.kanade.tachiyomi.ui.setting.SettingsScreen
 import eu.kanade.tachiyomi.util.system.toast
 import kotlinx.coroutines.CancellationException
 import mihon.icons.materialsymbols.MaterialSymbols
+import mihon.icons.materialsymbols.automirroredrounded.Label
 import mihon.icons.materialsymbols.rounded.Folder
 import mihon.icons.materialsymbols.rounded.Info
 import mihon.icons.materialsymbols.rounded.KeyboardArrowDown
 import mihon.icons.materialsymbols.rounded.KeyboardArrowRight
 import mihon.icons.materialsymbols.rounded.KeyboardArrowUp
-import mihon.icons.materialsymbols.automirroredrounded.Label
 import mihon.icons.materialsymbols.rounded.Refresh
 import mihon.icons.materialsymbols.rounded.Search
 import tachiyomi.domain.category.model.Category
@@ -100,6 +100,8 @@ class LocalWorksScreen : Screen() {
         var groupNameDialog by remember { mutableStateOf(false) }
         var dissolveDialog by remember { mutableStateOf(false) }
         var backupInfo by remember { mutableStateOf(false) }
+        var syncDialog by remember { mutableStateOf(false) }
+        var syncResult by remember { mutableStateOf<LocalAuthorSyncResult?>(null) }
         val visibleAuthors = remember(state.authors, query) {
             state.authors.filter {
                 it.name.contains(
@@ -133,6 +135,7 @@ class LocalWorksScreen : Screen() {
             viewModel.events.collect { event ->
                 when (event) {
                     is LocalWorksEvent.Open -> navigator.push(MangaScreen(event.mangaId, true))
+                    is LocalWorksEvent.SyncFinished -> syncResult = event.result
                     is LocalWorksEvent.Message -> context.toast(resources.getString(event.resource))
                 }
             }
@@ -144,6 +147,10 @@ class LocalWorksScreen : Screen() {
                 scrollBehavior = scrollBehavior,
                 actions = {
                     if (state.author == null && state.selectedAuthors.isEmpty()) {
+                        TextButton(
+                            onClick = { syncDialog = true },
+                            enabled = !state.loading && !state.saving && !state.error,
+                        ) { Text(stringResource(R.string.local_works_sync_action)) }
                         IconButton(onClick = { backupInfo = true }) {
                             Icon(MaterialSymbols.Rounded.Info, stringResource(R.string.local_works_backup_title))
                         }
@@ -168,6 +175,32 @@ class LocalWorksScreen : Screen() {
         }) { padding ->
             Column(Modifier.fillMaxSize().padding(padding)) {
                 if (state.saving) LinearProgressIndicator(Modifier.fillMaxWidth())
+                state.syncProgress?.let { progress ->
+                    Row(
+                        Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            if (progress.total == 0) {
+                                stringResource(R.string.local_works_sync_scanning)
+                            } else {
+                                stringResource(
+                                    R.string.local_works_sync_progress,
+                                    progress.completed,
+                                    progress.total,
+                                    progress.name,
+                                )
+                            },
+                            Modifier.weight(1f),
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
+                            style = MaterialTheme.typography.bodySmall,
+                        )
+                        TextButton(onClick = viewModel::cancelSync) {
+                            Text(stringResource(R.string.local_works_cancel))
+                        }
+                    }
+                }
                 OutlinedTextField(
                     value = query,
                     onValueChange = { query = it },
@@ -203,7 +236,9 @@ class LocalWorksScreen : Screen() {
                         state.selected.size,
                         {
                             importRequest = LocalWorkImport(
-                                state.selected, false, contexts = state.tagContextsForPaths(state.selected),
+                                state.selected,
+                                false,
+                                contexts = state.tagContextsForPaths(state.selected),
                             )
                         },
                         { importRequest = LocalWorkImport(state.selected, true, createFolder = true) },
@@ -286,7 +321,11 @@ class LocalWorksScreen : Screen() {
                                 val ordinal = state.selected.indexOf(item.path) + 1
                                 val existing = state.favoriteFor(item)
                                 val contexts = remember(
-                                    item, state.favorites, state.tagsByUrl, state.categories, state.legacySingleAliases,
+                                    item,
+                                    state.favorites,
+                                    state.tagsByUrl,
+                                    state.categories,
+                                    state.legacySingleAliases,
                                 ) {
                                     state.tagContexts(item)
                                 }
@@ -300,7 +339,11 @@ class LocalWorksScreen : Screen() {
                                     relatedTagged = contexts.any { it.names.isNotBlank() },
                                     enabled = !state.saving && (item.folder == null || state.selected.isEmpty()),
                                     onSelect = {
-                                        if (item.folder != null) viewModel.preview(item) else viewModel.toggle(item.path)
+                                        if (item.folder != null) {
+                                            viewModel.preview(item)
+                                        } else {
+                                            viewModel.toggle(item.path)
+                                        }
                                     },
                                     onClick = {
                                         if (state.selected.isEmpty()) {
@@ -336,8 +379,13 @@ class LocalWorksScreen : Screen() {
                     viewModel.preview(null)
                     val paths = item.folder?.members ?: listOf(item.path)
                     importRequest = LocalWorkImport(
-                        paths, item.folder != null, item.title, existing?.id, folder = item.folder,
-                        contexts = contexts, boundTitle = boundTitle,
+                        paths,
+                        item.folder != null,
+                        item.title,
+                        existing?.id,
+                        folder = item.folder,
+                        contexts = contexts,
+                        boundTitle = boundTitle,
                     )
                 },
                 tagNames = tagNames,
@@ -346,7 +394,10 @@ class LocalWorksScreen : Screen() {
                 onEditRelated = { related ->
                     viewModel.preview(null)
                     importRequest = LocalWorkImport(
-                        item.folder?.members ?: listOf(item.path), false, related.title, related.id,
+                        item.folder?.members ?: listOf(item.path),
+                        false,
+                        related.title,
+                        related.id,
                         boundTitle = related.title,
                     )
                 },
@@ -367,7 +418,11 @@ class LocalWorksScreen : Screen() {
                 fixedOrder = request.folder != null,
                 loadCategories = { works, combined ->
                     val id = request.categoriesOnlyId
-                    if (id != null) viewModel.categoryMembershipForId(id) else viewModel.categoryMembership(works, combined)
+                    if (id != null) {
+                        viewModel.categoryMembershipForId(id)
+                    } else {
+                        viewModel.categoryMembership(works, combined)
+                    }
                 },
                 contexts = request.contexts,
                 boundTitle = request.boundTitle,
@@ -380,7 +435,15 @@ class LocalWorksScreen : Screen() {
                     when {
                         request.createFolder -> viewModel.createFolder(ordered, title)
                         id != null -> viewModel.editCategories(id, add, remove)
-                        else -> viewModel.add(ordered, request.combined, title, add, remove, removeOriginals, request.folder)
+                        else -> viewModel.add(
+                            ordered,
+                            request.combined,
+                            title,
+                            add,
+                            remove,
+                            removeOriginals,
+                            request.folder,
+                        )
                     }
                 },
             )
@@ -392,6 +455,57 @@ class LocalWorksScreen : Screen() {
                 { name ->
                     groupNameDialog = false
                     viewModel.saveAuthorGroup(name)
+                },
+            )
+        }
+        if (syncDialog) {
+            AlertDialog(
+                onDismissRequest = { syncDialog = false },
+                title = { Text(stringResource(R.string.local_works_sync_title)) },
+                text = { Text(stringResource(R.string.local_works_sync_help)) },
+                confirmButton = {
+                    TextButton(onClick = {
+                        syncDialog = false
+                        viewModel.syncAuthors()
+                    }) { Text(stringResource(R.string.local_works_sync_action)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = { syncDialog = false }) { Text(stringResource(R.string.local_works_cancel)) }
+                },
+            )
+        }
+        syncResult?.let { result ->
+            AlertDialog(
+                onDismissRequest = { syncResult = null },
+                title = { Text(stringResource(R.string.local_works_sync_title)) },
+                text = {
+                    Column(
+                        Modifier.heightIn(max = 440.dp).verticalScroll(rememberScrollState()),
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
+                    ) {
+                        Text(
+                            stringResource(
+                                R.string.local_works_sync_result,
+                                result.synced,
+                                result.total,
+                                result.empty,
+                                result.failed,
+                            ),
+                        )
+                        if (result.failedNames.isNotEmpty()) {
+                            Text(
+                                stringResource(
+                                    R.string.local_works_sync_failed_names,
+                                    result.failedNames.joinToString("、"),
+                                ),
+                            )
+                        }
+                    }
+                },
+                confirmButton = {
+                    TextButton(onClick = { syncResult = null }) {
+                        Text(stringResource(R.string.local_works_understood))
+                    }
                 },
             )
         }
@@ -687,7 +801,9 @@ private fun WorkCard(
                 ) {
                     Icon(
                         MaterialSymbols.AutoMirroredRounded.Label,
-                        stringResource(if (tagged) R.string.local_works_has_tags else R.string.local_works_contains_tags),
+                        stringResource(
+                            if (tagged) R.string.local_works_has_tags else R.string.local_works_contains_tags,
+                        ),
                         Modifier.padding(2.dp).size(12.dp),
                     )
                 }
@@ -870,7 +986,13 @@ private fun ImportDialog(
                     OutlinedTextField(
                         value = title,
                         onValueChange = { customTitle = it },
-                        label = { Text(stringResource(if (createFolder) R.string.local_works_folder_name else R.string.local_works_name)) },
+                        label = {
+                            Text(
+                                stringResource(
+                                    if (createFolder) R.string.local_works_folder_name else R.string.local_works_name,
+                                ),
+                            )
+                        },
                         modifier = Modifier.fillMaxWidth(),
                     )
                     TextButton(onClick = { customTitle = null }) {
@@ -880,7 +1002,10 @@ private fun ImportDialog(
                 if (categoriesOnly || fixedOrder) Text(title, style = MaterialTheme.typography.titleSmall)
                 if (boundTitle != null) Text(stringResource(R.string.local_works_legacy_match, boundTitle))
                 if (createFolder) {
-                    Text(stringResource(R.string.local_works_create_folder_help), style = MaterialTheme.typography.bodySmall)
+                    Text(
+                        stringResource(R.string.local_works_create_folder_help),
+                        style = MaterialTheme.typography.bodySmall,
+                    )
                 }
                 if (!categoriesOnly) {
                     Text(stringResource(R.string.local_works_order_help), style = MaterialTheme.typography.bodySmall)
@@ -998,11 +1123,15 @@ private fun ImportDialog(
                 enabled = !saving && memberships != null && ordered.isNotEmpty() &&
                     title.isNotBlank() && title.length <= 1024,
             ) {
-                Text(stringResource(when {
-                    createFolder -> R.string.local_works_create
-                    categoriesOnly -> R.string.local_works_save
-                    else -> R.string.local_works_confirm
-                }))
+                Text(
+                    stringResource(
+                        when {
+                            createFolder -> R.string.local_works_create
+                            categoriesOnly -> R.string.local_works_save
+                            else -> R.string.local_works_confirm
+                        },
+                    ),
+                )
             }
         },
         dismissButton = {
@@ -1014,9 +1143,15 @@ private fun ImportDialog(
     )
     if (categoryPicker && memberships != null) {
         CategoryPickerDialog(
-            categories, memberships.orEmpty(), changes, contexts,
+            categories,
+            memberships.orEmpty(),
+            changes,
+            contexts,
             { categoryPicker = false },
-            { changes = it; categoryPicker = false },
+            {
+                changes = it
+                categoryPicker = false
+            },
         )
     }
 }
@@ -1043,7 +1178,8 @@ private fun CategoryPickerDialog(
             ) {
                 RelatedTagInfo(contexts)
                 OutlinedTextField(
-                    search, { search = it },
+                    search,
+                    { search = it },
                     placeholder = { Text(stringResource(R.string.local_works_search_tags)) },
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
@@ -1061,12 +1197,18 @@ private fun CategoryPickerDialog(
                         val toggle = { draft = draft + (category.id to (checked != true)) }
                         Card(
                             onClick = toggle,
-                            colors = CardDefaults.cardColors(containerColor = when (checked) {
-                                true -> MaterialTheme.colorScheme.primaryContainer
-                                null -> MaterialTheme.colorScheme.secondaryContainer
-                                false -> MaterialTheme.colorScheme.surfaceContainerHigh
-                            }),
-                            border = if (checked != false) BorderStroke(1.dp, MaterialTheme.colorScheme.primary) else null,
+                            colors = CardDefaults.cardColors(
+                                containerColor = when (checked) {
+                                    true -> MaterialTheme.colorScheme.primaryContainer
+                                    null -> MaterialTheme.colorScheme.secondaryContainer
+                                    false -> MaterialTheme.colorScheme.surfaceContainerHigh
+                                },
+                            ),
+                            border = if (checked != false) {
+                                BorderStroke(1.dp, MaterialTheme.colorScheme.primary)
+                            } else {
+                                null
+                            },
                         ) {
                             Row(Modifier.padding(end = 8.dp), verticalAlignment = Alignment.CenterVertically) {
                                 TriStateCheckbox(
