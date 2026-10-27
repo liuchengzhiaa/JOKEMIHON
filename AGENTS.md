@@ -63,7 +63,24 @@ pending steps. Never call an unbuilt APK tested or an unpublished APK published.
   independent old/new progress semantics documented in docs/LOCAL_WORKS.md.
 - See HANDOFF for final 151-test/0-error-Lint/Release/device/public-download receipt.
 
-## Latest preview: joke.10 (2026-10-26)
+## Latest preview: joke.11 (2026-10-27)
+
+- PUBLIC prerelease joke.11/code49; next APK code>49, same app.jokemihon/pinned signer.
+- Source/tag209b356d7de7ec72100ebc9e0858d155c44c0545 / v0.21.2-joke.11 immutable.
+- Optional library-only Folia mosaic: two-axis drag/pinch, focus then open, existing
+  selection; category-ID saved UI viewport, only active wall/nearby posters loaded.
+  Off-main geometry and bounded256-1024px Coil requests; original layouts/data/media/
+  backup107/108 unchanged. App settings carries layout, not cross-phone viewport.
+- Music project READ ONLY reference; independently authored Mihon renderer, not a
+  copy of upstream AGPL Folia. No music inertia/reflow/shape/ambient tool suite yet.
+- Standard verification resumed: focused7 pass, full182 tests/16 suites pass;
+  15 Lint reports0 errors/160 warnings; Release10m04s, static package/code49/4ABI/
+  pinned-v2-signer and source metadata verified. All3 remote sizes/digests and fresh
+  anonymous API URL readback match. No format/AVD/phone/FPS/memory/whole-APK-download
+  checks. Owner phone visual/gesture/performance acceptance pending. Older device
+  receipts do not validate this UI. C:full and signer offline backup remain pending.
+
+## Previous preview: joke.10 (2026-10-26)
 
 - PUBLIC prerelease joke.10/code48; next APK code>48, same package/signer configuration.
 - Source/tag6827a344c8637c02cd530cd57c96cc82864eb4f5 / v0.21.2-joke.10 immutable.

@@ -1,6 +1,6 @@
 # JOKEMIHON handoff
 
-## Current slice: joke.11 optional Folia library wall (2026-10-27, IN PROGRESS)
+## Current slice: joke.11 optional Folia library wall (2026-10-27, PUBLISHED PREVIEW)
 
 - Owner asks category-specific mosaic walls, referring to music project Folia. Read
   music focuswall geometry/spatial-index/docs ONLY; music repository unchanged.
@@ -29,11 +29,27 @@
   Neither failed verification produced a published APK. git diff --check clean.
 - Standard verification resumed per standing instructions; no format/AVD/phone or
   frame-rate/memory checks. Geometry40k is NOT phone-performance evidence.
-- Package/signer configuration unchanged, intended code49. Release build/static
-  package/signature checks and source/public preview publication still PENDING.
-- Safest next: commit reviewed source/docs, build Release from that clean SHA,
-  verify pinned signer/package/version, publish unique preview/read back assets.
-  Owner phone gesture/tab-return/rotation/selection/visual acceptance remains pending.
+- app:assembleRelease SUCCESS10m04s,388 tasks33 executed. Universal APK static
+  package app.jokemihon / version0.21.2-joke.11 / code49, min26/target36, all4 ABIs;
+  one v2 signer matches pinned f31ab9d9...5330a5. BuildConfig source209b356d7 and
+  telemetry/updater=false verified. No format/AVD/phone/FPS or memory tests.
+- Reviewed17-file source/resource/test/continuity set; source/APK/tag
+  209b356d7de7ec72100ebc9e0858d155c44c0545 pushed/read back. Annotated immutable
+  v0.21.2-joke.11 targets exact APK source. Receipt-only main docs do not rebuild or
+  move tag. No keys/auth/config/cache/media/backup files in Git; APK only Release.
+- PUBLIC prerelease ID425352594, published2026-10-27T11:15:09Z; draft=false,
+  prerelease=true, make_latest=false. Existing stable/latest not promoted.
+- Release: https://github.com/liuchengzhiaa/JOKEMIHON/releases/tag/v0.21.2-joke.11
+- APK: https://github.com/liuchengzhiaa/JOKEMIHON/releases/download/v0.21.2-joke.11/JOKEMIHON.apk
+- APK67944663 bytes, SHA256 c9db999e39ff71796c1eba081af328868d808712066123fd708b0d2f8ea8bfbb.
+  All3 remote sizes/digests matched67944663/80/1838 bytes. Fresh anonymous public
+  API URL/asset readback confirmed; whole APK download NOT repeated. Ignored
+  .tools/releases/v0.21.2-joke.11/publication-receipt.json has full receipt.
+- Safest next: owner backs up/installs, selects library filter icon > Display >
+  Folia mosaic wall. Check per-tag pan/return, both drag axes/pinch, tap focus then
+  open, long-press selection, Back focus, rotation, revert old styles. Phone visual/
+  smoothness/large-library acceptance still pending. No geometry test as FPS proof.
+  Host C:full/D:isolated env workaround and signer offline backup pending unchanged.
 
 ---
 

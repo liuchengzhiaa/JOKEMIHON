@@ -8,8 +8,10 @@
 - [x] Add seven geometry/gesture/serialization regression cases.
 - [x] Focused7 PASS3m48s; full182 tests/16 suites PASS,15 Lint reports0 errors/
       160 warnings, final full command12m48s; localized5-key parity/diff check clean.
-- [ ] Release build and static package/signer verification.
-- [ ] Reviewed source/docs push, unique public preview and asset readback.
+- [x] Release10m04s; static package/code49/4ABI/pinned v2 signer and BuildConfig
+      source209b356d7/updater+telemetry=false verified; no device/FPS/memory check.
+- [x] Reviewed17-file source209b356d7 pushed, immutable v0.21.2-joke.11 PUBLIC
+      preview published;3 asset sizes/digests and anonymous API URL readback match.
 - [ ] Owner phone visual/gesture/large-library acceptance.
 
 ## Chapter covers blank/slow (2026-10-26)

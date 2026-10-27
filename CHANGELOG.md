@@ -13,8 +13,10 @@
   viewport is transient saved UI state, not a new library/backup record. Independent
   Kotlin renderer inspired by owner music project, not a copy of upstream Folia.
 - Seven new regression tests pass, full182 unit tests pass;15 Lint reports0 errors/
-  160 warnings. No device/FPS/memory acceptance; first icon/count verification issues
-  corrected. Release/static package+signer verification/publication pending.
+  160 warnings. Release10m04s and static package/code49/pinned-v2-signer verified.
+  Source209b356d7 / immutable v0.21.2-joke.11 PUBLIC preview delivered;3 remote
+  asset sizes/digests and anonymous API URL readback confirmed. No format/device/
+  FPS/memory acceptance; first icon/count verification issues corrected.
 
 ## 0.21.2-joke.10 (48) - 2026-10-26
 
